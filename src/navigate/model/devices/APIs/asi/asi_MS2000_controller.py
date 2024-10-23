@@ -34,6 +34,7 @@
 import threading
 import time
 import logging
+import platform
 
 # Third Party Imports
 from serial import Serial
@@ -191,8 +192,9 @@ class MS2000Controller:
         self.serial_port.write_timeout = write_timeout
         self.serial_port.timeout = read_timeout
 
-        # set the size of the rx and tx buffers before calling open
-        self.serial_port.set_buffer_size(rx_size, tx_size)
+        if platform.system()=="Windows": 
+            # Only changed the buffer size in windows            
+            self.serial_port.set_buffer_size(rx_size, tx_size)
         try:
             self.serial_port.open()
         except SerialException:
@@ -217,7 +219,8 @@ class MS2000Controller:
                 "Y",
                 "Z",
             ]  # self.get_default_motor_axis_sequence()
-
+        else:
+            print("Didnt open")
     def get_default_motor_axis_sequence(self) -> None:
         """Get the default motor axis sequence from the ASI device
 

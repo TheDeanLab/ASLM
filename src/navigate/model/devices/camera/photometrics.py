@@ -66,8 +66,8 @@ def build_photometrics_connection(camera_connection):
     """
     try:
         pvc.init_pvcam()
-        # camera_names = Camera.get_available_camera_names()
-        camera_to_open = Camera.select_camera(camera_connection)
+        camera_names = Camera.get_available_camera_names()
+        camera_to_open = Camera.select_camera(camera_names[0])
         camera_to_open.open()
         return camera_to_open
     except Exception as e:
