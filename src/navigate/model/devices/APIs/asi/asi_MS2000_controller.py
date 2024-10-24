@@ -80,6 +80,7 @@ class MS2000Exception(Exception):
             ":N-6": "Undefined Error (command is incorrect, but the controller does "
             "not know exactly why.",
             ":N-21": "Serial Command halted by the HALT command",
+            ":N-21\r\n": "Serial Command halted by the HALT command",
         }
         #: str: Error code received from MS2000 Console
         self.code = code
@@ -218,9 +219,8 @@ class MS2000Controller:
                 "X",
                 "Y",
                 "Z",
-            ]  # self.get_default_motor_axis_sequence()
-        else:
-            print("Didnt open")
+            ]
+            
     def get_default_motor_axis_sequence(self) -> None:
         """Get the default motor axis sequence from the ASI device
 
@@ -377,7 +377,7 @@ class MS2000Controller:
         self.report_to_console(f"Received Response: {response.strip()}")
         if response.startswith(":N"):
             logger.error(f"Incorrect response received: {response}")
-            raise MS2000Exception(response)
+            raise MS2000Exception(response.strip())
 
         return response  # in case we want to read the response
 

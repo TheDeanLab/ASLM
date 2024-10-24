@@ -513,11 +513,11 @@ def load_stages(
             )
         elif stage_type == "KINESIS" and platform.system() == "Linux":
             from navigate.model.devices.stages.tl_kinesis_steppermotor import (
-                build_KSTStage_connection
+                build_KINESIS_Stage_connection
                 )
             stage_devices.append(
                 auto_redial(
-                    build_KSTStage_connection,
+                    build_KINESIS_Stage_connection,
                     (stage_config["serial_number"],),
                      exception=Exception
                      )

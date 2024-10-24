@@ -57,13 +57,13 @@ from numpy import round
 # Local Imports
 from navigate.model.devices.stages.base import StageBase
 from navigate.tools.decorators import log_initialization
-
+from navigate.model.devices.APIs.thorlabs.pykinesis_controller import KinesisStage
 # Logger Setup
 p = __name__.split(".")[1]
 logger = logging.getLogger(p)
 
 
-def build_KSTStage_connection(serial_number):
+def build_KINESIS_Stage_connection(serial_number):
     """Connect to the Thorlabs KST Stage
 
     Parameters
@@ -73,15 +73,14 @@ def build_KSTStage_connection(serial_number):
 
     Returns
     -------
-    kst_controller
+    kin_controller
         Thorlabs KST Stage controller
     """
-    kst_controller = importlib.import_module(
-        "navigate.model.devices.APIs.thorlabs.kenisis_motor"
-    )
-    connection = {"port":serial_number,"baudrate":115200,"rtscts":True} 
-    stage = kst_controller.KST_Open(connection)
-    return kst_controller, stage
+    kstage = KinesisStage(serial_number, False)
+    if not kstage.stage.is_opened():
+        logger.error("KinesisStage connection failed.")
+        raise Exception("Kinesis stage connection failed.")
+    return kstage
 
 
 @log_initialization
@@ -130,15 +129,15 @@ class TLKINStage(StageBase):
 
         if device_connection is not None:
             #: object: Thorlabs KST Stage controller
-            self.kst_controller, self.stage = device_connection
+            self.kin_controller = device_connection
         else:
-            self.kst_controller, self.stage = build_KSTStage_connection(self.serial_number)
+            self.kin_controller = build_KINESIS_Stage_connection(self.serial_number)
 
     def __del__(self):
         """Delete the KST Connection"""
         try:
-            self.kst_controller.stop()
-            self.kst_controller.stage.close(self.serial_number)
+            self.kin_controller.stop()
+            self.kin_controller.close()
         except AttributeError:
             pass
 
@@ -155,9 +154,7 @@ class TLKINStage(StageBase):
             Dictionary containing the current position of the stage.
         """
         try:
-            pos = self.kst_controller.KST_GetCurrentPosition(
-                self.serial_number
-            ) / float(self.device_unit_scale)
+            pos = self.kin_controller.get_current_position(self.device_unit_scale)
             setattr(self, f"{self.axes[0]}_pos", pos)
         except Exception:
             pass
@@ -185,7 +182,9 @@ class TLKINStage(StageBase):
         axis_abs = self.get_abs_position(axes, abs_pos)
         if axis_abs == -1e50:
             return False
-        self.kst_controller.KST_MoveToPosition(self.stage, axis_abs, wait_until_done, self.device_unit_scale)
+        self.kin_controller.move_to_position(axis_abs,
+                                             self.device_unit_scale, 
+                                             wait_until_done)
         return True
 
     def move_absolute(self, move_dictionary, wait_until_done=False):
@@ -229,17 +228,18 @@ class TLKINStage(StageBase):
         success : bool
             Was the move successful?
         """
-        self.kst_controller.KST_MoveToPosition(
-            self.stage, position, wait_until_done, self.device_unit_scale
-        )
-
+        self.kin_controller.move_to_position(position,
+                                             self.device_unit_scale, 
+                                             wait_until_done)
+        
     def run_homing(self):
         """Run homing sequence."""
-        self.kst_controller.KST_HomeDevice(self.serial_number)
+        self.kin_controller.home_stage()
+        # move to mid travel
         self.move_to_position(12.5, wait_until_done=True)
 
     def stop(self):
         """
         Stop all stage channels move
         """
-        self.kst_controller.KST_MoveStop(self)
+        self.kin_controller.stop()
