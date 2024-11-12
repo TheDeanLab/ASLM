@@ -188,6 +188,9 @@ and log information about the camera and frame IDs.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.common_features.Snap.data_func" title="navigate.model.features.common_features.Snap.data_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_func</span></code></a>(frame_ids)</p></td>
 <td><p>Capture data frames and log camera information.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.common_features.Snap.signal_func" title="navigate.model.features.common_features.Snap.signal_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">signal_func</span></code></a>()</p></td>
+<td><p>Mark saving flags in the signal function</p></td>
+</tr>
 </tbody>
 </table>
 <p class="rubric">Attributes</p>
@@ -206,7 +209,7 @@ and log information about the camera and frame IDs.</p>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.features.common_features.Snap.data_func">
-<span class="sig-name descname"><span class="pre">data_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.common_features.Snap.data_func" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">data_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#navigate.model.features.common_features.Snap.data_func" title="Permalink to this definition"></a></dt>
 <dd><p>Capture data frames and log camera information.</p>
 <p>This method captures data frames using the microscope and logs information
 about the active camera and the provided frame IDs.</p>
@@ -224,6 +227,12 @@ about the active camera and the provided frame IDs.</p>
 </dd>
 </dl>
 </section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigate.model.features.common_features.Snap.signal_func">
+<span class="sig-name descname"><span class="pre">signal_func</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#navigate.model.features.common_features.Snap.signal_func" title="Permalink to this definition"></a></dt>
+<dd><p>Mark saving flags in the signal function</p>
 </dd></dl>
 
 <dl class="py attribute">

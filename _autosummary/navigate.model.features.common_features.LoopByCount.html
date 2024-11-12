@@ -196,6 +196,12 @@ count. Default is 1.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.common_features.LoopByCount.data_func" title="navigate.model.features.common_features.LoopByCount.data_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_func</span></code></a>(frame_ids)</p></td>
 <td><p>Control the data acquisition loop and update the remaining frames or steps.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.common_features.LoopByCount.get_steps" title="navigate.model.features.common_features.LoopByCount.get_steps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_steps</span></code></a>()</p></td>
+<td><p>Get number of steps</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.common_features.LoopByCount.pre_func" title="navigate.model.features.common_features.LoopByCount.pre_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pre_func</span></code></a>()</p></td>
+<td><p>Initialize loop parameters</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.common_features.LoopByCount.signal_func" title="navigate.model.features.common_features.LoopByCount.signal_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">signal_func</span></code></a>()</p></td>
 <td><p>Control the signal acquisition loop and update the remaining steps.</p></td>
 </tr>
@@ -219,7 +225,10 @@ count. Default is 1.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.common_features.LoopByCount.data_frames" title="navigate.model.features.common_features.LoopByCount.data_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_frames</span></code></a></p></td>
 <td><p>The remaining number of frames.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.common_features.LoopByCount.config_table" title="navigate.model.features.common_features.LoopByCount.config_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config_table</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.common_features.LoopByCount.initialized" title="navigate.model.features.common_features.LoopByCount.initialized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initialized</span></code></a></p></td>
+<td><p>Initialization flag</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.common_features.LoopByCount.config_table" title="navigate.model.features.common_features.LoopByCount.config_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config_table</span></code></a></p></td>
 <td><p>A dictionary defining the configuration for the loop control process.</p></td>
 </tr>
 </tbody>
@@ -248,14 +257,33 @@ the remaining count.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="navigate.model.features.common_features.LoopByCount.get_steps">
+<span class="sig-name descname"><span class="pre">get_steps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.common_features.LoopByCount.get_steps" title="Permalink to this definition"></a></dt>
+<dd><p>Get number of steps</p>
+<section id="id2">
+<h3>Returns:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>Number of steps.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigate.model.features.common_features.LoopByCount.pre_func">
+<span class="sig-name descname"><span class="pre">pre_func</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.common_features.LoopByCount.pre_func" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize loop parameters</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.features.common_features.LoopByCount.signal_func">
 <span class="sig-name descname"><span class="pre">signal_func</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.common_features.LoopByCount.signal_func" title="Permalink to this definition"></a></dt>
 <dd><p>Control the signal acquisition loop and update the remaining steps.</p>
 <p>This method controls the signal acquisition loop by decrementing the remaining
 steps. It determines whether to continue the loop or exit based on the
 remaining count.</p>
-<section id="id2">
-<h3>Returns:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<section id="id3">
+<h3>Returns:<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
 <dl class="simple">
 <dt>bool</dt><dd><p>A boolean value indicating whether to continue the loop.</p>
 </dd>
@@ -281,6 +309,17 @@ remaining count.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigate.model.features.common_features.LoopByCount.initialized">
+<span class="sig-name descname"><span class="pre">initialized</span></span><a class="headerlink" href="#navigate.model.features.common_features.LoopByCount.initialized" title="Permalink to this definition"></a></dt>
+<dd><p>Initialization flag</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>

@@ -30,7 +30,7 @@ prior to moving to the next position in the multi-position table.
             {"name": CalculateFocusRange,},
             {"name": ZStackAcquisition,"args": (True,True,"z-stack",),},
             {"name": WaitToContinue,},
-            {"name": LoopByCount,"args": ("experiment.MicroscopeState.multiposition_count",),},
+            {"name": LoopByCount,"args": ("positions",),},
         ),
     ]
 

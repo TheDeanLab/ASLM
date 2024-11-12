@@ -140,19 +140,19 @@
 <h1>navigate.model.model.Model<a class="headerlink" href="#navigate-model-model-model" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="navigate.model.model.Model">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.model.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Namespace</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_queue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.model.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Namespace</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_queue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Queue</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Navigate Model Class</p>
 <p>Model for Model-View-Controller Software Architecture.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Namespace</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_queue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Namespace</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_queue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Queue</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the Model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>argparse.Namespace</em>) – Command line arguments.</p></li>
-<li><p><strong>configuration</strong> (<em>multiprocessing.managers.DictProxy</em>) – Configuration dictionary.</p></li>
+<li><p><strong>configuration</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – Configuration dictionary. Defaults to None.</p></li>
 <li><p><strong>event_queue</strong> (<em>multiprocessing.Queue</em>) – Event queue. Receives events from the controller.</p></li>
 </ul>
 </dd>
@@ -181,7 +181,7 @@
 <td><p>Get the active microscope.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.model.Model.get_camera_line_interval_and_exposure_time" title="navigate.model.model.Model.get_camera_line_interval_and_exposure_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_camera_line_interval_and_exposure_time</span></code></a>(...)</p></td>
-<td><p>Get camera line interval time and light sheet exposure time</p></td>
+<td><p>Get camera line interval time, light sheet exposure, and full chip exposure times.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.model.Model.get_data_buffer" title="navigate.model.model.Model.get_data_buffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_data_buffer</span></code></a>([img_width, img_height])</p></td>
 <td><p>Get the data buffer.</p></td>
@@ -321,7 +321,7 @@
 <td><p>Time before acquisition.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.model.Model.data_buffer" title="navigate.model.model.Model.data_buffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_buffer</span></code></a></p></td>
-<td><p>Data buffer.</p></td>
+<td><p>Data buffer for image frames.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.model.Model.img_width" title="navigate.model.model.Model.img_width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">img_width</span></code></a></p></td>
 <td><p>Number of active pixels in the x-dimension.</p></td>
@@ -408,7 +408,7 @@
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.change_resolution">
-<span class="sig-name descname"><span class="pre">change_resolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resolution_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.change_resolution" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">change_resolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resolution_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.change_resolution" title="Permalink to this definition"></a></dt>
 <dd><p>Switch resolution mode of the microscope.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -419,7 +419,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.create_pipe">
-<span class="sig-name descname"><span class="pre">create_pipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.create_pipe" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_pipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pipe</span></span></span><a class="headerlink" href="#navigate.model.model.Model.create_pipe" title="Permalink to this definition"></a></dt>
 <dd><p>Create a data pipe.</p>
 <p>Creates a pair of connection objects connected by a pipe which by default is
 duplex (two-way)</p>
@@ -431,14 +431,14 @@ duplex (two-way)</p>
 <dd class="field-even"><p><strong>end1</strong> – Connection object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>object</p>
+<dd class="field-odd"><p>multiprocessing.Pipe</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.destroy_virtual_microscope">
-<span class="sig-name descname"><span class="pre">destroy_virtual_microscope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.destroy_virtual_microscope" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">destroy_virtual_microscope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.destroy_virtual_microscope" title="Permalink to this definition"></a></dt>
 <dd><p>Destroy a virtual microscope.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -449,7 +449,7 @@ duplex (two-way)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.end_acquisition">
-<span class="sig-name descname"><span class="pre">end_acquisition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.end_acquisition" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">end_acquisition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.end_acquisition" title="Permalink to this definition"></a></dt>
 <dd><p>End the acquisition.</p>
 <p>Sets the current channel to 0, clears the signal and data containers,
 disconnects buffer in live mode and closes the shutters.</p>
@@ -457,7 +457,7 @@ disconnects buffer in live mode and closes the shutters.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.get_active_microscope">
-<span class="sig-name descname"><span class="pre">get_active_microscope</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.get_active_microscope" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_active_microscope</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="navigate.model.microscope.Microscope.html#navigate.model.microscope.Microscope" title="navigate.model.microscope.Microscope"><span class="pre">Microscope</span></a></span></span><a class="headerlink" href="#navigate.model.model.Model.get_active_microscope" title="Permalink to this definition"></a></dt>
 <dd><p>Get the active microscope.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -471,8 +471,9 @@ disconnects buffer in live mode and closes the shutters.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.get_camera_line_interval_and_exposure_time">
-<span class="sig-name descname"><span class="pre">get_camera_line_interval_and_exposure_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exposure_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_pixel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.get_camera_line_interval_and_exposure_time" title="Permalink to this definition"></a></dt>
-<dd><p>Get camera line interval time and light sheet exposure time</p>
+<span class="sig-name descname"><span class="pre">get_camera_line_interval_and_exposure_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exposure_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_pixel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#navigate.model.model.Model.get_camera_line_interval_and_exposure_time" title="Permalink to this definition"></a></dt>
+<dd><p>Get camera line interval time, light sheet exposure, and full chip exposure
+times.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -481,18 +482,35 @@ disconnects buffer in live mode and closes the shutters.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>exposure_time</strong> (<em>float</em>) – Light-sheet mode exposure time (ms).</p></li>
-<li><p><strong>camera_line_interval</strong> (<em>float</em>) – line interval duration (s).</p></li>
+<dd class="field-even"><p><p><strong>camera_times</strong> –</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>camera_exposure_time<span class="classifier">float</span></dt><dd><p>camera exposure time (s)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>camera_line_interval<span class="classifier">float</span></dt><dd><p>camera line interval (s)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>full_chip_exposure_time<span class="classifier">float</span></dt><dd><p>Updated full chip exposure time (s).</p>
+</dd>
+</dl>
+</li>
 </ul>
 </p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[float, float, float]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.get_data_buffer">
-<span class="sig-name descname"><span class="pre">get_data_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.get_data_buffer" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_data_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">512</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">512</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="navigate.model.concurrency.concurrency_tools.SharedNDArray.html#navigate.model.concurrency.concurrency_tools.SharedNDArray" title="navigate.model.concurrency.concurrency_tools.SharedNDArray"><span class="pre">SharedNDArray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#navigate.model.model.Model.get_data_buffer" title="Permalink to this definition"></a></dt>
 <dd><p>Get the data buffer.</p>
 <p>If the number of active pixels in x and y changes, updates the data buffer and
 returns newly-sized buffer.</p>
@@ -507,22 +525,26 @@ returns newly-sized buffer.</p>
 <dd class="field-even"><p><strong>data_buffer</strong> – Shared memory object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="navigate.model.concurrency.concurrency_tools.SharedNDArray.html#navigate.model.concurrency.concurrency_tools.SharedNDArray" title="navigate.model.concurrency.concurrency_tools.SharedNDArray">SharedNDArray</a></p>
+<dd class="field-odd"><p>List[<a class="reference internal" href="navigate.model.concurrency.concurrency_tools.SharedNDArray.html#navigate.model.concurrency.concurrency_tools.SharedNDArray" title="navigate.model.concurrency.concurrency_tools.SharedNDArray">SharedNDArray</a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.get_feature_list">
-<span class="sig-name descname"><span class="pre">get_feature_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.get_feature_list" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_feature_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#navigate.model.model.Model.get_feature_list" title="Permalink to this definition"></a></dt>
 <dd><p>Get feature list str by index</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>idx</strong> (<em>int</em>) – index of feature list</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>feature_list_str</strong> – “” if not exist
-string of the feature list</p>
+<dd class="field-even"><p><p><strong>feature_list_str</strong> –</p>
+<ul class="simple">
+<li><p>Any empty string if the feature is not found</p></li>
+<li><p>The name of the feature if it is found</p></li>
+</ul>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
@@ -532,35 +554,35 @@ string of the feature list</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.get_microscope_info">
-<span class="sig-name descname"><span class="pre">get_microscope_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.get_microscope_info" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_microscope_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#navigate.model.model.Model.get_microscope_info" title="Permalink to this definition"></a></dt>
 <dd><p>Return Microscopes device information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>microscope_info</strong> – Microscope device information.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>dict</p>
+<dd class="field-even"><p>Dict[str, Any]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.get_offset_variance_maps">
-<span class="sig-name descname"><span class="pre">get_offset_variance_maps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.get_offset_variance_maps" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_offset_variance_maps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#navigate.model.model.Model.get_offset_variance_maps" title="Permalink to this definition"></a></dt>
 <dd><p>Get the offset variance maps.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>offset_variance_maps</strong> – Offset variance maps.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>dict</p>
+<dd class="field-even"><p>Tuple[np.ndarray, np.ndarray]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.get_stage_position">
-<span class="sig-name descname"><span class="pre">get_stage_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.get_stage_position" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_stage_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#navigate.model.model.Model.get_stage_position" title="Permalink to this definition"></a></dt>
 <dd><p>Get the position of the stage.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -574,7 +596,7 @@ string of the feature list</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.launch_virtual_microscope">
-<span class="sig-name descname"><span class="pre">launch_virtual_microscope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">microscope_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.launch_virtual_microscope" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">launch_virtual_microscope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">microscope_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="navigate.model.concurrency.concurrency_tools.SharedNDArray.html#navigate.model.concurrency.concurrency_tools.SharedNDArray" title="navigate.model.concurrency.concurrency_tools.SharedNDArray"><span class="pre">SharedNDArray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#navigate.model.model.Model.launch_virtual_microscope" title="Permalink to this definition"></a></dt>
 <dd><p>Launch a virtual microscope.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -594,13 +616,13 @@ string of the feature list</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.load_feature_list_from_file">
-<span class="sig-name descname"><span class="pre">load_feature_list_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.load_feature_list_from_file" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_feature_list_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.load_feature_list_from_file" title="Permalink to this definition"></a></dt>
 <dd><p>Append feature list from file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filename</strong> (<em>str</em>) – filename of the feature list</p></li>
-<li><p><strong>features</strong> (<em>list</em>) – list of feature names</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – filename of the feature list.</p></li>
+<li><p><strong>features</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – list of feature names to load from file.</p></li>
 </ul>
 </dd>
 </dl>
@@ -608,57 +630,57 @@ string of the feature list</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.load_feature_list_from_str">
-<span class="sig-name descname"><span class="pre">load_feature_list_from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_list_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.load_feature_list_from_str" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_feature_list_from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_list_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.load_feature_list_from_str" title="Permalink to this definition"></a></dt>
 <dd><p>Append feature list from feature_list_str</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>feature_list_str</strong> (<em>str</em>) – str of a feature list</p>
+<dd class="field-odd"><p><strong>feature_list_str</strong> (<em>str</em>) – the str of a feature list</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.load_feature_records">
-<span class="sig-name descname"><span class="pre">load_feature_records</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.load_feature_records" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_feature_records</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.load_feature_records" title="Permalink to this definition"></a></dt>
 <dd><p>Load installed feature lists from system folder</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>System folcer can be found at ‘…./.navigate/feature_lists’</p>
+<p>System folder can be found at ‘…./.navigate/feature_lists’</p>
 </div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.load_images">
-<span class="sig-name descname"><span class="pre">load_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filenames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.load_images" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filenames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.load_images" title="Permalink to this definition"></a></dt>
 <dd><p>Load/Unload images to the Synthetic Camera</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filenames</strong> (<em>list</em>) – List of filenames to load.</p>
+<dd class="field-odd"><p><strong>filenames</strong> (<em>Optional</em><em>[</em><em>list</em><em>[</em><em>str</em><em>]</em><em>]</em>) – The list of filenames to load.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.mark_saving_flags">
-<span class="sig-name descname"><span class="pre">mark_saving_flags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.mark_saving_flags" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">mark_saving_flags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.mark_saving_flags" title="Permalink to this definition"></a></dt>
 <dd><p>Mark saving flags for the ImageWriter</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>frame_ids</strong> (<em>array</em>) – a list of frame ids</p>
+<dd class="field-odd"><p><strong>frame_ids</strong> (<em>list</em>) – a list of frame ids</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.move_stage">
-<span class="sig-name descname"><span class="pre">move_stage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_until_done</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.move_stage" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">move_stage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_until_done</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#navigate.model.model.Model.move_stage" title="Permalink to this definition"></a></dt>
 <dd><p>Moves the stages.</p>
 <p>Updates the stage dictionary, moves to the desired position, and reports
 the position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pos_dict</strong> (<em>dict</em>) – Dictionary of stage positions.</p></li>
+<li><p><strong>pos_dict</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Dictionary of stage positions.</p></li>
 <li><p><strong>wait_until_done</strong> (<em>bool</em>) – Checks “on target state” after command and waits until done.</p></li>
 </ul>
 </dd>
@@ -673,17 +695,17 @@ the position.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.pause_data_thread">
-<span class="sig-name descname"><span class="pre">pause_data_thread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.pause_data_thread" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pause_data_thread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.pause_data_thread" title="Permalink to this definition"></a></dt>
 <dd><p>Pause the data thread.</p>
 <p>Function is called when user pauses the acquisition.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.prepare_acquisition">
-<span class="sig-name descname"><span class="pre">prepare_acquisition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turn_off_flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.prepare_acquisition" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">prepare_acquisition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turn_off_flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.prepare_acquisition" title="Permalink to this definition"></a></dt>
 <dd><p>Prepare the acquisition.</p>
 <p>This function is called when user starts the acquisition.
-Sets flags. Calculates all of the waveforms. Sets the Camera Sensor Mode
+Sets flags. Calculates all the waveforms. Sets the Camera Sensor Mode
 Initializes the data buffer and starts camera. Opens Shutters</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -694,7 +716,7 @@ Initializes the data buffer and starts camera. Opens Shutters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.release_pipe">
-<span class="sig-name descname"><span class="pre">release_pipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.release_pipe" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">release_pipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.release_pipe" title="Permalink to this definition"></a></dt>
 <dd><p>Close a data pipe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -705,33 +727,33 @@ Initializes the data buffer and starts camera. Opens Shutters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.reset_feature_list">
-<span class="sig-name descname"><span class="pre">reset_feature_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.reset_feature_list" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">reset_feature_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.reset_feature_list" title="Permalink to this definition"></a></dt>
 <dd><p>Reset live mode feature list.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.resume_data_thread">
-<span class="sig-name descname"><span class="pre">resume_data_thread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.resume_data_thread" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">resume_data_thread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.resume_data_thread" title="Permalink to this definition"></a></dt>
 <dd><p>Resume the data thread.</p>
 <p>Function is called when user resumes the acquisition.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.run_acquisition">
-<span class="sig-name descname"><span class="pre">run_acquisition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.run_acquisition" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_acquisition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.run_acquisition" title="Permalink to this definition"></a></dt>
 <dd><p>Run acquisition along with a feature list one time.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.run_command">
-<span class="sig-name descname"><span class="pre">run_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.run_command" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.run_command" title="Permalink to this definition"></a></dt>
 <dd><p>Receives commands from the controller.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>command</strong> (<em>str</em>) – Type of command to run.</p></li>
-<li><p><strong>*args</strong> (<em>list</em>) – List of arguments to pass to the command.</p></li>
-<li><p><strong>**kwargs</strong> (<em>dict</em>) – Dictionary of keyword arguments to pass to the command.</p></li>
+<li><p><strong>*args</strong> (<em>List</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>]</em>) – List of arguments to pass to the command.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Dictionary of keyword arguments to pass to the command.</p></li>
 </ul>
 </dd>
 </dl>
@@ -739,14 +761,14 @@ Initializes the data buffer and starts camera. Opens Shutters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.run_data_process">
-<span class="sig-name descname"><span class="pre">run_data_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_of_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.run_data_process" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_data_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_of_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.run_data_process" title="Permalink to this definition"></a></dt>
 <dd><p>Run the data process.</p>
 <p>This function is the structure of data thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>num_of_frames</strong> (<em>int</em>) – Number of frames to acquire.</p></li>
-<li><p><strong>data_func</strong> (<em>object</em>) – Function to run on the acquired data.</p></li>
+<li><p><strong>num_of_frames</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Number of frames to acquire. Default is 0.</p></li>
+<li><p><strong>data_func</strong> (<em>Optional</em><em>[</em><em>callable</em><em>]</em>) – Function to run on the acquired data. Default is None.</p></li>
 </ul>
 </dd>
 </dl>
@@ -754,7 +776,7 @@ Initializes the data buffer and starts camera. Opens Shutters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.run_live_acquisition">
-<span class="sig-name descname"><span class="pre">run_live_acquisition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.run_live_acquisition" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_live_acquisition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.run_live_acquisition" title="Permalink to this definition"></a></dt>
 <dd><p>Stream live image to the GUI.</p>
 <p>Recalculates the waveforms for each image, thereby allowing people to adjust
 acquisition parameters in real-time.</p>
@@ -762,14 +784,14 @@ acquisition parameters in real-time.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.simplified_data_process">
-<span class="sig-name descname"><span class="pre">simplified_data_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">microscope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_img_pipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.simplified_data_process" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">simplified_data_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">microscope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="navigate.model.microscope.Microscope.html#navigate.model.microscope.Microscope" title="navigate.model.microscope.Microscope"><span class="pre">Microscope</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_img_pipe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.simplified_data_process" title="Permalink to this definition"></a></dt>
 <dd><p>Run the data process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>microscope</strong> (<a class="reference internal" href="navigate.model.microscope.Microscope.html#navigate.model.microscope.Microscope" title="navigate.model.microscope.Microscope"><em>Microscope</em></a>) – Microscope object.</p></li>
-<li><p><strong>show_img_pipe</strong> (<em>multiprocessing.connection.Connection</em>) – Pipe for showing images.</p></li>
-<li><p><strong>data_func</strong> (<em>object</em>) – Function to run on the acquired data.</p></li>
+<li><p><strong>microscope</strong> (<a class="reference internal" href="navigate.model.microscope.Microscope.html#navigate.model.microscope.Microscope" title="navigate.model.microscope.Microscope"><em>Microscope</em></a>) – Instance of the Microscope object.</p></li>
+<li><p><strong>show_img_pipe</strong> (<em>multiprocessing.Pipe</em>) – The pipe for delivering images to the Controller.</p></li>
+<li><p><strong>data_func</strong> (<em>callable</em>) – Function to run on the acquired data.</p></li>
 </ul>
 </dd>
 </dl>
@@ -777,7 +799,7 @@ acquisition parameters in real-time.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.snap_image">
-<span class="sig-name descname"><span class="pre">snap_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.snap_image" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">snap_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.snap_image" title="Permalink to this definition"></a></dt>
 <dd><p>Acquire an image after updating the waveforms.</p>
 <p>Can be used in acquisitions where changing waveforms are required,
 but there is additional overhead due to the need to write the
@@ -786,19 +808,19 @@ waveforms into the buffers of the DAQ cards.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.stop_stage">
-<span class="sig-name descname"><span class="pre">stop_stage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.stop_stage" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">stop_stage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.stop_stage" title="Permalink to this definition"></a></dt>
 <dd><p>Stop the stages.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.terminate">
-<span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.terminate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.terminate" title="Permalink to this definition"></a></dt>
 <dd><p>Terminate the model.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.update_data_buffer">
-<span class="sig-name descname"><span class="pre">update_data_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.update_data_buffer" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_data_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">512</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">512</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.update_data_buffer" title="Permalink to this definition"></a></dt>
 <dd><p>Update the Data Buffer</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -812,14 +834,14 @@ waveforms into the buffers of the DAQ cards.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.update_ilastik_setting">
-<span class="sig-name descname"><span class="pre">update_ilastik_setting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">display_segmentation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mark_position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.update_ilastik_setting" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_ilastik_setting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">display_segmentation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mark_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[1]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.update_ilastik_setting" title="Permalink to this definition"></a></dt>
 <dd><p>Update the ilastik setting.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>display_segmentation</strong> (<em>bool</em>) – Display segmentation.</p></li>
-<li><p><strong>mark_position</strong> (<em>bool</em>) – Mark position.</p></li>
-<li><p><strong>target_labels</strong> (<em>list</em>) – Target labels.</p></li>
+<li><p><strong>display_segmentation</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Display segmentation. Default is False.</p></li>
+<li><p><strong>mark_position</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Mark position. Default is True.</p></li>
+<li><p><strong>target_labels</strong> (<em>Optional</em><em>[</em><em>list</em><em>[</em><em>int</em><em>]</em><em>]</em>) – Target labels. Default is [1].</p></li>
 </ul>
 </dd>
 </dl>
@@ -827,13 +849,13 @@ waveforms into the buffers of the DAQ cards.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.model.Model.update_mirror">
-<span class="sig-name descname"><span class="pre">update_mirror</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coef</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flatten</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.model.Model.update_mirror" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_mirror</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coef</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flatten</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.model.Model.update_mirror" title="Permalink to this definition"></a></dt>
 <dd><p>Update the mirror.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>coef</strong> (<em>list</em>) – List of coefficients.</p></li>
-<li><p><strong>flatten</strong> (<em>bool</em>) – Flatten the mirror?</p></li>
+<li><p><strong>coef</strong> (<em>list</em>) – The list of coefficients. Default is [].</p></li>
+<li><p><strong>flatten</strong> (<em>bool</em>) – Flatten the mirror? Default is False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -941,10 +963,10 @@ waveforms into the buffers of the DAQ cards.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="navigate.model.model.Model.data_buffer">
 <span class="sig-name descname"><span class="pre">data_buffer</span></span><a class="headerlink" href="#navigate.model.model.Model.data_buffer" title="Permalink to this definition"></a></dt>
-<dd><p>Data buffer.</p>
+<dd><p>Data buffer for image frames.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>object</p>
+<dd class="field-odd"><p>List[<a class="reference internal" href="navigate.model.concurrency.concurrency_tools.SharedNDArray.html#navigate.model.concurrency.concurrency_tools.SharedNDArray" title="navigate.model.concurrency.concurrency_tools.SharedNDArray">SharedNDArray</a>]</p>
 </dd>
 </dl>
 </dd></dl>

@@ -18,7 +18,6 @@ navigate.model.devices.remote\_focus.equipment\_solutions.RemoteFocusEquipmentSo
    
       ~RemoteFocusEquipmentSolutions.__init__
       ~RemoteFocusEquipmentSolutions.adjust
-      ~RemoteFocusEquipmentSolutions.close_connection
       ~RemoteFocusEquipmentSolutions.move
       ~RemoteFocusEquipmentSolutions.read_bytes
       ~RemoteFocusEquipmentSolutions.send_command

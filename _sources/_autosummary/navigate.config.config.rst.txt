@@ -21,6 +21,7 @@ navigate.config.config
       update_config_dict
       verify_configuration
       verify_experiment_config
+      verify_positions_config
       verify_waveform_constants
    
    

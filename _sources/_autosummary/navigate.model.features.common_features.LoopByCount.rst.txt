@@ -18,6 +18,8 @@ navigate.model.features.common\_features.LoopByCount
    
       ~LoopByCount.__init__
       ~LoopByCount.data_func
+      ~LoopByCount.get_steps
+      ~LoopByCount.pre_func
       ~LoopByCount.signal_func
    
    
@@ -33,6 +35,7 @@ navigate.model.features.common\_features.LoopByCount
       ~LoopByCount.steps
       ~LoopByCount.signals
       ~LoopByCount.data_frames
+      ~LoopByCount.initialized
       ~LoopByCount.config_table
    
    

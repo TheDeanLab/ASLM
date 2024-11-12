@@ -164,7 +164,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>microscope_name</strong> (<em>str</em>) – Name of the microscope.</p></li>
-<li><p><strong>device_connection</strong> (<em>dict</em>) – Dictionary containing the connection information for the device.</p></li>
+<li><p><strong>device_connection</strong> (<em>mcl_controller</em>) – Communication object for the stage.</p></li>
 <li><p><strong>configuration</strong> (<em>dict</em>) – Dictionary containing the configuration information for the device.</p></li>
 <li><p><strong>device_id</strong> (<em>int</em>) – Device ID.</p></li>
 </ul>
@@ -388,7 +388,7 @@ Expect values in micrometers, except for theta, which is in degrees.</p></li>
 <dd><p>MCL controller object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>object</p>
+<dd class="field-odd"><p>mcl_controller</p>
 </dd>
 </dl>
 </dd></dl>

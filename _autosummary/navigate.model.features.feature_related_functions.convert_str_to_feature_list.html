@@ -150,18 +150,24 @@
 <h1>navigate.model.features.feature_related_functions.convert_str_to_feature_list<a class="headerlink" href="#navigate-model-features-feature-related-functions-convert-str-to-feature-list" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="navigate.model.features.feature_related_functions.convert_str_to_feature_list">
-<span class="sig-prename descclassname"><span class="pre">navigate.model.features.feature_related_functions.</span></span><span class="sig-name descname"><span class="pre">convert_str_to_feature_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.feature_related_functions.convert_str_to_feature_list" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">navigate.model.features.feature_related_functions.</span></span><span class="sig-name descname"><span class="pre">convert_str_to_feature_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#navigate.model.features.feature_related_functions.convert_str_to_feature_list" title="Permalink to this definition"></a></dt>
 <dd><p>Convert string to a feature list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>content</strong> (<em>str</em>) – A string value that represents a feature list.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>feature_list</strong> – A list: If the string value can be converted to a valid feature list
-None: If can not.</p>
+<dd class="field-even"><p><p><strong>feature_list</strong> –</p>
+<ul class="simple">
+<li><p>List : If the string value can be converted to a valid feature list</p></li>
+<li><p>None : If the string value cannot be converted to a valid feature list</p></li>
+<li><p>”break” : If the string value is “break”</p></li>
+<li><p>”continue” : If the string value is “continue”</p></li>
+</ul>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List</p>
+<dd class="field-odd"><p>Union[list, str, None]</p>
 </dd>
 </dl>
 </dd></dl>

@@ -153,18 +153,18 @@
 <h1>navigate.model.devices.filter_wheel.base.FilterWheelBase<a class="headerlink" href="#navigate-model-devices-filter-wheel-base-filterwheelbase" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="navigate.model.devices.filter_wheel.base.FilterWheelBase">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.devices.filter_wheel.base.</span></span><span class="sig-name descname"><span class="pre">FilterWheelBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.devices.filter_wheel.base.FilterWheelBase" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.devices.filter_wheel.base.</span></span><span class="sig-name descname"><span class="pre">FilterWheelBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.devices.filter_wheel.base.FilterWheelBase" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>FilterWheelBase - Parent class for controlling filter wheels.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.devices.filter_wheel.base.FilterWheelBase.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.devices.filter_wheel.base.FilterWheelBase.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.devices.filter_wheel.base.FilterWheelBase.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the FilterWheelBase class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>device_connection</strong> (<em>dict</em>) – Dictionary of device connections.</p></li>
-<li><p><strong>device_config</strong> (<em>dict</em>) – Dictionary of device configuration parameters.</p></li>
+<li><p><strong>device_connection</strong> (<em>Any</em>) – The communication instance with the device.</p></li>
+<li><p><strong>device_config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Dictionary of device configuration parameters.</p></li>
 </ul>
 </dd>
 </dl>
@@ -228,7 +228,7 @@ filter dictionary</p>
 <dd><p>Dictionary of device configuration parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-odd"><p>Dict[str, Any]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -239,7 +239,7 @@ filter dictionary</p>
 <dd><p>Device connection object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>object</p>
+<dd class="field-odd"><p>Any</p>
 </dd>
 </dl>
 </dd></dl>

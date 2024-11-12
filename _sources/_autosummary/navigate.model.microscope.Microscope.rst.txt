@@ -21,6 +21,7 @@ navigate.model.microscope.Microscope
       ~Microscope.calculate_all_waveform
       ~Microscope.calculate_exposure_sweep_times
       ~Microscope.end_acquisition
+      ~Microscope.get_available_channels
       ~Microscope.get_exposure_sweep_times
       ~Microscope.get_stage_position
       ~Microscope.load_and_start_devices
@@ -29,7 +30,11 @@ navigate.model.microscope.Microscope
       ~Microscope.move_stage_offset
       ~Microscope.prepare_acquisition
       ~Microscope.prepare_next_channel
+      ~Microscope.report_camera_settings
       ~Microscope.run_command
+      ~Microscope.set_camera_exposure_time
+      ~Microscope.set_camera_roi
+      ~Microscope.set_camera_sensor_mode
       ~Microscope.stop_stage
       ~Microscope.terminate
       ~Microscope.turn_off_lasers
@@ -53,8 +58,10 @@ navigate.model.microscope.Microscope
       ~Microscope.stages_list
       ~Microscope.ask_stage_for_position
       ~Microscope.camera
+      ~Microscope.shutter
       ~Microscope.lasers
       ~Microscope.galvo
+      ~Microscope.remote_focus_device
       ~Microscope.filter_wheel
       ~Microscope.daq
       ~Microscope.info
