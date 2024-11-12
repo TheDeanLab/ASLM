@@ -477,6 +477,7 @@ class VolumeSearch3D:
         y_direction="y",
         overlap=0.05,
         analysis_function=None,
+        pixel_size=1.0,
     ):
         """Initialize VolumeSearch
 
@@ -527,6 +528,8 @@ class VolumeSearch3D:
             analysis_function if analysis_function else find_cell_boundary_3d
         )
 
+        self.low_res_pixel_size = pixel_size
+
         #: dict: Feature configuration
         self.config_table = {
             "data": {
@@ -553,6 +556,7 @@ class VolumeSearch3D:
 
         # map labeled cells
         z_start = microscope_state_config["start_position"]
+        z_end = microscope_state_config["end_position"]
         z_step = microscope_state_config["step_size"]
 
         if microscope_state_config["multiposition_count"] == 0:
@@ -564,6 +568,11 @@ class VolumeSearch3D:
             position = self.model.configuration["experiment"]["MultiPositions"][
                 self.position_id
             ]
+
+        self.model.logger.debug(f"*** current z range ednding position in low res: {position}")
+        # calculate z origin position
+        position[2] -= z_end
+        self.model.logger.debug(f"*** current z origin position in low res: {position}")
 
         current_microscope_name = self.model.active_microscope_name
         current_zoom_value = self.model.active_microscope.zoom.zoomvalue
@@ -598,10 +607,12 @@ class VolumeSearch3D:
                             f"not implemented! There is not enough information in the "
                             f"configuration.yaml file!"
                         )
+        self.model.logger.debug(f"*** position with offset: {position}")
 
         current_pixel_size = self.model.configuration["configuration"]["microscopes"][
             current_microscope_name
         ]["zoom"]["pixel_size"][current_zoom_value]
+        current_pixel_size = self.low_res_pixel_size
         current_image_width = self.model.configuration["experiment"][
             "CameraParameters"
         ][current_microscope_name]["img_x_pixels"]

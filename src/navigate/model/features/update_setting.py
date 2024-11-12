@@ -326,6 +326,12 @@ class UpdateExperimentSetting:
         self.model.frame_id = 0
         # prepare channel
         self.model.active_microscope.prepare_next_channel()
+        # updating image writer
+        if self.model.image_writer:
+            try:
+                self.model.image_writer.data_source.set_metadata_from_configuration_experiment(self.model.configuration)
+            except Exception as e:
+                print("**** updating image_writer failed:", e)
         # resume data thread
         self.model.resume_data_thread()
         return True

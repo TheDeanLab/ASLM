@@ -313,6 +313,7 @@ class TiffDataSource(DataSource):
             )
             self.file_name.append(file_name)
             self.uid.append(str(uuid.uuid4()))
+            print("*** setup image for position:", len(self.image), file_name, self._current_position, ch)
 
     def close(self, internal=False) -> None:
         """Close the file.
@@ -330,9 +331,10 @@ class TiffDataSource(DataSource):
         if self.mode == "w":
             if not internal:
                 self._check_shape(self._current_frame - 1, self.metadata.per_stack)
-        if type(self.image) == list:
+        if type(self.image) is list:
             for ch in range(len(self.image)):
                 self.image[ch].close()
+                print("*** closing tiff writer:", self._current_position, ch, self.file_name[ch])
                 if self.is_ome and len(self._views) > 0:
                     # Attach OME metadata at the end of the write
                     tifffile.tiffcomment(
