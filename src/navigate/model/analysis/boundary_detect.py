@@ -554,6 +554,8 @@ def map_labels(
 
     for i in range(target_num):
         min_z, min_y, min_x, max_z, max_y, max_x = regionprops[i].bbox
+        if (max_x - min_x) < 10 or (max_y - min_y) < 10:
+            continue
 
         num_x = math.ceil((max_x - min_x) / (x_pixel * (1 - overlap)))
         shift_x = (num_x * x_pixel - (max_x - min_x)) // 2
