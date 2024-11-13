@@ -164,8 +164,6 @@ class TextExperimentFile(unittest.TestCase):
             "timepoint_interval": int,
             "experiment_duration": float,
             "is_multiposition": bool,
-            "multiposition_count": int,
-            "selected_channels": int,
             "channels": dict,
             "stack_z_origin": float,
             "stack_focus_origin": float,
@@ -203,12 +201,3 @@ class TextExperimentFile(unittest.TestCase):
                     expected_values[key_key],
                 ), f"{key_key} is not of type {expected_values[key_key]}"
 
-    def test_multiposition(self):
-        expected_values = [float, float, float, float, float]
-        positions = self.data["MultiPositions"]
-        print("*** positions:", positions)
-        for position in positions:
-            for i in range(len(expected_values)):
-                assert isinstance(
-                    position[i], expected_values[i]
-                ), f"{i} is not of type {expected_values[i]}"

@@ -77,6 +77,7 @@ def test_config_methods():
         "update_config_dict",
         "verify_experiment_config",
         "verify_waveform_constants",
+        "verify_positions_config",
         "verify_configuration",
         "yaml",
         "logging",
@@ -122,7 +123,7 @@ def test_get_configuration_paths():
     paths = config.get_configuration_paths()
     for path in paths:
         assert isinstance(path, pathlib.Path)
-    assert len(paths) == 6
+    assert len(paths) == 7
 
 
 def test_get_configuration_paths_create_dir(monkeypatch):
@@ -348,8 +349,6 @@ class TestVerifyExperimentConfig(unittest.TestCase):
             "timepoint_interval": 0,
             "experiment_duration": 1.03,
             "is_multiposition": False,
-            "multiposition_count": 1,
-            "selected_channels": 0,
             "stack_z_origin": 0,
             "stack_focus_origin": 0,
             "start_focus": 0.0,
@@ -366,7 +365,6 @@ class TestVerifyExperimentConfig(unittest.TestCase):
             "CameraParameters": camera_parameters_dict_sample,
             "StageParameters": stage_parameters_dict_sample,
             "MicroscopeState": microscope_parameters_dict_sample,
-            "MultiPositions": multipositions_sample,
         }
 
     def tearDown(self):
@@ -420,9 +418,9 @@ class TestVerifyExperimentConfig(unittest.TestCase):
             experiement_config["MicroscopeState"],
         )
 
-        # MultiPositions
-        for i, position in enumerate(self.experiment_sample["MultiPositions"]):
-            assert position == experiement_config["MultiPositions"][i]
+        # # MultiPositions
+        # for i, position in enumerate(self.experiment_sample["MultiPositions"]):
+        #     assert position == experiement_config["MultiPositions"][i]
 
     def test_load_experiment_file_with_missing_parameters(self):
         experiment = load_yaml_file(os.path.join(self.config_path, "experiment.yml"))
@@ -784,12 +782,6 @@ class TestVerifyExperimentConfig(unittest.TestCase):
                 == expected_value[k]
             )
 
-        # selected_channels
-        assert experiment["MicroscopeState"]["selected_channels"] == 0
-        experiment["MicroscopeState"]["channels"]["channel_2"]["is_selected"] = True
-        config.verify_experiment_config(self.manager, configuration)
-        assert experiment["MicroscopeState"]["selected_channels"] == 1
-
     def select_random_entries_from_list(self, parameter_list):
         n = random.randint(1, len(parameter_list))
         return random.choices(parameter_list, k=n)
@@ -801,3 +793,31 @@ class TestVerifyExperimentConfig(unittest.TestCase):
             if k in parameter_dict.keys():
                 del parameter_dict[k]
         return deleted_parameters
+
+    def test_load_empty_multi_positions(self):
+        positions_file_path = os.path.join(self.test_root, "multi_positions.yml")
+        with open(positions_file_path, "w") as f:
+            f.write("")
+        positions = load_yaml_file(positions_file_path)
+        new_positions = config.verify_positions_config(positions)
+        assert isinstance(new_positions, list)
+        assert len(new_positions) == 0
+
+    def test_load_multi_positions_with_corrupted_values(self):
+        positions = [[1, 2, 3], ['a', 'b', 'c', 1, 2], [10, 'a', 30, 40,]]
+        new_positions = config.verify_positions_config(positions)
+        assert isinstance(new_positions, list)
+        assert len(new_positions) == 0
+
+
+        positions = [[1, 2, 3], ['a', 'b', 'c', 1, 2], [1, 2, 3, 4, 5], [10, 'a', 30, 40,]]
+        new_positions = config.verify_positions_config(positions)
+        assert isinstance(new_positions, list)
+        assert len(new_positions) == 1
+
+        positions = [[1, 2, 3], ['a', 'b', 'c', 1, 2], [1, 2, 3, 4, 5], [10, 'a', 30, 40,],
+                     [1, 2, 3, 4, 5, 6]]
+        new_positions = config.verify_positions_config(positions)
+        assert isinstance(new_positions, list)
+        assert len(new_positions) == 2
+

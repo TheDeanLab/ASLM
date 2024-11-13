@@ -100,7 +100,12 @@ class MultiPositionController(GUIController):
         """
         axis_dict = {"x": "X", "y": "Y", "z": "Z", "theta": "R", "f": "F"}
         data = {}
-
+        if len(positions) == 0:
+            # add current stage position to the table
+            stage_position = self.parent_controller.configuration["experiment"][
+                "StageParameters"
+            ]
+            positions = [[stage_position[axis] for axis in axis_dict.keys()]]
         for i, name in enumerate(axis_dict.keys()):
             data[axis_dict[name]] = list(pos[i] for pos in positions)
         self.table.model.df = pd.DataFrame(data)

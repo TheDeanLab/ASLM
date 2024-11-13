@@ -309,7 +309,7 @@ class Model:
                         {"name": PrepareNextChannel},
                         {
                             "name": LoopByCount,
-                            "args": ("experiment.MicroscopeState.selected_channels",),
+                            "args": ("channels",),
                         },
                     ),
                     {
@@ -338,7 +338,7 @@ class Model:
                     {"name": WaitToContinue},
                     {
                         "name": LoopByCount,
-                        "args": ("experiment.MicroscopeState.multiposition_count",),
+                        "args": ("positions",),
                     },
                 ),
             ]
@@ -361,7 +361,7 @@ class Model:
                     },
                     {
                         "name": LoopByCount,
-                        "args": ("experiment.MicroscopeState.multiposition_count",),
+                        "args": ("positions",),
                     },
                 ),
                 {"name": RemoveEmptyPositions, "args": (records,)},
@@ -374,7 +374,7 @@ class Model:
                     {"name": PrepareNextChannel},
                     {
                         "name": LoopByCount,
-                        "args": ("experiment.MicroscopeState.selected_channels",),
+                        "args": ("channels",),
                     },
                 )
             ],
@@ -383,7 +383,7 @@ class Model:
                     {"name": PrepareNextChannel},
                     {
                         "name": LoopByCount,
-                        "args": ("experiment.MicroscopeState.selected_channels",),
+                        "args": ("channels",),
                     },
                 )
             ],
@@ -552,6 +552,10 @@ class Model:
             self.is_save = self.configuration["experiment"]["MicroscopeState"][
                 "is_save"
             ]
+            if len(self.configuration["multi_positions"]) == 0:
+                self.configuration["experiment"]["MicroscopeState"][
+                    "is_multiposition"
+                ] = False
 
             # Calculate waveforms, turn on lasers, etc.
             self.prepare_acquisition()
@@ -1187,7 +1191,7 @@ class Model:
                         {"name": PrepareNextChannel},
                         {
                             "name": LoopByCount,
-                            "args": ("experiment.MicroscopeState.selected_channels",),
+                            "args": ("channels",),
                         },
                     )
                 ],

@@ -45,6 +45,7 @@ from navigate.config.config import (
     verify_experiment_config,
     verify_waveform_constants,
     verify_configuration,
+    verify_positions_config,
 )
 from navigate.model.devices.camera.synthetic import (
     SyntheticCamera,
@@ -53,6 +54,7 @@ from navigate.model.devices.camera.synthetic import (
 from navigate.model.features.feature_container import (
     load_features,
 )
+from navigate.tools.file_functions import load_yaml_file
 
 
 class DummyController:
@@ -189,6 +191,9 @@ class DummyModel:
         gui_configuration_path = Path.joinpath(
             configuration_directory, "gui_configuration.yml"
         )
+        multi_positions_path = Path.joinpath(
+            configuration_directory, "multi_positions.yml"
+        )
 
         #: Manager: The manager.
         self.manager = Manager()
@@ -204,6 +209,10 @@ class DummyModel:
         verify_configuration(self.manager, self.configuration)
         verify_experiment_config(self.manager, self.configuration)
         verify_waveform_constants(self.manager, self.configuration)
+
+        positions = load_yaml_file(multi_positions_path)
+        positions = verify_positions_config(positions)
+        self.configuration["multi_positions"] = positions
 
         #: DummyDevice: The device.
         self.device = DummyDevice()

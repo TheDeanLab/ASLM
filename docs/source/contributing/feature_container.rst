@@ -253,7 +253,7 @@ To create a customized feature list, follow these steps:
                 {"name": PrepareNextChannel},
                 {
                     "name": LoopByCount,
-                    "args": ("experiment.MicroscopeState.selected_channels",),
+                    "args": ("channels",),
                 },
             )
         ]

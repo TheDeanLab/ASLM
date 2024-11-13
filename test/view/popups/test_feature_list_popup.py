@@ -67,7 +67,7 @@ def test_feature_icon(tk_root):
         ),
         ("ChangeResolution", ["resolution_mode", "zoom_value"], ["high", "N/A"]),
         ("LoopByCount", ["steps"], [1]),
-        ("LoopByCount", ["steps"], ["experiment.MicroscopeState.selected_channels"]),
+        ("LoopByCount", ["steps"], ["channels"]),
     ],
 )
 def test_feature_config_popup(feature_name, args_name, args_value, tk_root):

@@ -36,6 +36,7 @@ import ast
 from functools import reduce
 from threading import Lock
 import logging
+from multiprocessing.managers import ListProxy
 
 # Third party imports
 
@@ -183,7 +184,16 @@ class Snap:
         self.saving_flag = saving_flag
 
         #: dict: A dictionary defining the configuration for the data capture process.
-        self.config_table = {"data": {"main": self.data_func}}
+        self.config_table = {
+            "signal": {"main": self.signal_func},
+            "data": {"main": self.data_func},
+        }
+
+    def signal_func(self) -> bool:
+        """Mark saving flags in the signal function"""
+        if self.saving_flag:
+            self.model.mark_saving_flags([self.model.frame_id])
+        return True
 
     def data_func(self, frame_ids: list) -> bool:
         """Capture data frames and log camera information.
@@ -201,8 +211,6 @@ class Snap:
         bool
             A boolean value indicating the success of the data capture process.
         """
-        if self.saving_flag:
-            self.model.mark_saving_flags(frame_ids)
         logger.info(f"the camera is:{self.model.active_microscope_name}, {frame_ids}")
         return True
 
@@ -211,7 +219,7 @@ class WaitForExternalTrigger:
     """WaitForExternalTrigger class to time features using external input.
 
     This class waits for either an external trigger (or the timeout) before continuing
-    on to the next feature block in the list. Useful when combined with LoopByCounts
+    on to the next feature block in the list. Useful when combined with LoopByCount
     when each iteration may depend on some external event happening.
 
     Notes:
@@ -451,30 +459,49 @@ class LoopByCount:
         self.model = model
 
         #: bool: A boolean value indicating whether to step by frame or by step.
-        self.step_by_frame = True
+        self.step_by_frame = False if type(steps) is str else True
 
         #: int: The remaining number of steps or frames.
         self.steps = steps
-        if type(steps) is str:
-            self.step_by_frame = False
-            try:
-                parameters = steps.split(".")
-                config_ref = reduce((lambda pre, n: f"{pre}['{n}']"), parameters, "")
-                exec(f"self.steps = int(self.model.configuration{config_ref})")
-            except:  # noqa
-                self.steps = 1
 
         #: int: The remaining number of steps.
-        self.signals = self.steps
+        self.signals = 1
 
         #: int: The remaining number of frames.
-        self.data_frames = self.steps
+        self.data_frames = 1
+
+        #: bool: Initialization flag
+        self.initialized = VariableWithLock(bool)
+        self.initialized.value = False
 
         #: dict: A dictionary defining the configuration for the loop control process.
         self.config_table = {
-            "signal": {"main": self.signal_func},
-            "data": {"main": self.data_func},
+            "signal": {
+                "init": self.pre_func,
+                "main": self.signal_func,
+            },
+            "data": {
+                "init": self.pre_func,
+                "main": self.data_func
+            },
         }
+
+    def pre_func(self):
+        """Initialize loop parameters"""
+        if self.initialized.value:
+            return
+        
+        with self.initialized as initialized:
+            if initialized.value:
+                return
+
+            self.get_steps()
+
+            self.signals = self.steps
+            self.data_frames = self.steps
+            initialized.value = True
+
+            logger.debug(f"LoopByCount-initialize: {self.signals}, {self.data_frames}")
 
     def signal_func(self):
         """Control the signal acquisition loop and update the remaining steps.
@@ -491,6 +518,7 @@ class LoopByCount:
         self.signals -= 1
         if self.signals <= 0:
             self.signals = self.steps
+            self.initialized.value = False
             return False
         return True
 
@@ -517,8 +545,37 @@ class LoopByCount:
             self.data_frames -= 1
         if self.data_frames <= 0:
             self.data_frames = self.steps
+            self.initialized.value = False
             return False
         return True
+
+    def get_steps(self):
+        """Get number of steps
+
+        Returns:
+        --------
+        int
+            Number of steps.
+        """
+        if type(self.steps) is int:
+            return self.steps
+        if self.steps == "channels":
+            self.steps = len(self.model.active_microscope.available_channels)
+        elif self.steps == "positions":
+            self.steps = len(self.model.configuration["multi_positions"])
+        else:
+            try:
+                parameters = self.steps.split(".")
+                config_ref = reduce((lambda pre, n: f"{pre}['{n}']"), parameters, "")
+                exec(f"self.steps = self.model.configuration{config_ref}")
+            except:  # noqa
+                self.steps = 1
+
+            if type(self.steps) in [list, ListProxy]:
+                self.steps = len(self.steps)
+            else:
+                self.steps = int(self.steps)
+        return self.steps
 
 
 class PrepareNextChannel:
@@ -635,14 +692,10 @@ class MoveToNextPositionInMultiPositionTable:
         self.current_idx = 0
 
         #: dict: A dictionary defining the configuration for the position control
-        self.multiposition_table = self.model.configuration["experiment"][
-            "MultiPositions"
-        ]
+        self.multiposition_table = []
 
         #: int: The total number of positions in the multi-position table.
-        self.position_count = self.model.configuration["experiment"]["MicroscopeState"][
-            "multiposition_count"
-        ]
+        self.position_count = 0
 
         #: int: The stage distance threshold for pausing the data thread.
         self.stage_distance_threshold = 1000
@@ -661,6 +714,8 @@ class MoveToNextPositionInMultiPositionTable:
         if self.initialized:
             return
         self.initialized = True
+        self.multiposition_table = self.model.configuration["multi_positions"]
+        self.position_count = len(self.multiposition_table)
         if type(self.offset) is str:
             try:
                 self.offset = ast.literal_eval(self.offset)
@@ -1011,7 +1066,14 @@ class ZStackAcquisition:
         self.stack_cycling_mode = microscope_state["stack_cycling_mode"]
 
         # get available channels
-        self.channels = microscope_state["selected_channels"]
+        self.channels = len(
+            list(
+                filter(
+                    lambda channel: channel["is_selected"],
+                    microscope_state["channels"].values(),
+                )
+            )
+        )
         #: int: The current channel being acquired in the z-stack
         self.current_channel_in_list = 0
 
@@ -1041,7 +1103,7 @@ class ZStackAcquisition:
 
         # position: x, y, z, theta, f
         if bool(microscope_state["is_multiposition"]):
-            self.positions = self.model.configuration["experiment"]["MultiPositions"]
+            self.positions = self.model.configuration["multi_positions"]
         else:
             self.positions = [
                 [

@@ -103,6 +103,7 @@ def main():
         logging_path,
         configurator,
         gui_configuration_path,
+        multi_positions_path,
     ) = evaluate_parser_input_arguments(args)
 
     log_setup("logging.yml", logging_path)
@@ -119,6 +120,7 @@ def main():
             rest_api_path,
             waveform_templates_path,
             gui_configuration_path,
+            multi_positions_path,
             args,
         )
 

@@ -83,7 +83,12 @@ from navigate.config.config import (
     verify_configuration,
     get_navigate_path,
 )
-from navigate.tools.file_functions import save_yaml_file, get_ram_info
+from navigate.tools.file_functions import (
+    create_save_path,
+    load_yaml_file,
+    save_yaml_file,
+    get_ram_info,
+)
 from navigate.tools.common_dict_tools import update_stage_dict
 from navigate.tools.multipos_table_tools import update_table
 from navigate.tools.common_functions import combine_funcs
@@ -831,8 +836,8 @@ class Controller:
             if not self.prepare_acquire_data():
                 self.acquire_bar_controller.stop_acquire()
                 return
-
-            file_directory = args[0]
+            saving_settings = self.configuration["experiment"]["Saving"]
+            file_directory = create_save_path(saving_settings)
 
             # Save the experiment.yaml file.
             save_yaml_file(
@@ -1219,7 +1224,10 @@ class Controller:
             if microscope_name not in self.additional_microscopes:
                 self.additional_microscopes[microscope_name] = {}
 
-            if "camera_view_controller" not in self.additional_microscopes[microscope_name]:
+            if (
+                "camera_view_controller"
+                not in self.additional_microscopes[microscope_name]
+            ):
                 popup_window = CameraViewPopupWindow(self.view, microscope_name)
                 camera_view_controller = CameraViewController(
                     popup_window.camera_view, self
