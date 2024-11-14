@@ -200,6 +200,13 @@ class ChannelSettingController(GUIController):
             if self.view.interval_spins[i].get() == "":
                 self.view.interval_spins[i].set(1.0)
 
+    def update_experiment_values(self):
+        """Update experiment values according to GUI"""
+        for i in range(self.num):
+            channel_vals = self.get_vals_by_channel(i)
+            for name in channel_vals:
+                self.channel_callback(i, name)()
+
     def set_spinbox_range_limits(self, settings):
         """Set the range limits for the spinboxes in the View.
 
