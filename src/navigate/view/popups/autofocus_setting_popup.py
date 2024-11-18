@@ -87,7 +87,7 @@ class AutofocusPopup:
 
         self.inputs["device"] = LabelInput(
             parent=device_frame,
-            label="Device Type",
+            label="Device:",
             input_class=ttk.Combobox,
             input_var=tk.StringVar(),
             input_args={"width": 20, "state": "readonly"},
@@ -97,7 +97,7 @@ class AutofocusPopup:
 
         self.inputs["device_ref"] = LabelInput(
             parent=device_frame,
-            label="Device Reference",
+            label="Axis:",
             input_class=ttk.Combobox,
             input_var=tk.StringVar(),
             input_args={"width": 20, "state": "readonly"},
@@ -108,7 +108,11 @@ class AutofocusPopup:
         starting_row_id = 1
 
         # Row 0, Column Titles
-        title_labels = ["Select", "Range", "Step Size"]
+        title_labels = [
+            "Select",
+            "Range  (" + "\N{GREEK SMALL LETTER MU}" + "m)",
+            "Step Size  (" + "\N{GREEK SMALL LETTER MU}" + "m)"
+        ]
         for i in range(3):
             title = ttk.Label(content_frame, text=title_labels[i], padding=(2, 5, 0, 0))
             title.grid(row=starting_row_id, column=i, sticky=tk.NSEW)

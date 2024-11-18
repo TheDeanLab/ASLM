@@ -7,3 +7,4 @@ Setting Up A Microscope
 
    software_configuration
    multiple_cameras
+   communication_challenges

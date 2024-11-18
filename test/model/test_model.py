@@ -54,7 +54,9 @@ def model():
         verify_experiment_config,
         verify_waveform_constants,
         verify_configuration,
+        verify_positions_config,
     )
+    from navigate.tools.file_functions import load_yaml_file
 
     with Manager() as manager:
 
@@ -70,6 +72,7 @@ def model():
             configuration_directory, "waveform_constants.yml"
         )
         rest_api_path = Path.joinpath(configuration_directory, "rest_api_config.yml")
+        multi_positions_path = Path.joinpath(configuration_directory, "multi_positions.yml")
 
         event_queue = MagicMock()
 
@@ -83,6 +86,10 @@ def model():
         verify_configuration(manager, configuration)
         verify_experiment_config(manager, configuration)
         verify_waveform_constants(manager, configuration)
+
+        positions = load_yaml_file(multi_positions_path)
+        positions = verify_positions_config(positions)
+        configuration["multi_positions"] = positions
 
         model = Model(
             args=SimpleNamespace(synthetic_hardware=True),
@@ -104,7 +111,7 @@ def test_single_acquisition(model):
     state["image_mode"] = "single"
     state["is_save"] = False
 
-    n_frames = state["selected_channels"]
+    n_frames = len(list(filter(lambda channel: channel["is_selected"], state["channels"].values())))
 
     show_img_pipe = model.create_pipe("show_img_pipe")
 
@@ -219,8 +226,8 @@ def test_multiposition_acquisition(model):
     model.configuration["experiment"]["MicroscopeState"]["is_multiposition"] = True
     update_config_dict(
         model.__test_manager,  # noqa
-        model.configuration["experiment"],
-        "MultiPositions",
+        model.configuration,
+        "multi_positions",
         [[10.0, 10.0, 10.0, 10.0, 10.0]],
     )
     model.configuration["experiment"]["MicroscopeState"]["image_mode"] = "z-stack"
@@ -245,8 +252,8 @@ def test_multiposition_acquisition(model):
     # Multiposition is selected but not actually  True
     update_config_dict(
         model.__test_manager,
-        model.configuration["experiment"],
-        "MultiPositions",
+        model.configuration,
+        "multi_positions",
         [],  # noqa
     )
 

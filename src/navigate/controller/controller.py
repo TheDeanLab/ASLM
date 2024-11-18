@@ -40,7 +40,6 @@ import sys
 import os
 import time
 import platform
-import reprlib
 
 # Third Party Imports
 
@@ -64,6 +63,7 @@ from navigate.controller.sub_controllers import (
     FeaturePopupController,
     MenuController,
     PluginsController,
+    HistogramController,
     # MicroscopePopupController,
     # AdaptiveOpticsPopupController,
 )
@@ -80,10 +80,16 @@ from navigate.config.config import (
     update_config_dict,
     verify_experiment_config,
     verify_waveform_constants,
+    verify_positions_config,
     verify_configuration,
     get_navigate_path,
 )
-from navigate.tools.file_functions import create_save_path, save_yaml_file, get_ram_info
+from navigate.tools.file_functions import (
+    create_save_path,
+    load_yaml_file,
+    save_yaml_file,
+    get_ram_info,
+)
 from navigate.tools.common_dict_tools import update_stage_dict
 from navigate.tools.multipos_table_tools import update_table
 from navigate.tools.common_functions import combine_funcs
@@ -97,6 +103,7 @@ logger = logging.getLogger(p)
 
 class Controller:
     """Navigate Controller"""
+
     def __init__(
         self,
         root,
@@ -107,6 +114,7 @@ class Controller:
         rest_api_path,
         waveform_templates_path,
         gui_configuration_path,
+        multi_positions_path,
         args,
     ):
         """Initialize the Navigate Controller.
@@ -197,9 +205,15 @@ class Controller:
         verify_experiment_config(self.manager, self.configuration)
         verify_waveform_constants(self.manager, self.configuration)
 
+        positions = load_yaml_file(multi_positions_path)
+        positions = verify_positions_config(positions)
+        self.configuration["multi_positions"] = positions
+
         total_ram, available_ram = get_ram_info()
-        logger.info(f"Total RAM: {total_ram / 1024**3:.2f} GB. "
-                    f"Available RAM: {available_ram / 1024**3:.2f} GB.")
+        logger.info(
+            f"Total RAM: {total_ram / 1024**3:.2f} GB. "
+            f"Available RAM: {available_ram / 1024**3:.2f} GB."
+        )
 
         #: ObjectInSubprocess: Model object in MVC architecture.
         self.model = ObjectInSubprocess(
@@ -225,7 +239,7 @@ class Controller:
         self.event_listeners = {}
 
         #: AcquireBarController: Acquire Bar Sub-Controller.
-        self.acquire_bar_controller = AcquireBarController(self.view.acqbar, self)
+        self.acquire_bar_controller = AcquireBarController(self.view.acquire_bar, self)
 
         #: ChannelsTabController: Channels Tab Sub-Controller.
         self.channels_tab_controller = ChannelsTabController(
@@ -240,6 +254,10 @@ class Controller:
         #: CameraViewController: Camera View Tab Sub-Controller.
         self.camera_view_controller = CameraViewController(
             self.view.camera_waveform.camera_tab, self
+        )
+
+        self.histogram_controller = HistogramController(
+            self.view.camera_waveform.camera_tab.histogram, self
         )
 
         #: MIPSettingController: MIP Settings Tab Sub-Controller.
@@ -365,7 +383,7 @@ class Controller:
 
     def update_acquire_control(self):
         """Update the acquire control based on the current experiment parameters."""
-        self.view.acqbar.stop_stage.config(
+        self.view.acquire_bar.stop_stage.config(
             command=self.stage_controller.stop_button_handler
         )
 
@@ -453,7 +471,7 @@ class Controller:
         self.acquire_bar_controller.populate_experiment_values()
         # self.stage_controller.populate_experiment_values()
         self.multiposition_tab_controller.set_positions(
-            self.configuration["experiment"]["MultiPositions"]
+            self.configuration["multi_positions"]
         )
         self.channels_tab_controller.populate_experiment_values()
         self.camera_setting_controller.populate_experiment_values()
@@ -484,10 +502,22 @@ class Controller:
             Warning info if any
 
         """
-        warning_message = self.camera_setting_controller.update_experiment_values()
         microscope_name = self.configuration["experiment"]["MicroscopeState"][
             "microscope_name"
         ]
+        zoom_value = self.configuration["experiment"]["MicroscopeState"]["zoom"]
+        resolution_value = self.menu_controller.resolution_value.get()
+
+        # set microscope and zoom value according to GUI
+        if f"{microscope_name} {zoom_value}" != resolution_value:
+            microscope_name, zoom_value = resolution_value.split()
+            self.configuration["experiment"]["MicroscopeState"][
+                "microscope_name"
+            ] = microscope_name
+            self.configuration["experiment"]["MicroscopeState"]["zoom"] = zoom_value
+            self.execute("resolution", resolution_value)
+        
+        warning_message = self.camera_setting_controller.update_experiment_values()
 
         # set waveform template
         if self.acquire_bar_controller.mode in ["live", "single", "z-stack"]:
@@ -503,10 +533,7 @@ class Controller:
 
         # update multi-positions
         positions = self.multiposition_tab_controller.get_positions()
-        self.configuration["experiment"]["MultiPositions"] = positions
-        self.configuration["experiment"]["MicroscopeState"][
-            "multiposition_count"
-        ] = len(positions)
+        self.configuration["multi_positions"] = positions
 
         if (
             self.configuration["experiment"]["MicroscopeState"]["is_multiposition"]
@@ -519,7 +546,7 @@ class Controller:
             self.channels_tab_controller.is_multiposition_val.set(False)
 
         # TODO: validate experiment dict
-
+        self.channels_tab_controller.update_experiment_values()
         warning_message += self.channels_tab_controller.verify_experiment_values()
 
         # additional microscopes
@@ -551,12 +578,14 @@ class Controller:
             height : int
                 Height of the GUI.
             """
-            if width < 1200 or height < 600:
+            if width < 1300 or height < 800:
                 return
             self.view.camera_waveform["width"] = (
-                width - self.view.frame_left.winfo_width() - 81
-            )
-            self.view.camera_waveform["height"] = height - 110
+                width - self.view.left_frame.winfo_width() - 35
+            )  #
+            self.view.camera_waveform["height"] = height - 117
+
+            print("camera_waveform height", self.view.camera_waveform["height"])
 
         if event.widget != self.view.scroll_frame:
             return
@@ -595,8 +624,8 @@ class Controller:
 
         Parameters
         __________
-        mode : string
-            string = 'live', 'stop'
+        mode : str
+            The string = 'live', 'stop'
         """
         self.channels_tab_controller.set_mode(mode)
         self.camera_view_controller.set_mode(mode)
@@ -625,8 +654,9 @@ class Controller:
         Parameters
         __________
         command : string
-            string = 'stage', 'stop_stage', 'move_stage_and_update_info',
-        args* : function-specific passes.
+            The string includes 'stage', 'stop_stage', 'move_stage_and_update_info',
+        args* : Iterable.
+            Function-specific passes
         """
 
         if command == "joystick_toggle":
@@ -838,6 +868,13 @@ class Controller:
                 filename="waveform_constants.yml",
             )
 
+            # Save multi_positions.yml file
+            save_yaml_file(
+                file_directory=file_directory,
+                content_dict=self.configuration["multi_positions"],
+                filename="multi_positions.yml",
+            )
+
             self.camera_setting_controller.solvent = self.configuration["experiment"][
                 "Saving"
             ]["solvent"]
@@ -942,6 +979,12 @@ class Controller:
                 content_dict=self.configuration["experiment"],
                 filename="experiment.yml",
             )
+            save_yaml_file(
+                file_directory=file_directory,
+                content_dict=self.configuration["multi_positions"],
+                filename="multi_positions.yml",
+            )
+
             if hasattr(self, "waveform_popup_controller"):
                 self.waveform_popup_controller.save_waveform_constants()
 
@@ -1081,11 +1124,14 @@ class Controller:
                 )
                 self.execute("stop_acquire")
 
-            # Display the Image in the View
+            # Display the image and update the histogram
             self.camera_view_controller.try_to_display_image(
                 image=self.data_buffer[image_id]
             )
             self.mip_setting_controller.try_to_display_image(
+                image=self.data_buffer[image_id]
+            )
+            self.histogram_controller.populate_histogram(
                 image=self.data_buffer[image_id]
             )
             images_received += 1
@@ -1151,10 +1197,10 @@ class Controller:
             camera_view_controller : CameraViewController
                 Camera View Controller object.
             show_img_pipe : multiprocessing.Pipe
-                Pipe for showing images.
+                The pipe for showing images.
             data_buffer : SharedNDArray
                 Pre-allocated shared memory array.
-                Size dictated by x_pixels, y_pixels, an number_of_frames in
+                Size dictated by x_pixels, y_pixels, and number_of_frames in
                 configuration file.
             """
             camera_view_controller.initialize_non_live_display(
@@ -1206,13 +1252,16 @@ class Controller:
             if microscope_name not in self.additional_microscopes:
                 self.additional_microscopes[microscope_name] = {}
 
+            if "camera_view_controller" not in self.additional_microscopes[microscope_name]:
                 popup_window = CameraViewPopupWindow(self.view, microscope_name)
                 camera_view_controller = CameraViewController(
                     popup_window.camera_view, self
                 )
                 camera_view_controller.microscope_name = microscope_name
                 popup_window.popup.bind("<Configure>", camera_view_controller.resize)
-                self.additional_microscopes[microscope_name]["popup_window"] = popup_window
+                self.additional_microscopes[microscope_name][
+                    "popup_window"
+                ] = popup_window
                 self.additional_microscopes[microscope_name][
                     "camera_view_controller"
                 ] = camera_view_controller
@@ -1226,7 +1275,9 @@ class Controller:
                     ),
                 )
 
-            self.additional_microscopes[microscope_name]["show_img_pipe"] = show_img_pipe
+            self.additional_microscopes[microscope_name][
+                "show_img_pipe"
+            ] = show_img_pipe
             self.additional_microscopes[microscope_name]["data_buffer"] = data_buffer
 
             # start thread
@@ -1263,7 +1314,9 @@ class Controller:
         # destroy the popup window
         if destroy_window:
             self.additional_microscopes[microscope_name]["popup_window"].popup.dismiss()
-            self.additional_microscopes[microscope_name]["camera_view_controller"] = None
+            self.additional_microscopes[microscope_name][
+                "camera_view_controller"
+            ] = None
             del self.additional_microscopes[microscope_name]
 
     def move_stage(self, pos_dict):
@@ -1361,8 +1414,8 @@ class Controller:
         ----------
         event_name : string
             Name of the event.
-        event_handler : function
-            Function to handle the event.
+        event_handler : callable
+            The function to handle the event.
         """
         self.event_listeners[event_name] = event_handler
 

@@ -42,7 +42,7 @@ a :doc:`feature list <features>`, shown in its
         {"name": PrepareNextChannel},
         {
             "name": LoopByCount,
-            "args": ("experiment.MicroscopeState.selected_channels",),
+            "args": ("channels",),
         },
       )
     ]

@@ -40,7 +40,10 @@ first establish communication with the device using `ASI provided software <http
 
     - Tiger Controller 2.2.0.
 
-
+.. note::
+    Some users have reported intermittent connection issues at random intervals when
+    used with Coherent OBIS lasers. These issues, and how to address them, are discussed
+    in the :ref:`communication challenges <obis_tiger_connection>` section.
 
 .. warning::
     If you are using the FTP-2000 stage, do not change the F stage axis. This

@@ -32,7 +32,6 @@
 
 # Standard Library Imports
 import logging
-from functools import reduce
 import datetime
 
 # Third Party Imports
@@ -773,12 +772,6 @@ class ChannelsTabController(GUIController):
             Returns parent_controller.execute(command) if command = 'get_stage_position'
         """
         if command == "recalculate_timepoint":
-            # update selected channels num
-            self.microscope_state_dict["selected_channels"] = reduce(
-                lambda count, channel: count + (channel["is_selected"] is True),
-                self.microscope_state_dict["channels"].values(),
-                0,
-            )
             self.update_timepoint_setting()
             # update framerate info in camera setting tab
             exposure_time = max(
@@ -798,6 +791,12 @@ class ChannelsTabController(GUIController):
             )
 
         self.show_verbose_info("Received command from child", command, args)
+
+    def update_experiment_values(self):
+        """Update experiment values"""
+        self.channel_setting_controller.update_experiment_values()
+        self.update_z_steps()
+        
 
     def verify_experiment_values(self):
         """Verify channel tab settings and return warning info

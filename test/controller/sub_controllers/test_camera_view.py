@@ -92,7 +92,6 @@ class TestCameraViewController:
             },
             "number_z_steps": np.random.randint(10, 100),
             "stack_cycling_mode": "per_stack",
-            "selected_channels": 3,
             "image_mode": "z-stack",
         }
 

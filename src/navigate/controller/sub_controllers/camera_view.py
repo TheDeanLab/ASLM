@@ -33,20 +33,21 @@
 # Standard Library Imports
 import platform
 import tkinter as tk
+from tkinter import messagebox
 import logging
 import threading
-from typing import Dict
+from typing import Dict, Optional
 import tempfile
 import os
 import time
+import abc
+import copy
 
 # Third Party Imports
 import cv2
 from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
 import numpy as np
-import copy
-import abc
 
 # Local Imports
 from navigate.controller.sub_controllers.gui import GUIController
@@ -58,6 +59,7 @@ from navigate.config import get_navigate_path
 # Logger Setup
 p = __name__.split(".")[1]
 logger = logging.getLogger(p)
+
 
 class ABaseViewController(metaclass=abc.ABCMeta):
     """Abstract Base View Controller Class."""
@@ -115,6 +117,9 @@ class BaseViewController(GUIController, ABaseViewController):
 
         #: numpy.ndarray: The variance map.
         self._variance = None
+
+        #: str: The imaging mode.
+        self.image_mode = None
 
         #: bool: The flag for the display of the cross-hair.
         self.apply_cross_hair = True
@@ -519,17 +524,10 @@ class BaseViewController(GUIController, ABaseViewController):
         self.is_displaying_image.value = False
         self.image_count = 0  # was image_counter
         self.slice_index = 0
-
         self.image_mode = microscope_state["image_mode"]
         self.stack_cycling_mode = microscope_state["stack_cycling_mode"]
-        self.number_of_channels = int(microscope_state["selected_channels"])
-
-        self.selected_channels = []
-        for channel_name, channel_data in microscope_state["channels"].items():
-            if channel_data["is_selected"]:
-                channel_idx = channel_name.split("_")[-1]
-                self.selected_channels.append(f"CH{channel_idx}")
-
+        self.get_selected_channels(microscope_state)
+        self.number_of_channels = len(self.selected_channels)
         self.number_of_slices = int(microscope_state["number_z_steps"])
         self.total_images_per_volume = self.number_of_channels * self.number_of_slices
         self.original_image_width = int(camera_parameters["img_x_pixels"])
@@ -550,6 +548,25 @@ class BaseViewController(GUIController, ABaseViewController):
 
         self.update_canvas_size()
         self.reset_display(False, False)
+
+    def get_selected_channels(self, microscope_state: Optional[dict] = None) -> None:
+        """Get the selected microscope channels from the MicroscopeState.
+
+        Parameters
+        ----------
+        microscope_state : Optional[dict]
+            The microscope state dictionary object.
+        """
+        if microscope_state is None:
+            microscope_state = self.parent_controller.configuration["experiment"][
+                "MicroscopeState"
+            ]
+
+        self.selected_channels = []
+        for channel_name, channel_data in microscope_state["channels"].items():
+            if channel_data["is_selected"]:
+                channel_idx = channel_name.split("_")[-1]
+                self.selected_channels.append(f"CH{channel_idx}")
 
     def reset_display(self, display_flag=True, reset_crosshair=True):
         """Set the display back to the original digital zoom.
@@ -684,7 +701,7 @@ class BaseViewController(GUIController, ABaseViewController):
                 command = "move_stage_and_update_info"
             self.parent_controller.execute(command, stage_position)
         else:
-            tk.messagebox.showerror(
+            messagebox.showerror(
                 title="Warning", message="Can't move to there! Invalid stage position!"
             )
 
@@ -715,7 +732,7 @@ class BaseViewController(GUIController, ABaseViewController):
 
         Returns
         -------
-        image : np.array
+        image : np.ndarray
             Image after digital zoom applied
         """
         self.zoom_rect = self.zoom_rect - self.zoom_offset
@@ -889,12 +906,15 @@ class BaseViewController(GUIController, ABaseViewController):
             Image data.
         """
         temp_img = self.array_to_image(image)
-        if self.image_cache_flag:
-            self.tk_image = ImageTk.PhotoImage(temp_img)
-            self.canvas.create_image(0, 0, image=self.tk_image, anchor="nw")
-        else:
-            self.tk_image2 = ImageTk.PhotoImage(temp_img)
-            self.canvas.create_image(0, 0, image=self.tk_image2, anchor="nw")
+        try:
+            if self.image_cache_flag:
+                self.tk_image = ImageTk.PhotoImage(temp_img)
+                self.canvas.create_image(0, 0, image=self.tk_image, anchor="nw")
+            else:
+                self.tk_image2 = ImageTk.PhotoImage(temp_img)
+                self.canvas.create_image(0, 0, image=self.tk_image2, anchor="nw")
+        except tk.TclError:
+            return
         self.image_cache_flag = not self.image_cache_flag
 
     def process_image(self):
@@ -915,14 +935,8 @@ class BaseViewController(GUIController, ABaseViewController):
         image = self.apply_lut(image)
         self.populate_image(image)
 
-    def left_click(self, *args):
-        """Toggles cross-hair on image upon left click event.
-
-        Parameters
-        ----------
-        args : tuple
-            Arguments.
-        """
+    def left_click(self, *_):
+        """Toggles cross-hair on image upon left click event."""
         if self.image is not None:
             self.apply_cross_hair = not self.apply_cross_hair
             self.process_image()
@@ -958,7 +972,7 @@ class BaseViewController(GUIController, ABaseViewController):
         if width == self.width and height == self.height:
             return
         self.canvas_width = width - self.view.lut.winfo_width() - 24
-        self.canvas_height = height - 85
+        self.canvas_height = height - 153
         self.view.canvas.config(width=self.canvas_width, height=self.canvas_height)
         self.view.update_idletasks()
 
@@ -1036,8 +1050,8 @@ class CameraViewController(BaseViewController):
 
         Parameters
         ----------
-        view : tkinter.Frame
-            The tkinter frame that contains the widgets.
+        view : CameraTab
+            The Camera tkinter frame that contains the widgets.
         parent_controller : Controller
             The parent controller of the camera view controller.
         """
@@ -1134,6 +1148,7 @@ class CameraViewController(BaseViewController):
         super().initialize_non_live_display(microscope_state, camera_parameters)
         self.update_display_state()
         self.view.live_frame.channel["values"] = self.selected_channels
+        self.view.live_frame.channel.set(self.selected_channels[0])
         self.spooled_images = SpooledImageLoader(
             channels=self.number_of_channels,
             size_y=self.original_image_height,
@@ -1149,19 +1164,12 @@ class CameraViewController(BaseViewController):
             self._offset, self._variance = copy.deepcopy(off), copy.deepcopy(var)
             self.image_palette["SNR"].grid(row=3, column=0, sticky=tk.NSEW, pady=3)
 
-    def slider_update(self, *args):
-        """Updates the image when the slider is moved.
-
-        Parameters
-        ----------
-        args : tuple
-            Arguments.
-        """
+    def slider_update(self, *_):
+        """Updates the image when the slider is moved."""
 
         slider_index = self.view.slider.get()
         channel_index = self.view.live_frame.channel.get()
-        channel_index = channel_index[-1]
-        channel_index = int(channel_index) - 1
+        channel_index = self.selected_channels.index(channel_index)
         image = self.spooled_images.load_image(
             channel=channel_index, slice_index=slider_index
         )
@@ -1176,16 +1184,11 @@ class CameraViewController(BaseViewController):
         with self.is_displaying_image as is_displaying_image:
             is_displaying_image.value = False
 
-    def update_display_state(self, *args):
+    def update_display_state(self, *_):
         """Image Display Combobox Called.
 
         Sets self.display_state to desired display format. Toggles state of slider
         widget. Sets number of positions.
-
-        Parameters
-        ----------
-        args : tuple
-            Arguments.
         """
         if self.number_of_slices == 0:
             return
@@ -1204,11 +1207,12 @@ class CameraViewController(BaseViewController):
             )
             self.view.slider.configure(state="normal")
             self.view.slider.grid()
-            self.view.live_frame.channel.configure(state="normal")
+            self.view.live_frame.channel.state(["!disabled", "readonly"])
+            # was normal
             if self.view.live_frame.channel.get() not in self.selected_channels:
                 self.view.live_frame.channel.set(self.selected_channels[0])
 
-    def initialize(self, name, data):
+    def initialize(self, name: str, data: list):
         """Sets widgets based on data given from main controller/config.
 
         Parameters
@@ -1344,13 +1348,13 @@ class CameraViewController(BaseViewController):
             is_displaying_image.value = False
         logger.info(f"Displaying image took {time.time() - start_time:.4f} seconds")
 
-    def set_mask_color_table(self, colors):
+    def set_mask_color_table(self, colors: list):
         """Set up segmentation mask color table
 
         Parameters
         ----------
         colors : list
-            List of colors to use for the segmentation mask
+            The list of colors to use for the segmentation mask
         """
         self.mask_color_table = np.zeros((256, 1, 3), dtype=np.uint8)
         self.mask_color_table[0] = [0, 0, 0]
@@ -1369,8 +1373,8 @@ class CameraViewController(BaseViewController):
 
         Parameters
         ----------
-        mask : np.array
-            Segmentation mask to display)
+        mask : np.ndarray
+            Segmentation mask to display
         """
         self.ilastik_seg_mask = cv2.applyColorMap(mask, self.mask_color_table)
         self.ilastik_mask_ready_lock.release()
@@ -1389,8 +1393,8 @@ class MIPViewController(BaseViewController):
 
         Parameters
         ----------
-        view : tkinter.Frame
-            The tkinter frame that contains the widgets.
+        view : MIPTab
+            The MIP tkinter frame that contains the widgets.
         parent_controller : Controller
             The parent controller of the camera view controller.
         """
@@ -1398,6 +1402,15 @@ class MIPViewController(BaseViewController):
 
         #: tkinter.Canvas: The tkinter canvas that displays the image.
         self.view = view
+
+        #: int: The image height.
+        self.XY_image_height = None
+
+        #: int: The image width.
+        self.XY_image_width = None
+
+        #: int: Scaling factor for ratio of lateral and axial dimensions.
+        self.Z_image_value = None
 
         #: np.ndarray: The image data.
         self.image = None
@@ -1426,7 +1439,7 @@ class MIPViewController(BaseViewController):
         self.menu.entryconfig("Move Here", state="disabled")
         self.menu.entryconfig("Mark Position", state="disabled")
 
-    def initialize(self, name, data):
+    def initialize(self, name: str, data: list):
         """Initialize the MIP view.
 
         Sets the min and max intensity values for the image.Disables the min and max
@@ -1451,9 +1464,13 @@ class MIPViewController(BaseViewController):
         self.image_palette["Gray"].widget.invoke()
         self.image_palette["Autoscale"].widget.invoke()
         self.image_palette["SNR"].grid_remove()
+
         self.render_widgets["perspective"].widget["values"] = ("XY", "ZY", "ZX")
         self.render_widgets["perspective"].set("XY")
-        self.render_widgets["channel"].set("CH1")
+
+        self.get_selected_channels()
+        if isinstance(self.selected_channels, list) and len(self.selected_channels) > 0:
+            self.render_widgets["channel"].set(self.selected_channels[0])
 
         # event binding
         self.render_widgets["perspective"].get_variable().trace_add(
@@ -1513,17 +1530,23 @@ class MIPViewController(BaseViewController):
         image : numpy.ndarray
             Image data
         """
-        if self.xy_mip is None:
+        views = [self.xy_mip, self.zy_mip, self.zx_mip]
+        if any(view is None for view in views):
             return None
 
         display_mode = self.render_widgets["perspective"].get()
-        channel_idx = int(self.render_widgets["channel"].get()[2:]) - 1
+        channel = self.render_widgets["channel"].get()
+        if channel in self.selected_channels:
+            channel_idx = self.selected_channels.index(channel)
+        else:
+            return
+
         if display_mode == "XY":
             image = self.xy_mip[channel_idx]
         elif display_mode == "ZY":
-            image = self.zy_mip[channel_idx].T
-        elif display_mode == "ZX":
-            image = self.zx_mip[channel_idx]
+            image = self.zy_mip[channel_idx, :].T
+        else:
+            image = self.zx_mip[channel_idx, :]
 
         image = self.flip_image(image)
         # map the image to canvas size()
@@ -1541,15 +1564,20 @@ class MIPViewController(BaseViewController):
             Camera parameters.
         """
         super().initialize_non_live_display(microscope_state, camera_parameters)
+        if isinstance(self.selected_channels, list) and len(self.selected_channels) > 0:
+            self.render_widgets["channel"].set(self.selected_channels[0])
         self.perspective = self.render_widgets["perspective"].get()
         self.XY_image_width = self.original_image_width
         self.XY_image_height = self.original_image_height
-        # in microns
         z_range = microscope_state["abs_z_end"] - microscope_state["abs_z_start"]
+
         # TODO: may stretch by the value of binning.
-        self.Z_image_value = int(
-            self.XY_image_width * camera_parameters["fov_x"] / z_range
-        )
+        if z_range == 0:
+            self.Z_image_value = 1
+        else:
+            self.Z_image_value = int(
+                self.XY_image_width * camera_parameters["fov_x"] / z_range
+            )
         self.prepare_mip_view()
         self.update_perspective()
 
@@ -1562,6 +1590,9 @@ class MIPViewController(BaseViewController):
             Image data.
         """
         channel_idx, slice_idx = self.identify_channel_index_and_slice()
+
+        if self.image_mode in ["live", "single"]:
+            return
 
         # Orthogonal maximum intensity projections.
         self.xy_mip[channel_idx] = np.maximum(self.xy_mip[channel_idx], image)
@@ -1593,14 +1624,9 @@ class MIPViewController(BaseViewController):
         with self.is_displaying_image as is_displaying_image:
             is_displaying_image.value = False
 
-    def display_mip_image(self, *args):
-        """Display MIP image in non-live view.
+    def display_mip_image(self, *_):
+        """Display MIP image in non-live view."""
 
-        Parameters
-        ----------
-        args : tuple
-            Arguments.
-        """
         if self.perspective != self.render_widgets["perspective"].get():
             self.update_perspective()
         if self.mode != "stop":
@@ -1609,16 +1635,19 @@ class MIPViewController(BaseViewController):
         if self.image is not None:
             self.process_image()
 
-    def update_perspective(self, *args, display=False):
-        """Update the perspective of the image.
+    def update_perspective(self):
+        """Update the perspective of the image."""
+        attribute_list = [
+            "XY_image_width",
+            "XY_image_height",
+            "Z_image_value",
+        ]
+        if any(
+            not hasattr(self, attr) or getattr(self, attr) is None
+            for attr in attribute_list
+        ):
+            return
 
-        Parameters
-        ----------
-        args : tuple
-            Arguments.
-        display : bool
-            Flag to display the image.
-        """
         display_mode = self.render_widgets["perspective"].get()
         self.perspective = display_mode
         if display_mode == "XY":

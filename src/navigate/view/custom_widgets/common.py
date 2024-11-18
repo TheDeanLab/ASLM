@@ -1,6 +1,5 @@
 # Copyright (c) 2021-2024  The University of Texas Southwestern Medical Center.
 # All rights reserved.
-
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted for academic and research use only (subject to the
 # limitations in the disclaimer below) provided that the following conditions are met:
@@ -29,52 +28,57 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-
-# Standard Imports
-import logging
+# Standard Library Imports
+from typing import Dict, Any
+from tkinter import ttk
 
 # Third Party Imports
 
 # Local Imports
 
-# Logger Setup
-p = __name__.split(".")[1]
-logger = logging.getLogger(p)
 
-""" File type specific data sources. """
-
-FILE_TYPES = ["TIFF", "OME-TIFF", "H5", "N5", "OME-Zarr"]
-
-
-def get_data_source(file_type: str):
-    """Get the data source class for the given file type.
-
-    Parameters
-    ----------
-    file_type : str
-        File type to get the data source for.
-
-    Returns
-    -------
-    DataSource
-        Data source class for the given file type.
+class CommonMethods:
+    """This class is a collection of common methods for handling variables, widgets,
+    and buttons.
     """
 
-    if (file_type == "TIFF") or (file_type == "OME-TIFF"):
-        from .tiff_data_source import TiffDataSource
+    def get_variables(self) -> Dict[str, Any]:
+        """This function returns a dictionary of all the variables that are tied to
+        each  widget name.
 
-        return TiffDataSource
+        The key is the widget name, value is the variable associated.
 
-    elif (file_type == "H5") or file_type == "N5":
-        from .bdv_data_source import BigDataViewerDataSource
+        Returns
+        -------
+        variables : dict
+            The dictionary that holds the variables.
+        """
+        variables = {}
+        for key, widget in self.inputs.items():
+            variables[key] = widget.get()
+        return variables
 
-        return BigDataViewerDataSource
+    def get_widgets(self) -> Dict[str, Any]:
+        """This function returns the dictionary that holds the widgets.
 
-    elif file_type == "OME-Zarr":
-        from .zarr_data_source import OMEZarrDataSource
+        The key is the widget name, value is the LabelInput class that has all the data.
 
-        return OMEZarrDataSource
+        Returns
+        -------
+        widgets : dict
+            The dictionary that holds the widgets.
+        """
+        return self.inputs
 
-    else:
-        logger.error(f"Unknown file type {file_type}. Cannot open.")
-        raise NotImplementedError(f"Unknown file type {file_type}. Cannot open.")
+    def get_buttons(self) -> Dict[str, ttk.Button]:
+        """Get the buttons of the popup
+
+        This function returns the dictionary that holds the buttons.
+        The key is the button name, value is the button.
+
+        Returns
+        -------
+        buttons : Dict[str, ttk.Button]
+            Dictionary of all the buttons
+        """
+        return self.buttons

@@ -31,6 +31,9 @@ def controller(tk_root):
     gui_configuration_path = Path.joinpath(
         configuration_directory, "gui_configuration.yml"
     )
+    multi_positions_path = Path.joinpath(
+        configuration_directory, "multi_positions.yml"
+    )
     args = SimpleNamespace(synthetic_hardware=True)
 
     controller = Controller(
@@ -42,6 +45,7 @@ def controller(tk_root):
         rest_api_path,
         waveform_templates_path,
         gui_configuration_path,
+        multi_positions_path,
         args,
     )
     # To make sure the testcases won't hang on because of the model.event_queue

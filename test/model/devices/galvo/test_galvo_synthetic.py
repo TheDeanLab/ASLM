@@ -53,6 +53,7 @@ class TestGalvoSynthetic(unittest.TestCase):
             rest_api_path,
             waveform_templates_path,
             gui_configuration_path,
+            multi_positions_path,
         ) = get_configuration_paths()
 
         self.configuration = load_configs(

@@ -34,9 +34,10 @@ import logging
 import importlib  # noqa: F401
 from multiprocessing.managers import ListProxy
 import reprlib
-from typing import Any, Dict
+from typing import Any, Dict, List, Optional
 
 # Third-party imports
+import numpy as np
 
 # Local application imports
 from navigate.model.device_startup_functions import start_stage
@@ -55,9 +56,9 @@ class Microscope:
         name: str,
         configuration: Dict[str, Any],
         devices_dict: dict,
-        is_synthetic=False,
-        is_virtual=False,
-    ):
+        is_synthetic: bool = False,
+        is_virtual: bool = False,
+    ) -> None:
         """Initialize the microscope.
 
         Parameters
@@ -99,11 +100,17 @@ class Microscope:
         #: obj: Camera object.
         self.camera = None
 
+        #: Any: Shutter device.
+        self.shutter = None
+
         #: dict: Dictionary of lasers.
         self.lasers = {}
 
         #: dict: Dictionary of galvanometers.
         self.galvo = {}
+
+        #: Any: Remote focus device.
+        self.remote_focus_device = None
 
         #: dict: Dictionary of filter_wheels
         self.filter_wheel = {}
@@ -357,12 +364,14 @@ class Microscope:
         if is_synthetic and self.daq is not None:
             self.daq.add_camera(self.microscope_name, self.camera)
 
-    def update_data_buffer(self, data_buffer, number_of_frames):
+    def update_data_buffer(
+        self, data_buffer: List[np.ndarray], number_of_frames: int
+    ) -> None:
         """Update the data buffer for the camera.
 
         Parameters
         ----------
-        data_buffer : numpy.ndarray
+        data_buffer : List[np.ndarray]
             Data buffer for the camera.
         number_of_frames : int
             Number of frames to be acquired.
@@ -373,12 +382,12 @@ class Microscope:
         self.data_buffer = data_buffer
         self.number_of_frames = number_of_frames
 
-    def move_stage_offset(self, former_microscope=None):
+    def move_stage_offset(self, former_microscope: Optional[str] = None) -> None:
         """Move the stage to the offset position.
 
         Parameters
         ----------
-        former_microscope : str
+        former_microscope : Optional[str], optional
             Name of the former microscope.
         """
 
@@ -392,7 +401,6 @@ class Microscope:
             self.microscope_name
         ]["stage"]
         self.ask_stage_for_position = True
-        # print(self.stages)
         pos_dict = self.get_stage_position()
         for stage, axes in self.stages_list:
 
@@ -409,13 +417,63 @@ class Microscope:
             stage.move_absolute(pos, wait_until_done=True)
         self.ask_stage_for_position = True
 
-    def prepare_acquisition(self):
+    def prepare_acquisition(self) -> dict:
         """Prepare the acquisition.
+
+        This function prepares the acquisition by identifying which channels are
+        selected for imaging, setting the camera region of interest (ROI), setting
+        the camera sensor mode, setting the camera binning, initializing the image
+        series, calculating all the waveforms required for the acquisition process,
+        and opens the shutter.
 
         Returns
         -------
         waveform : dict
             Dictionary of all the waveforms.
+        """
+        self.current_channel = 0
+        self.central_focus = None
+        self.get_available_channels()
+
+        if self.camera.is_acquiring:
+            self.camera.close_image_series()
+        self.set_camera_roi()
+        self.set_camera_sensor_mode()
+        self.camera.set_binning(
+            self.configuration["experiment"]["CameraParameters"][self.microscope_name][
+                "binning"
+            ]
+        )
+        logger.debug(f"Running microscope {self.microscope_name}")
+        self.report_camera_settings()
+        # Initialize Image Series - Attaches camera buffer and start imaging
+        self.camera.initialize_image_series(self.data_buffer, self.number_of_frames)
+
+        # calculate all the waveform
+        self.shutter.open_shutter()
+
+        return self.calculate_all_waveform()
+
+    def get_available_channels(self) -> None:
+        """Get the available channels for imaging.
+
+        This function gets the available channels for imaging by identifying which
+        channels are selected for imaging in the configuration file.
+        """
+        self.channels = self.configuration["experiment"]["MicroscopeState"]["channels"]
+        self.available_channels = list(
+            map(
+                lambda c: int(c[len("channel_") :]),
+                filter(lambda k: self.channels[k]["is_selected"], self.channels.keys()),
+            )
+        )
+
+    def report_camera_settings(self) -> None:
+        """Log the camera settings.
+
+        This function logs the camera settings for the current acquisition. It logs the
+        camera parameters specified in the configuration file for the current
+        microscope.
         """
         camera_info = reprlib.Repr()
         camera_info.indent = "---"
@@ -429,19 +487,35 @@ class Microscope:
         )
         logger.info(f"Preparing Acquisition. Camera Parameters: {camera_info}")
 
-        self.current_channel = 0
-        self.central_focus = None
-        self.channels = self.configuration["experiment"]["MicroscopeState"]["channels"]
-        self.available_channels = list(
-            map(
-                lambda c: int(c[len("channel_") :]),
-                filter(lambda k: self.channels[k]["is_selected"], self.channels.keys()),
-            )
-        )
-        if self.camera.is_acquiring:
-            self.camera.close_image_series()
+    def set_camera_sensor_mode(self) -> None:
+        """Set the camera sensor mode.
 
-        # set ROI
+        This function sets the camera sensor mode based on the camera parameters
+        specified in the configuration file. It sets the sensor mode and the readout
+        direction for the camera if it is in the light-sheet imaging mode.
+        """
+        # Set Camera Sensor Mode - Must be done before camera is initialized.
+        sensor_mode = self.configuration["experiment"]["CameraParameters"][
+            self.microscope_name
+        ]["sensor_mode"]
+        self.camera.set_sensor_mode(sensor_mode)
+        if sensor_mode == "Light-Sheet":
+            self.camera.set_readout_direction(
+                self.configuration["experiment"]["CameraParameters"][
+                    self.microscope_name
+                ]["readout_direction"]
+            )
+
+    def set_camera_roi(self) -> None:
+        """Set the camera ROI.
+
+        This function sets the camera region of interest (ROI) based on the camera
+        parameters specified in the configuration file. It sets the image width,
+        image height, and the center of the image. The camera ROI is used to define
+        the area of the image sensor that will be used to capture images during the
+        acquisition process.
+        """
+
         img_width = self.configuration["experiment"]["CameraParameters"][
             self.microscope_name
         ]["x_pixels"]
@@ -456,35 +530,15 @@ class Microscope:
         ]["center_y"]
         self.camera.set_ROI(img_width, img_height, center_x, center_y)
 
-        # Set Camera Sensor Mode - Must be done before camera is initialized.
-        sensor_mode = self.configuration["experiment"]["CameraParameters"][
-            self.microscope_name
-        ]["sensor_mode"]
+    def end_acquisition(self) -> None:
+        """End the acquisition.
 
-        self.camera.set_sensor_mode(sensor_mode)
-        if sensor_mode == "Light-Sheet":
-            self.camera.set_readout_direction(
-                self.configuration["experiment"]["CameraParameters"][
-                    self.microscope_name
-                ]["readout_direction"]
-            )
-
-        # set binning
-        self.camera.set_binning(
-            self.configuration["experiment"]["CameraParameters"][self.microscope_name][
-                "binning"
-            ]
-        )
-        # Initialize Image Series - Attaches camera buffer and start imaging
-        self.camera.initialize_image_series(self.data_buffer, self.number_of_frames)
-
-        # calculate all the waveform
-        self.shutter.open_shutter()
-
-        return self.calculate_all_waveform()
-
-    def end_acquisition(self):
-        """End the acquisition."""
+        This function stops the acquisition, which includes stopping the data
+        acquisition system, closing the camera image series, closing the shutter,
+        turning off the lasers, and moving the stage to the central focus
+        position if it was moved during the acquisition. It also stops the stage if
+        it is moving.
+        """
         self.daq.stop_acquisition()
         self.stop_stage()
         if self.central_focus is not None:
@@ -499,21 +553,21 @@ class Microscope:
         self.central_focus = None
         logger.info("Acquisition Ended")
 
-    def turn_on_laser(self):
+    def turn_on_laser(self) -> None:
         """Turn on the current laser."""
         logger.info(
             f"Turning on laser {self.laser_wavelength[self.current_laser_index]}"
         )
         self.lasers[str(self.laser_wavelength[self.current_laser_index])].turn_on()
 
-    def turn_off_lasers(self):
+    def turn_off_lasers(self) -> None:
         """Turn off current laser."""
         logger.info(
             f"Turning off laser {self.laser_wavelength[self.current_laser_index]}"
         )
         self.lasers[str(self.laser_wavelength[self.current_laser_index])].turn_off()
 
-    def calculate_all_waveform(self):
+    def calculate_all_waveform(self) -> dict:
         """Calculate all the waveforms.
 
         Returns
@@ -543,7 +597,7 @@ class Microscope:
         }
         return waveform_dict
 
-    def calculate_exposure_sweep_times(self):
+    def calculate_exposure_sweep_times(self) -> tuple:
         """Calculate the exposure and sweep times for all channels.
 
         The `calculate_exposure_sweep_times` function calculates and returns exposure
@@ -560,7 +614,6 @@ class Microscope:
             Dictionary of exposure times.
         sweep_times : dict
             Dictionary of sweep times.
-
         """
         exposure_times = {}
         sweep_times = {}
@@ -668,7 +721,7 @@ class Microscope:
 
         return exposure_times, sweep_times
 
-    def get_exposure_sweep_times(self):
+    def get_exposure_sweep_times(self) -> tuple:
         """Get the exposure and sweep times for all channels.
 
         Returns
@@ -681,7 +734,7 @@ class Microscope:
         """
         return self.exposure_times, self.sweep_times
 
-    def prepare_next_channel(self, update_daq_task_flag=True):
+    def prepare_next_channel(self, update_daq_task_flag: bool = True) -> None:
         """Prepare the next channel.
 
         This function, `prepare_next_channel`, is responsible for configuring various
@@ -718,27 +771,7 @@ class Microscope:
             self.filter_wheel[k].set_filter(channel[k])
 
         # Camera Settings
-        self.current_exposure_time = float(channel["camera_exposure_time"]) / 1000
-        if (
-            self.configuration["experiment"]["CameraParameters"][self.microscope_name][
-                "sensor_mode"
-            ]
-            == "Light-Sheet"
-        ):
-            (
-                self.current_exposure_time,
-                camera_line_interval,
-                _,
-            ) = self.camera.calculate_light_sheet_exposure_time(
-                self.current_exposure_time,
-                int(
-                    self.configuration["experiment"]["CameraParameters"][
-                        self.microscope_name
-                    ]["number_of_pixels"]
-                ),
-            )
-            self.camera.set_line_interval(camera_line_interval)
-        self.camera.set_exposure_time(self.current_exposure_time)
+        self.set_camera_exposure_time(channel)
 
         # Laser Settings
         self.current_laser_index = channel["laser_index"]
@@ -774,8 +807,44 @@ class Microscope:
                 update_focus=False,
             )
 
+    def set_camera_exposure_time(self, channel: dict) -> None:
+        """Set the camera exposure time.
+
+        This function prepares the camera for imaging by setting the camera exposure
+        time based on the selected channel's configuration. It also adjusts the
+        camera line interval if the sensor mode is set to the Light-Sheet mode.
+
+        Parameters
+        ----------
+        channel : dict
+            Dictionary of channel parameters.
+        """
+        self.current_exposure_time = float(channel["camera_exposure_time"]) / 1000
+        if (
+            self.configuration["experiment"]["CameraParameters"][self.microscope_name][
+                "sensor_mode"
+            ]
+            == "Light-Sheet"
+        ):
+            (
+                self.current_exposure_time,
+                camera_line_interval,
+                _,
+            ) = self.camera.calculate_light_sheet_exposure_time(
+                self.current_exposure_time,
+                int(
+                    self.configuration["experiment"]["CameraParameters"][
+                        self.microscope_name
+                    ]["number_of_pixels"]
+                ),
+            )
+            self.camera.set_line_interval(camera_line_interval)
+            logger.info(f"Camera line interval set to {camera_line_interval}.")
+        self.camera.set_exposure_time(self.current_exposure_time)
+        logger.info(f"Camera exposure time set to {self.current_exposure_time}.")
+
     def move_stage(
-        self, pos_dict: dict, wait_until_done=False, update_focus=True
+        self, pos_dict: dict, wait_until_done: bool = False, update_focus: bool = True
     ) -> bool:
         """Move stage to a position.
 
@@ -844,18 +913,18 @@ class Microscope:
             self.ask_stage_for_position = False
         return self.ret_pos_dict
 
-    def move_remote_focus(self, offset=None) -> None:
+    def move_remote_focus(self, offset: Optional[float] = None) -> None:
         """Move remote focus.
 
         Parameters
         ----------
-        offset : float, optional
+        offset : Optional[float], optional
             Offset, by default None
         """
         exposure_times, sweep_times = self.calculate_exposure_sweep_times()
         self.remote_focus_device.move(exposure_times, sweep_times, offset)
 
-    def update_stage_limits(self, limits_flag=True) -> None:
+    def update_stage_limits(self, limits_flag: bool = True) -> None:
         """Update stage limits.
 
         Parameters
@@ -926,43 +995,49 @@ class Microscope:
         is_list: bool,
         device_name_list: list,
         device_ref_name: str,
-        device_connection,
+        device_connection: Any,
         name: str,
         i: int,
         plugin_devices: dict,
     ) -> None:
         """Load and start devices.
 
+        Function uses importlib to import the device startup functions and then
+        starts the devices. If it is a list, it will start the device at the index i.
+        If it is a plugin, it will load the plugin device.
+
         Parameters
         ----------
         device_name : str
-            Device name.
+            The name of the device.
         is_list : bool
-            Is list.
+            Whether the device is a list of devices.
         device_name_list : list
-            Device name list.
+            The list of device names.
         device_ref_name : str
-            Device reference name.
-        device_connection : str
-            Device connection.
+            The reference name of the device.
+        device_connection : Any
+            The communication instance of the device.
         name : str
-            Name.
+            The name of the microscope.
         i : int
             Index.
         plugin_devices : dict
             Plugin Devices
 
-        TODO: Remove uncalled parameters (device_connection, name, plugin_devices)?
         """
-        # Import start_device classes
         try:
             exec(
                 f"start_{device_name}=importlib.import_module("
                 f"'navigate.model.device_startup_functions').start_{device_name}"
             )
         except AttributeError:
-            print(f"Could not import start_{device_name}")
-            print(f"Could not load device {device_name}")
+            error_string = (
+                f"Could not import: "
+                f"navigate.model.device_startup_functions.start_{device_name}"
+            )
+            print(error_string)
+            logger.error(error_string)
 
         # Start the devices
         if is_list:
@@ -982,24 +1057,26 @@ class Microscope:
             self.info[device_name] = device_ref_name
 
     def terminate(self) -> None:
-        """Close hardware explicitly."""
-        self.camera.close_camera()
+        """Close hardware explicitly.
 
-        for k in self.galvo:
-            self.galvo[k].turn_off()
+        Closes all devices other than plugin devices and deformable mirrors.
+        """
 
-        try:
-            # Currently only for RemoteFocusEquipmentSolutions
-            self.remote_focus_device.close_connection()
-        except AttributeError:
-            pass
+        for device in [self.camera, self.daq, self.remote_focus_device,
+                       self.shutter, self.zoom]:
+            del device
 
-        try:
-            for stage, _ in self.stages_list:
-                stage.close()
-        except Exception as e:
-            print(f"Stage delete failure: {e}")
-        pass
+        for key in list(self.filter_wheel.keys()):
+            del self.filter_wheel[key]
+
+        for key in list(self.galvo.keys()):
+            del self.galvo[key]
+
+        for key in list(self.lasers.keys()):
+            del self.lasers[key]
+
+        for stage, _ in self.stages_list:
+            del stage
 
     def run_command(self, command: str, *args) -> None:
         """Run command.

@@ -33,36 +33,36 @@ Loading Custom Functions
    :menuselection:`Features --> Advanced Setting`.
 
 
-   .. image:: images/step_10.png
+   .. image:: ../images/step_10.png
 
 
 #. In the :guilabel:`Advanced Setting` popup window, choose the feature name with which
    you want to use the dynamic customized functions as feature parameters.
 
 
-   .. image:: images/step_11.png
+   .. image:: ../images/step_11.png
 
 
-   .. image:: images/step_12.png
+   .. image:: ../images/step_12.png
 
 
 #. Click :guilabel:`Add`, A new line will appear and allow you to edit the parameter
    options. Type the function name which is defined in your python file.
 
 
-   .. image:: images/step_13.png
+   .. image:: ../images/step_13.png
 
 
 #. Then click :guilabel:`Load` to choose your Python file.
 
 
-   .. image:: images/step_14.png
+   .. image:: ../images/step_14.png
 
 #. When you run a feature list containing the feature you just set, the new function
    name will appear and you can choose the one you just added.
 
 
-   .. image:: images/step_15.png
+   .. image:: ../images/step_15.png
 
 
 -----------
@@ -93,7 +93,7 @@ features:
    `OK` to save it.
 
 
-   .. image:: images/step_3.png
+   .. image:: ../images/step_3.png
 
 
 #. You can edit the list of features directly by modifying the text, or through a
@@ -103,10 +103,10 @@ features:
    will be inserted by default.
 
 
-   .. image:: images/step_4.png
+   .. image:: ../images/step_4.png
 
 
-   .. image:: images/step_5.png
+   .. image:: ../images/step_5.png
 
 
 #. To change the identity of the inserted feature, you can select a different feature
@@ -115,14 +115,14 @@ features:
    changed automatically in the popup window.
 
 
-   .. image:: images/step_6.png
+   .. image:: ../images/step_6.png
 
 
 #. If you click the preview button, a graphical representation of the feature list will
    be displayed.
 
 
-   .. image:: images/step_7.png
+   .. image:: ../images/step_7.png
 
 
 6. If you want a loop structure, type a pair of parentheses around the features, then
@@ -130,7 +130,7 @@ features:
    features in a user-selected format.
 
 
-   .. image:: images/step_8.png
+   .. image:: ../images/step_8.png
       :alt: How to create a custom feature list.
 
 #. After editing the feature list, click :guilabel:`Add`. The new feature list will
@@ -146,13 +146,13 @@ Editing Feature Lists on the Fly
    popup window, you can see the structure of the selected feature list.
 
 
-   .. image:: images/step_16.png
+   .. image:: ../images/step_16.png
 
 
-   .. image:: images/step_17.png
+   .. image:: ../images/step_17.png
 
 
-   .. image:: images/step_18.png
+   .. image:: ../images/step_18.png
 
 
 #. Click one feature in the preview window, a :guilabel:`Feature Parameters` window
@@ -160,14 +160,14 @@ Editing Feature Lists on the Fly
    in this screenshot). Close the :guilabel:`Feature Parameters` window.
 
 
-   .. image:: images/step_19.png
+   .. image:: ../images/step_19.png
 
 
 
 #. Click :guilabel:`Confirm`. The feature list will start to run.
 
 
-   .. image:: images/step_20.png
+   .. image:: ../images/step_20.png
 
 -----------
 
@@ -180,7 +180,7 @@ Deleting Feature Lists
    and the software.
 
 
-   .. image:: images/step_9.png
+   .. image:: ../images/step_9.png
 
 -----------
 

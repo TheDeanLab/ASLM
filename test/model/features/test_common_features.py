@@ -52,7 +52,7 @@ class TestZStack:
             self.config["end_position"] - self.config["start_position"]
         ) / self.config["number_z_steps"]
 
-        position_list = self.model.configuration["experiment"]["MultiPositions"]
+        position_list = self.model.configuration["multi_positions"]
         if len(position_list) < 5:
             for i in range(5):
                 pos = [0] * 5
@@ -94,7 +94,7 @@ class TestZStack:
         mode = self.config["stack_cycling_mode"]  # per_z/pre_stack
         is_multiposition = self.config["is_multiposition"]
         if is_multiposition:
-            positions = self.model.configuration["experiment"]["MultiPositions"]
+            positions = self.model.configuration["multi_positions"]
         else:
             pos_dict = self.model.configuration["experiment"]["StageParameters"]
             positions = [
@@ -281,7 +281,6 @@ class TestZStack:
 
         # 1 channel per_z
         self.config["stack_cycling_mode"] = "per_z"
-        self.config["selected_channels"] = 1
         self.config["channels"]["channel_1"]["is_selected"] = True
         self.config["channels"]["channel_2"]["is_selected"] = False
         self.config["channels"]["channel_3"]["is_selected"] = False
@@ -299,7 +298,6 @@ class TestZStack:
 
         # 1 channel per_stack
         self.config["stack_cycling_mode"] = "per_stack"
-        self.config["selected_channels"] = 1
         self.config["channels"]["channel_1"]["is_selected"] = True
         self.config["channels"]["channel_2"]["is_selected"] = False
         self.config["channels"]["channel_3"]["is_selected"] = False
@@ -316,7 +314,6 @@ class TestZStack:
 
         # 2 channels per_z
         self.config["stack_cycling_mode"] = "per_z"
-        self.config["selected_channels"] = 2
         for i in range(3):
             for j in range(3):
                 self.config["channels"]["channel_" + str(j + 1)]["is_selected"] = True
@@ -334,7 +331,6 @@ class TestZStack:
 
         # 2 channels per_stack
         self.config["stack_cycling_mode"] = "per_stack"
-        self.config["selected_channels"] = 2
         for i in range(3):
             for j in range(3):
                 self.config["channels"]["channel_" + str(j + 1)]["is_selected"] = True
@@ -351,7 +347,6 @@ class TestZStack:
         ]["stage"]["has_ni_galvo_stage"] = has_ni_galvo_stage
 
         # 3 channels per_stack
-        self.config["selected_channels"] = 3
         self.config["channels"]["channel_1"]["is_selected"] = True
         self.config["channels"]["channel_2"]["is_selected"] = True
         self.config["channels"]["channel_3"]["is_selected"] = True
@@ -368,7 +363,6 @@ class TestZStack:
         ]["stage"]["has_ni_galvo_stage"] = has_ni_galvo_stage
 
         # 3 channels per_z
-        self.config["selected_channels"] = 3
         self.config["channels"]["channel_1"]["is_selected"] = True
         self.config["channels"]["channel_2"]["is_selected"] = True
         self.config["channels"]["channel_3"]["is_selected"] = True
@@ -386,7 +380,6 @@ class TestZStack:
 
         # 1 channel per_z
         self.config["stack_cycling_mode"] = "per_z"
-        self.config["selected_channels"] = 1
         self.config["channels"]["channel_1"]["is_selected"] = True
         self.config["channels"]["channel_2"]["is_selected"] = False
         self.config["channels"]["channel_3"]["is_selected"] = False
@@ -404,7 +397,6 @@ class TestZStack:
 
         # 1 channel per_stack
         self.config["stack_cycling_mode"] = "per_stack"
-        self.config["selected_channels"] = 1
         self.config["channels"]["channel_1"]["is_selected"] = True
         self.config["channels"]["channel_2"]["is_selected"] = False
         self.config["channels"]["channel_3"]["is_selected"] = False
@@ -422,7 +414,6 @@ class TestZStack:
 
         # 2 channels per_z
         self.config["stack_cycling_mode"] = "per_z"
-        self.config["selected_channels"] = 2
         for i in range(3):
             for j in range(3):
                 self.config["channels"]["channel_" + str(j + 1)]["is_selected"] = True
@@ -441,7 +432,6 @@ class TestZStack:
 
         # 2 channels per_stack
         self.config["stack_cycling_mode"] = "per_stack"
-        self.config["selected_channels"] = 2
         for i in range(3):
             for j in range(3):
                 self.config["channels"]["channel_" + str(j + 1)]["is_selected"] = True
@@ -459,7 +449,6 @@ class TestZStack:
         ]["stage"]["has_ni_galvo_stage"] = has_ni_galvo_stage
 
         # 3 channels per_stack
-        self.config["selected_channels"] = 3
         self.config["channels"]["channel_1"]["is_selected"] = True
         self.config["channels"]["channel_2"]["is_selected"] = True
         self.config["channels"]["channel_3"]["is_selected"] = True
@@ -477,7 +466,6 @@ class TestZStack:
         ]["stage"]["has_ni_galvo_stage"] = has_ni_galvo_stage
 
         # 3 channels per_z
-        self.config["selected_channels"] = 3
         self.config["channels"]["channel_1"]["is_selected"] = True
         self.config["channels"]["channel_2"]["is_selected"] = True
         self.config["channels"]["channel_3"]["is_selected"] = True

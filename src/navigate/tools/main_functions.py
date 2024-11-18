@@ -72,6 +72,8 @@ def evaluate_parser_input_arguments(args):
         True if configurator is enabled
     gui_configuration_path
         Path to gui_configuration file
+    multi_positions_path
+        Path to multi_positions file
     """
     # Retrieve the Default Configuration paths
     (
@@ -81,6 +83,7 @@ def evaluate_parser_input_arguments(args):
         rest_api_path,
         waveform_templates_path,
         gui_configuration_path,
+        multi_positions_path,
     ) = get_configuration_paths()
 
     # Evaluate Input Arguments
@@ -125,7 +128,13 @@ def evaluate_parser_input_arguments(args):
         assert (
             args.gui_config_file.exists()
         ), "gui_configuration Path {} not valid".format(args.gui_config_file)
-        gui_configuration_path = args.gui_config
+        gui_configuration_path = args.gui_config_file
+
+    if args.multi_positions_file:
+        assert (
+            args.multi_positions_file.exists()
+        ), "multi_positions Path {} not valid".format(args.multi_positions_file)
+        multi_positions_path = args.multi_positions_file
 
     # Creating Loggers etc., they exist globally so no need to pass
     if args.logging_config:
@@ -145,6 +154,7 @@ def evaluate_parser_input_arguments(args):
         logging_path,
         configurator,
         gui_configuration_path,
+        multi_positions_path,
     )
 
 
@@ -255,6 +265,15 @@ def create_parser():
         default=None,
         help="Non-default path to the logging.yml config file \n"
         "This file specifies how the logging will be performed.",
+    )
+
+    input_args.add_argument(
+        "--multi-positions-file",
+        type=Path,
+        required=False,
+        default=None,
+        help="Non-default path to the multi_positions.yml file.  \n"
+        "This file contains a list of stage positions.",
     )
 
     return parser

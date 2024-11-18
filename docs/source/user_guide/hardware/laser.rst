@@ -25,6 +25,13 @@ modulation.
     for the slew rate from the data acquisition card to be insufficient to drive the modulation
     of the laser if the laser is set to an analog modulation mode.
 
+.. note::
+    Users have reported intermittent connection issues at random intervals arising
+    from USB-based communication instance with Coherent Obis controllers. Specifically,
+    these errors were observed as a conflict over COM port assignments between the
+    Coherent OBIS laser and the ASI Tiger controller. These issues are discussed in
+    depth in the :ref:`communication challenges <obis_tiger_connection>` section.
+
 
 .. collapse:: Configuration File
 

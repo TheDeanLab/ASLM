@@ -714,7 +714,15 @@ class CameraSettingController(GUIController):
         value : tuple
             (sensor_mode, readout_direction, number_of_pixels)
         """
-        sensor_mode, readout_direction, number_of_pixels = value
+        microscope_name, sensor_mode, readout_direction, number_of_pixels = value
+        if (
+            self.microscope_name is None
+            and microscope_name
+            != self.parent_controller.configuration_controller.microscope_name
+        ):
+            return
+        if self.microscope_name is not None and microscope_name != self.microscope_name:
+            return
         if sensor_mode:
             self.update_sensor_mode(sensor_mode)
         if readout_direction:

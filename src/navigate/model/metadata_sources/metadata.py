@@ -195,7 +195,7 @@ class Metadata:
         self._multiposition = state["is_multiposition"]
 
         if bool(self._multiposition):
-            self.positions = len(self.configuration["experiment"]["MultiPositions"])
+            self.positions = len(self.configuration["multi_positions"])
         else:
             self.positions = 1
 
@@ -205,7 +205,7 @@ class Metadata:
         # let the data sources have the ability to save more frames
         # self._multiposition = True
         # self.positions = len(
-        #     self.configuration["experiment"]["MultiPositions"]
+        #     self.configuration["multi_positions"]
         # )
 
         # Allow additional axes (e.g. f) to couple onto existing axes (e.g. z)
@@ -248,7 +248,7 @@ class Metadata:
         tuple
             Voxel size
         """
-        return (self.dx, self.dy, self.dz)
+        return self.dx, self.dy, self.dz
 
     @property
     def shape(self) -> tuple:
@@ -259,7 +259,7 @@ class Metadata:
         tuple
             Shape as XYCZT
         """
-        return (self.shape_x, self.shape_y, self.shape_c, self.shape_z, self.shape_t)
+        return self.shape_x, self.shape_y, self.shape_c, self.shape_z, self.shape_t
 
 
 class XMLMetadata(Metadata):

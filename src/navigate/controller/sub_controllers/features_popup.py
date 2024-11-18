@@ -33,7 +33,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import inspect
-import json
+import ast
 import os
 import platform
 
@@ -557,9 +557,22 @@ class FeatureListGraphController:
                     elif a == "False":
                         feature["args"][i] = False
                     elif popup.inputs_type[i] is float:
-                        feature["args"][i] = float(a)
+                        try:
+                            feature["args"][i] = float(a)
+                        except ValueError:
+                            feature["args"][i] = a
                     elif popup.inputs_type[i] is dict:
-                        feature["args"][i] = json.loads(a.replace("'", '"'))
+                        try:
+                            feature["args"][i] = ast.literal_eval(a.replace("'", '"'))
+                        except (SyntaxError, ValueError):
+                            spec = inspect.getfullargspec(feature["name"])
+                            arg_name = spec.args[i+2]
+                            messagebox.showerror(
+                                title="Upate Feature Parameter Error",
+                                message=f"The argument {arg_name} has something wrong!\n"
+                                    "Please make sure you input a correct value!"
+                            )
+                            return
                     elif a == "None":
                         feature["args"][i] = None
             if "true" in feature:
