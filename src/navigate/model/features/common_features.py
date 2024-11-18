@@ -1026,10 +1026,10 @@ class ZStackAcquisition:
         self.z_stack_distance = abs(
             self.start_z_position - float(microscope_state["end_position"])
         )
-
+        # NOTE: added a quick fix for the focus stage moving in a negative direction during z-stack acquisitions. Somehow a negative step needs to be allowed. Flipping the axes direction did not have the desired outcome.
         self.start_focus = float(microscope_state["start_focus"])
         end_focus = float(microscope_state["end_focus"])
-        self.focus_step_size = (end_focus - self.start_focus) / self.number_z_steps
+        self.focus_step_size = -(end_focus - self.start_focus) / self.number_z_steps
         #: float: The focus stack distance for the z-stack.
         self.f_stack_distance = abs(end_focus - self.start_focus)
 

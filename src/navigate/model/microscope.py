@@ -488,6 +488,7 @@ class Microscope:
         self.daq.stop_acquisition()
         self.stop_stage()
         if self.central_focus is not None:
+            print(self.central_focus)
             self.move_stage({"f_abs": self.central_focus})
         if self.camera.is_acquiring:
             self.camera.close_image_series()
@@ -766,6 +767,7 @@ class Microscope:
         if self.central_focus is None:
             self.central_focus = self.get_stage_position().get("f_pos")
         if self.central_focus is not None:
+            #TODO: This causes the F-stage to move the defocus distance every time the "stop" button is selected. 
             self.move_stage(
                 {"f_abs": self.central_focus + float(channel["defocus"])},
                 wait_until_done=True,

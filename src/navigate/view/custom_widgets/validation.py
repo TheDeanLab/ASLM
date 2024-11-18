@@ -895,7 +895,7 @@ class ValidatedSpinbox(ValidatedMixin, ttk.Spinbox):
     ignore key if proposed value requires more precision than increment, ignore key
     On focus out, make sure number is a valid number string and greater than from value
     If given a min_var, max_var, or focus_update_var, then the spinbox range will
-    update dynamically when those valuse are changed (can be used to link to other
+    update dynamically when those values are changed (can be used to link to other
     widgets)
     """
 

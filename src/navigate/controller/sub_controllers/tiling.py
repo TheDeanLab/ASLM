@@ -266,26 +266,19 @@ class TilingWizardController(GUIController):
         y_stop = float(self.variables["y_end"].get())
         y_tiles = int(self.variables["y_tiles"].get())
 
+        # NOTE: Removed shifting by the origin becuase, it was not clear how to set the origin.
         # shift z by coordinate origin of local z-stack
-        z_start = float(self.variables["z_start"].get()) - float(
-            self.stack_acq_widgets["start_position"].get()
-        )
-        z_stop = float(self.variables["z_end"].get()) - float(
-            self.stack_acq_widgets["end_position"].get()
-        )
+        z_start = float(self.variables["z_start"].get()) # - float(self.stack_acq_widgets["start_position"].get())
+        z_stop = float(self.variables["z_end"].get()) # - float(self.stack_acq_widgets["end_position"].get())
         z_tiles = int(self.variables["z_tiles"].get())
-
+        
         # Default to fixed theta
         r_start = float(self.stage_position_vars["theta"].get())
         r_stop = float(self.stage_position_vars["theta"].get())
         r_tiles = 1
 
-        f_start = float(self.variables["f_start"].get()) - float(
-            self.stack_acq_widgets["start_focus"].get()
-        )
-        f_stop = float(self.variables["f_end"].get()) - float(
-            self.stack_acq_widgets["end_focus"].get()
-        )
+        f_start = float(self.variables["f_start"].get()) #- float(self.stack_acq_widgets["start_focus"].get())
+        f_stop = float(self.variables["f_end"].get()) #- float(self.stack_acq_widgets["end_focus"].get())
         f_tiles = int(self.variables["f_tiles"].get())
 
         # for consistency, always go from low to high
@@ -308,11 +301,12 @@ class TilingWizardController(GUIController):
                 return b, a
             return a, b
 
+        #NOTE: Sorting variables breaks down if the F and Z stage are not both moving in the same direction. On our microscope, the F stage moves in a negative direction for positive z-stack acquisitions. I also have a hard coded (-) in commmon_features.py to allow the focus stage to move in a negative direction.
         x_start, x_stop = sort_vars(x_start, x_stop)
         y_start, y_stop = sort_vars(y_start, y_stop)
         z_start, z_stop = sort_vars(z_start, z_stop)
         r_start, r_stop = sort_vars(r_start, r_stop)
-        f_start, f_stop = sort_vars(f_start, f_stop)
+        # f_start, f_stop = sort_vars(f_start, f_stop)
 
         overlap = float(self._percent_overlap) / 100
         table_values = compute_tiles_from_bounding_box(
