@@ -1,0 +1,159 @@
+microscopes:
+  Mesoscale:
+    camera:
+      hardware:
+        type: HamamatsuOrca
+        serial_number: 302158
+        camera_connection: NA
+      defect_correct_mode: 2.0
+      delay: 1.0
+      settle_down: 1.0
+      flip_x: False
+      flip_y: False
+      supported_channel_count: 5
+    daq:
+      hardware:
+        type: NI
+      sample_rate: 100000
+      master_trigger_out_line: PXI6259/port0/line1
+      camera_trigger_out_line: /PXI6259/ctr0
+      trigger_source: /PXI6259/PFI0
+      laser_port_switcher: PXI6733/port0/line0
+      laser_switch_state: False
+    filter_wheel:
+      hardware:
+        type: SutterFilterWheel
+        wheel_number: 1
+        port: None
+        baudrate: 9600
+        name: FW1
+      filter_wheel_delay: 0.03
+      available_filters:
+        Empty-Alignment: 0
+        GFP - FF01-515/30-32: 1
+        RFP - FF01-595/31-32: 2
+        Far-Red - BLP01-647R/31-32: 3
+        Blocked1: 4
+        Blocked2: 5
+    galvo:
+       -
+        hardware:
+          type: NI
+          channel: PXI6259/ao0
+          min: -5.0
+          max: 5.0
+        waveform: sine
+        phase: 1.57079
+    lasers:
+       -
+        wavelength: 488
+        onoff:
+          hardware:
+            type: NI
+            channel: PXI6733/port0/line2
+            min: 0.0
+            max: 5.0
+        power:
+          hardware:
+            type: NI
+            channel: PXI6733/ao0
+            min: 0.0
+            max: 5.0
+       -
+        wavelength: 562
+        onoff:
+          hardware:
+            type: NI
+            channel: PXI6733/port0/line3
+            min: 0.0
+            max: 5.0
+        power:
+          hardware:
+            type: NI
+            channel: PXI6733/ao1
+            min: 0.0
+            max: 5.0
+       -
+        wavelength: 642
+        onoff:
+          hardware:
+            type: NI
+            channel: PXI6733/port0/line4
+            min: 0.0
+            max: 5.0
+        power:
+          hardware:
+            type: NI
+            channel: PXI6733/ao2
+            min: 0.0
+            max: 5.0
+    remote_focus_device:
+      hardware:
+        type: NI
+        channel: PXI6259/ao2
+        min: 0.0
+        max: 5.0
+        port: None
+        baudrate: 
+    mirror:
+      hardware:
+        type: SyntheticMirror
+        flat_path: NA
+      n_modes: 32
+    shutter:
+      hardware:
+        type: NI
+        channel: PXI6259/port0/line0
+        min: 0.0
+        max: 5.0
+    stage:
+      hardware:
+        -
+          type: PI
+          serial_number: 119060508
+          axes: ['x', 'y', 'z', 'theta', 'f']
+          axes_mapping: [1, 2, 3, 4, 5]
+          feedback_alignment: None
+          device_units_per_mm: 
+          volts_per_micron: None
+          min: 0.0
+          max: 5.0
+          distance_threshold: 5.0
+          settle_duration_ms: 18.0
+          controllername: C-884
+          stages: L-509.20DG10 L-509.40DG10 L-509.20DG10 M-060.DG M-406.4PD NOSTAGE
+          refmode: FRF FRF FRF FRF FRF FRF
+          port: None
+          baudrate: 0
+          timeout: 0.25
+      joystick_axes: ['x', 'y', 'z']
+      x_min: -100000.0
+      x_max: 100000.0
+      y_min: -100000.0
+      y_max: 100000.0
+      z_min: -100000.0
+      z_max: 100000.0
+      theta_min: 0.0
+      theta_max: 360.0
+      f_min: -100000.0
+      f_max: 100000.0
+      x_offset: 0.0
+      y_offset: 0.0
+      z_offset: 0.0
+      theta_offset: 0.0
+      f_offset: 0.0
+      flip_x: False
+      flip_y: False
+      flip_z: False
+      flip_f: False
+    zoom:
+      hardware:
+        type: DynamixelZoom
+        servo_id: 1
+        port: COM9
+        baudrate: 100000
+      position:
+        1x: 627.0
+      pixel_size:
+        1x: 6.38
+
