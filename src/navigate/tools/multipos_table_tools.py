@@ -31,6 +31,7 @@
 
 # Standard library imports
 from math import ceil
+import csv
 
 # Third party imports
 import numpy as np
@@ -245,3 +246,29 @@ def update_table(table, pos, append=False):
     table.resetColors()
     table.redraw()
     table.tableChanged()
+
+def write_to_csv_file(positions, file_path):
+    """Write positions to a csv file.
+    
+    Parameters
+    ----------
+    pos: list or np.array
+        A list of positions.
+    file_path: str
+        The target csv file path.
+
+    Returns
+    -------
+    result: bool
+        Whether positions are saved successfully.
+    """
+    try:
+        with open(file_path, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["X", "Y", "Z", "R", "F"])
+
+            for p in positions:
+                writer.writerow(p)
+        return True
+    except FileNotFoundError:
+        return False

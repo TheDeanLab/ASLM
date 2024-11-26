@@ -31,6 +31,10 @@
 #
 
 from queue import Queue
+import numpy as np
+from tifffile import imwrite
+from os import path
+
 from navigate.model.analysis.boundary_detect import (
     find_tissue_boundary_2d,
     binary_detect,
@@ -38,9 +42,10 @@ from navigate.model.analysis.boundary_detect import (
     find_cell_boundary_3d,
     map_labels,
 )
-import numpy as np
-from tifffile import imwrite
-from os import path
+
+from navigate.tools.multipos_table_tools import(
+    write_to_csv_file
+)
 
 
 def draw_box(img, xl, yl, xu, yu, fill=65535):
@@ -91,8 +96,8 @@ class VolumeSearch:
         model,
         target_resolution="Nanoscale",
         target_zoom="N/A",
-        flipx=False,
-        flipy=False,
+        x_alignment="x",
+        y_alignment="y",
         overlap=0.1,
         debug=False,
     ):
@@ -107,10 +112,10 @@ class VolumeSearch:
         target_zoom : str
             Resolution of microscope (target_resolution) to use for tiled imaging
             of tissue
-        flipx : bool
-            Flip the direction in which new tiles are added.
-        flipy : bool
-            Flip the direction in which new tiles are added.
+        x_alignment : str
+            Values from ["x", "-x", "y", "-y"]
+        y_alignment : str
+            Values from ["x", "-x", "y", "-y"]
         overlap : float
             Value between 0 and 1 indicating percent overlap of tiles.
         debug : bool
@@ -147,13 +152,22 @@ class VolumeSearch:
         #: int: Current z-index
         self.curr_z_index = 0
 
+        if x_alignment not in ["x", "-x", "y", "-y"]:
+            x_alignment = "x"
+        if y_alignment not in ["x", "-x", "y", "-y"]:
+            y_alignment = "y"
+        if x_alignment[-1] == y_alignment[-1]:
+            y_alignment[-1] = "y" if x_alignment == "x" else "x"
+
         # By default an increase in x/y stage position corresponds
         # to a sample moving down/right into the field of view
-        #: int: 1 if flipx is False, -1 if flipx is True
-        self.sinx = 1 if flipx else -1
+        #: int: 1 if not flipped.
+        self.x_alignment = -1 if x_alignment[0] == "-" else 1
+        self.x_axis = x_alignment[-1]
 
-        #: int: 1 if flipy is False, -1 if flipy is True
-        self.siny = 1 if flipy else -1
+        #: int: 1 if not flipped
+        self.y_alignment = -1 if y_alignment[0] == "-" else 1
+        self.y_axis = y_alignment[-1]
 
         #: float: Percent overlap of tiles
         self.overlap = max(0, min(overlap, 0.999))
@@ -205,13 +219,11 @@ class VolumeSearch:
         self.model.active_microscope.current_channel = 0
         self.model.active_microscope.prepare_next_channel()
 
-        self.z_pos = float(
-            self.model.configuration["experiment"]["StageParameters"]["z"]
-        )
-        self.f_pos = float(
-            self.model.configuration["experiment"]["StageParameters"]["f"]
-        )
-
+        # get current stage position
+        pos_dict = self.model.get_stage_position()
+        self.position = [
+            pos_dict[f"{axis}_pos"] for axis in ["x", "y", "z", "theta", "f"]
+        ]
         self.z_steps = float(
             self.model.configuration["experiment"]["MicroscopeState"]["number_z_steps"]
         )
@@ -252,8 +264,8 @@ class VolumeSearch:
             True if the signal function should be called again.
         """
         self.model.logger.debug(f"acquiring at z:{self.curr_z_index}")
-        z = self.z_pos + self.curr_z_index * self.z_step_size
-        f = self.f_pos + self.curr_z_index * self.f_step_size
+        z = self.position[2] + self.curr_z_index * self.z_step_size
+        f = self.position[4] + self.curr_z_index * self.f_step_size
         self.model.move_stage({"z_abs": z, "f_abs": f})
         return True
 
@@ -292,7 +304,7 @@ class VolumeSearch:
         """Initialize data function"""
         # Establish current and target pixel sizes
         microscope_name = self.model.active_microscope_name
-        curr_zoom = self.model.configuration["experiment"]["MicroscopeState"]["zoom"]
+        curr_zoom = self.model.active_microscope.zoom.zoom_value
         curr_pixel_size = float(
             self.model.configuration["configuration"]["microscopes"][microscope_name][
                 "zoom"
@@ -308,52 +320,65 @@ class VolumeSearch:
         img_width = self.model.configuration["experiment"]["CameraParameters"][
             microscope_name
         ]["x_pixels"]
+        img_height = self.model.configuration["experiment"]["CameraParameters"][
+            microscope_name
+        ]["y_pixels"]
 
         # The target image size in pixels
         self.mag_ratio = int(curr_pixel_size / target_pixel_size)
-        self.target_grid_pixels = int(img_width // self.mag_ratio)
+        self.target_grid_width_pixels = int(img_width // self.mag_ratio)
+        self.target_grid_height_pixels = int(img_height // self.mag_ratio)
         # The target image size in microns
         self.target_grid_width = img_width * target_pixel_size * (1 - self.overlap)
+        self.target_grid_height = img_height * target_pixel_size * (1 - self.overlap)
 
         # For each axis, establish the offset between this image and the target
         # image as the difference in the physical offsets of the two microscopes
         axes = ["x", "y", "z", "theta", "f"]
         self.offset = [0, 0, 0, 0, 0]
-        for i, axis in enumerate(axes):
-            t = axis + "_offset"
-            self.offset[i] = float(
-                self.model.configuration["configuration"]["microscopes"][
-                    self.target_resolution
-                ]["stage"][t]
-            ) - float(
-                self.model.configuration["configuration"]["microscopes"][
-                    microscope_name
-                ]["stage"][t]
-            )
+        if self.target_resolution != microscope_name:
+            for i, axis in enumerate(axes):
+                t = axis + "_offset"
+                self.offset[i] = float(
+                    self.model.configuration["configuration"]["microscopes"][
+                        self.target_resolution
+                    ]["stage"][t]
+                ) - float(
+                    self.model.configuration["configuration"]["microscopes"][
+                        microscope_name
+                    ]["stage"][t]
+                )
+        else:
+            solvent = self.model.configuration["experiment"]["Saving"]["solvent"]
+            stage_solvent_offsets = self.model.active_microscope.zoom.stage_offsets
+            if (
+                stage_solvent_offsets is not None
+                and solvent in stage_solvent_offsets.keys()
+            ):
+                stage_offset = stage_solvent_offsets[solvent]
+                for i, axis in enumerate(["x", "y", "z", "theta", "f"]):
+                    if axis not in stage_offset.keys():
+                        continue
+                    try:
+                        self.offset[i] += float(
+                            stage_offset[axis][self.target_zoom][curr_zoom]
+                        )
+                    except (ValueError, KeyError):
+                        self.model.logger.info(
+                            f"*** Offsets from {self.target_zoom} to {curr_zoom} are "
+                            f"not implemented! There is not enough information in the "
+                            f"configuration.yaml file!"
+                        )
 
         # Set this to the upper left corner of the image
-        self.offset[0] += (
-            self.model.configuration["experiment"]["StageParameters"]["x"]
-            - self.sinx * (img_width - self.target_grid_pixels) // 2 * curr_pixel_size
-        )
-        self.offset[1] += (
-            self.model.configuration["experiment"]["StageParameters"]["y"]
-            - self.siny * (img_width - self.target_grid_pixels) // 2 * curr_pixel_size
-        )
-        self.offset[2] += self.z_pos
-        self.offset[3] += self.model.configuration["experiment"]["StageParameters"][
-            "theta"
-        ]
-
-        offsets = self.model.active_microscope.zoom.stage_offsets
-        focus_offset = 0
-        if offsets is not None:
-            solvent = self.model.configuration["experiment"]["Saving"]["solvent"]
-            try:
-                focus_offset = offsets[solvent]["f"][curr_zoom][self.target_zoom]
-            except Exception:
-                focus_offset = 0
-        self.offset[4] += self.f_pos + focus_offset
+        x_offset = (img_width - self.target_grid_width_pixels) // 2 * curr_pixel_size
+        y_offset = (img_height - self.target_grid_height_pixels) // 2 * curr_pixel_size
+        if self.x_axis == "x":
+            self.offset[0] -= self.x_alignment * x_offset
+            self.offset[1] -= self.y_alignment * y_offset
+        else:
+            self.offset[0] -= self.x_alignment * y_offset
+            self.offset[1] -= self.y_alignment * x_offset
 
         self.first_boundary = None
         self.pre_boundary = None
@@ -384,11 +409,11 @@ class VolumeSearch:
                 self.volumes_selected[self.curr_z_index] = img_data
 
             if self.pre_boundary is None:
-                boundary = find_tissue_boundary_2d(img_data, self.target_grid_pixels)
+                boundary = find_tissue_boundary_2d(img_data, self.mag_ratio)
             else:
                 off, var = self.model.get_offset_variance_maps()
                 boundary = binary_detect(
-                    img_data, self.pre_boundary, self.target_grid_pixels, off, var
+                    img_data, self.pre_boundary, self.target_grid_width_pixels, off, var
                 )
 
             self.has_tissue = any(boundary)
@@ -426,16 +451,28 @@ class VolumeSearch:
             for z_index in sorted(self.boundary.keys()):
                 path = map_boundary(self.boundary[z_index], direction)
                 direction = not direction
-                positions += map(
-                    lambda item: (
-                        self.sinx * item[0] * self.target_grid_width + self.offset[0],
-                        self.siny * item[1] * self.target_grid_width + self.offset[1],
-                        z_index * self.z_step_size + self.offset[2],
-                        self.offset[3],
-                        z_index * self.f_step_size + self.offset[4],
-                    ),
-                    path,
-                )
+                if self.x_axis == "x":
+                    positions += map(
+                        lambda item: (
+                            self.x_alignment * item[0] * self.target_grid_width + self.position[0] + self.offset[0],
+                            self.y_alignment * item[1] * self.target_grid_height + self.position[1] + self.offset[1],
+                            z_index * self.z_step_size + self.position[2] + self.offset[2],
+                            self.position[3] + self.offset[3],
+                            z_index * self.f_step_size + self.position[4] + self.offset[4],
+                        ),
+                        path,
+                    )
+                else:
+                    positions += map(
+                        lambda item: (
+                            self.x_alignment * item[1] * self.target_grid_height + self.position[0] + self.offset[0],
+                            self.y_alignment * item[0] * self.target_grid_width + self.position[1] + self.offset[1],
+                            z_index * self.z_step_size + self.position[2] + self.offset[2],
+                            self.position[3] + self.offset[3],
+                            z_index * self.f_step_size + self.position[4] + self.offset[4],
+                        ),
+                        path,
+                    )
                 if self.debug:
                     for item in path:
                         self.volumes_selected[z_index] = draw_box(
@@ -648,7 +685,7 @@ class VolumeSearch3D:
             "CameraParameters"
         ][self.target_resolution]["img_y_pixels"]
 
-        z_range, positions = map_labels(
+        z_range, positions, target_labels = map_labels(
             labeled_image,
             position,
             z_start,
@@ -664,6 +701,19 @@ class VolumeSearch3D:
             overlap=self.overlap,
             filter_pixel_number=self.filter_pixel_number,
         )
+        # save positions
+        write_to_csv_file(positions, path.join(
+            self.model.configuration["experiment"]["Saving"]["save_directory"],
+            "positions.csv",
+        ),)
+        # save target label index sequences
+        target_labels_file = path.join(
+            self.model.configuration["experiment"]["Saving"]["save_directory"],
+            "target_labels.txt"
+        )
+        with open(target_labels_file, "w") as f:
+            for idx in target_labels:
+                f.write(f"{idx}\n")
 
         self.model.event_queue.put(("multiposition", positions))
         self.model.configuration["multi_positions"] = positions
