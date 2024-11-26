@@ -524,9 +524,11 @@ def map_labels(
         The maximum number of z steps
     positions : array
         Array of positions
+    target_labels : array
+        Array of target label index.
     """
     if target_pixel_size >= current_pixel_size:
-        return 1, [position]
+        return 1, [position], [0]
     if overlap < 0:
         overlap = 0
     if x_direction not in ["x", "-x", "y", "-y"]:
@@ -555,6 +557,12 @@ def map_labels(
     regionprops = measure.regionprops(labeled_image)
     z_range = 1
 
+    target_labels_index = []
+    start = -1
+    end = -1
+    start_weight = current_image_width + current_image_height
+    end_weight = 0
+
     for i in range(target_num):
         min_z, min_y, min_x, max_z, max_y, max_x = regionprops[i].bbox
 
@@ -564,6 +572,53 @@ def map_labels(
             max_y - min_y
         ) < filter_pixel_number:
             continue
+
+        target_labels_index.append(i)
+        # find the start and end position
+        centroid_z, centroid_y, centroid_x = regionprops[i].centroid 
+        if start < 0:
+            start = i
+            start_weight = centroid_x + centroid_y
+        elif centroid_x + centroid_y < start_weight:
+            if end_weight < start_weight:
+                end = start
+                end_weight = start_weight
+            start = i
+            start_weight = centroid_x + centroid_y
+        elif centroid_x + centroid_y > end_weight:
+            end = i
+            end_weight = centroid_x + centroid_y
+
+    # build a graph
+    weight_graph = [[0 for i in range(len(target_labels_index))] for _ in range(len(target_labels_index))]
+    for i in range(len(target_labels_index)):
+        centroid_z_i, centroid_y_i, centroid_x_i = regionprops[target_labels_index[i]].centroid
+        for j in range(len(target_labels_index)):
+            if i == j:
+                weight_graph[j][i] = weight_graph[i][j] = current_image_width + current_image_height
+                continue
+            centroid_z_j, centroid_y_j, centroid_x_j = regionprops[target_labels_index[j]].centroid
+            weight_graph[i][j] = abs(centroid_x_i - centroid_x_j) + abs(centroid_y_i - centroid_y_j)
+            weight_graph[j][i] = weight_graph[i][j]
+    # find the appoximation shortest path in (x, y).
+    visited_num = 1
+    target_labels = [target_labels_index[start]]
+    pre = start
+    visited = [False] * len(target_labels_index)
+    visited[start] = True
+    while visited_num < len(target_labels_index):
+        while True:
+            idx = weight_graph[pre].index(min(weight_graph[pre]))
+            weight_graph[pre][idx] = weight_graph[idx][pre] = current_image_width + current_image_height
+            if not visited[idx]:
+                break
+        target_labels.append(target_labels_index[idx])
+        pre = idx
+        visited[idx] = True
+        visited_num += 1
+    
+    for i in target_labels:
+        min_z, min_y, min_x, max_z, max_y, max_x = regionprops[i].bbox
 
         num_x = math.ceil((max_x - min_x) / (x_pixel * (1 - overlap)))
         shift_x = (num_x * x_pixel - (max_x - min_x)) // 2
@@ -615,4 +670,4 @@ def map_labels(
                 for x_pos, y_pos in product(x_positions, y_positions)
             ]
 
-    return z_range, position_table
+    return z_range, position_table, target_labels
