@@ -577,16 +577,16 @@ def map_labels(
         # find the start and end position
         centroid_z, centroid_y, centroid_x = regionprops[i].centroid 
         if start < 0:
-            start = i
+            start = len(target_labels_index) - 1
             start_weight = centroid_x + centroid_y
         elif centroid_x + centroid_y < start_weight:
             if end_weight < start_weight:
                 end = start
                 end_weight = start_weight
-            start = i
+            start = len(target_labels_index) - 1
             start_weight = centroid_x + centroid_y
         elif centroid_x + centroid_y > end_weight:
-            end = i
+            end = len(target_labels_index) - 1
             end_weight = centroid_x + centroid_y
 
     # build a graph

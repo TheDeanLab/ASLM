@@ -616,7 +616,7 @@ class VolumeSearch3D:
         z_end = microscope_state_config["end_position"]
         z_step = microscope_state_config["step_size"]
 
-        if microscope_state_config["multiposition_count"] == 0:
+        if len(self.model.configuration["multi_positions"]) == 0:
             pos_dict = self.model.get_stage_position()
             position = [
                 pos_dict[f"{axis}_pos"] for axis in ["x", "y", "z", "theta", "f"]
