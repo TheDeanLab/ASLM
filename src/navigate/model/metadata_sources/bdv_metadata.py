@@ -58,13 +58,7 @@ class BigDataViewerMetadata(XMLMetadata):
     """
 
     def __init__(self) -> None:
-        """Initialize the BigDataViewer metadata object.
-
-        Parameters
-        ----------
-        configuration : Optional[Dict[str, Any]]
-            Configuration dictionary.
-        """
+        """Initialize the BigDataViewer metadata object. """
         super().__init__()
 
         # Affine Transform Parameters
@@ -162,24 +156,38 @@ class BigDataViewerMetadata(XMLMetadata):
                 "text": file_name,
             }
 
-        # TODO: Consider adding support for tiff/tif files. Needs evaluation.
-        # elif ext == "tiff" or ext == "tif":
-        #     """
-        #     Need to iterate through the time points, etc.
-        #     <ImageLoader format="spimreconstruction.filelist">
-        #         <imglib2container>ArrayImgFactory</imglib2container>
-        #         <ZGrouped>false</ZGrouped>
-        #         <files>
-        #             <FileMapping view_setup="0" timepoint="0" series="0" channel="0">
-        #                 <file type="relative">1_CH00_000000.tif</file>
-        #             </FileMapping>
-        #             <FileMapping view_setup="1" timepoint="0" series="0" channel="0">
-        #                 <file type="relative">1_CH01_000000.tif</file>
-        #             </FileMapping>
-        #         </files>
-        #     </ImageLoader>
-        #     """
-        #     pass
+        elif ext == "tiff" or ext == "tif":
+            """
+            <ImageLoader format="spimreconstruction.filelist">
+                <imglib2container>ArrayImgFactory</imglib2container>
+                <ZGrouped>false</ZGrouped>
+                <files>
+                    <FileMapping view_setup="0" timepoint="0" series="0" channel="0">
+                        <file type="relative">1_CH00_000000.tif</file>
+                    </FileMapping>
+                    <FileMapping view_setup="1" timepoint="0" series="0" channel="0">
+                        <file type="relative">1_CH01_000000.tif</file>
+                    </FileMapping>
+                </files>
+            </ImageLoader>
+            """
+
+
+            bdv_dict["SequenceDescription"]["ImageLoader"] = {"format": "spimreconstruction.filelist"}
+            bdv_dict["SequenceDescription"]["ImageLoader"]["imglib2container"] = {"text": "ArrayImgFactory"}
+            bdv_dict["SequenceDescription"]["ImageLoader"]["ZGrouped"] = {"text": "false"}
+            for view in views:
+                bdv_dict["SequenceDescription"]["ImageLoader"]["files"] = {"FileMapping": {
+                    "view_setup": "0",
+                    "timepoint": f"{self.dt}",
+                    "series": "0",
+                    "channel": f"{self.dc}",
+                    "file": {
+                        "type": "relative",
+                        "text": "file_name"}
+                    }
+                }
+
 
         elif ext == "n5":
             """
@@ -562,7 +570,7 @@ class BigDataViewerMetadata(XMLMetadata):
             A list of dictionaries containing metadata for each view.
 
         """
-
+        print("write xml file name:", file_name)
         return super().write_xml(
             file_name, file_type="bdv", root="SpimData", views=views
         )

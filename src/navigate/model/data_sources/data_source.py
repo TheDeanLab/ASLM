@@ -66,6 +66,9 @@ class DataSource:
         mode : str
             Mode to open the file in. Can be 'r' or 'w'.
         """
+        #: BigDataViewerMetadata: Metadata for the BigDataViewer.
+        self.bdv_metadata = None
+
         #: logging.Logger: Logger for this class.
         self.logger = logging.getLogger(__name__.split(".")[1])
 

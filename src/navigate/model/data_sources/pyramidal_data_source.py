@@ -66,6 +66,7 @@ class PyramidalDataSource(DataSource):
         """
         #: np.array: The resolution of each down-sampled pyramid level.
         self._resolutions = np.array([[1, 1, 1]], dtype=int)
+
         #: np.array: The number of subdivisions in each dimension.
         self._subdivisions = None
 

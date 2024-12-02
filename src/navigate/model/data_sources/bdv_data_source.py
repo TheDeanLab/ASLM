@@ -48,7 +48,8 @@ from ..metadata_sources.bdv_metadata import BigDataViewerMetadata
 logger = logging.getLogger(__name__.split(".")[1])
 
 # Suppress UserWarnings from zarr.n5
-warnings.filterwarnings("ignore", message="Attribute dataType is a reserved N5 keyword")
+warnings.filterwarnings(
+    "ignore", message="Attribute dataType is a reserved N5 keyword")
 warnings.filterwarnings(
     "ignore", message="Attribute blockSize is a reserved N5 keyword"
 )

@@ -43,6 +43,8 @@ from numpy import stack
 
 # Local imports
 from .data_source import DataSource, DataReader
+from .pyramidal_data_source import PyramidalDataSource
+from ..metadata_sources.bdv_metadata import BigDataViewerMetadata
 from ..metadata_sources.metadata import Metadata
 from ..metadata_sources.ome_tiff_metadata import OMETIFFMetadata
 
@@ -52,7 +54,7 @@ p = __name__.split(".")[1]
 logger = logging.getLogger(p)
 
 
-class TiffDataSource(DataSource):
+class TiffDataSource(PyramidalDataSource):
     """Data source for TIFF files."""
 
     def __init__(
@@ -91,6 +93,8 @@ class TiffDataSource(DataSource):
             self._is_ome = False
             self.metadata = Metadata()
 
+        #: BigDataViewerMetadata: BigDataViewer metadata object
+        self.bdv_metadata = BigDataViewerMetadata()
         self._is_bigtiff = is_bigtiff
 
         # For file writing, do we assume all files end with tiff or tif?
@@ -100,6 +104,8 @@ class TiffDataSource(DataSource):
         # self._current_frame = 0
         self._current_time = 0
         self._current_position = 0
+
+
 
     @property
     def data(self) -> npt.ArrayLike:
@@ -344,6 +350,7 @@ class TiffDataSource(DataSource):
         internal : bool
             Internal flag. Do not close if True.
         """
+
         if self._closed and not internal:
             return
         if self.image is None:
@@ -353,6 +360,10 @@ class TiffDataSource(DataSource):
             if not internal:
                 self._check_shape(self._current_frame - 1, self.metadata.per_stack)
         if type(self.image) is list:
+            file_name = os.path.join(
+                self.save_directory, "bdv.xml"
+            )
+            self.bdv_metadata.write_xml(file_name=file_name, views=self._views)
             for ch in range(len(self.image)):
                 self.image[ch].close()
                 if self.is_ome and len(self._views) > 0:
@@ -369,6 +380,7 @@ class TiffDataSource(DataSource):
                     )
         else:
             self.image.close()
+
         if not internal:
             self._closed = True
 
