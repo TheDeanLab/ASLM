@@ -532,17 +532,25 @@ class NIDAQ(DAQBase):
             switching_on_state = self.configuration["configuration"]["microscopes"][
                 self.microscope_name
             ]["daq"]["laser_switch_state"]
+        except KeyError:
+            pass
 
-            if self.laser_switching_task:
-                self.laser_switching_task.close()
-            self.laser_switching_task = nidaqmx.Task()
+
+        if self.laser_switching_task:
+            self.laser_switching_task.close()
+        self.laser_switching_task = nidaqmx.Task()
+
+        try:
             self.laser_switching_task.do_channels.add_do_chan(
                 switching_port,
                 line_grouping=nidaqmx.constants.LineGrouping.CHAN_FOR_ALL_LINES,
             )
-            self.laser_switching_task.write(switching_on_state, auto_start=True)
-        except KeyError:
-            pass
+        except nidaqmx.errors.DaqError as e:
+            raise Exception(f"The NI Data Acquisition Card specified does not exist. "
+                            f"Please make sure that the device name in NI MAX matches "
+                            f"that specified in your configuration.yaml file.: {e}")
+        self.laser_switching_task.write(switching_on_state, auto_start=True)
+
 
     def update_analog_task(self, board_name: str) -> Union[bool, None]:
         """Update analog task.
