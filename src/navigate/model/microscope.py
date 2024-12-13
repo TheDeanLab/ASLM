@@ -542,7 +542,6 @@ class Microscope:
         self.daq.stop_acquisition()
         self.stop_stage()
         if self.central_focus is not None:
-            print(self.central_focus)
             self.move_stage({"f_abs": self.central_focus})
         if self.camera.is_acquiring:
             self.camera.close_image_series()
