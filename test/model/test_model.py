@@ -346,7 +346,7 @@ def test_change_resolution(model):
             ) == 0
 
         assert model.active_microscope_name == scope
-        assert model.active_microscope.zoom.zoomvalue == zoom
+        assert model.active_microscope.zoom.zoom_value == zoom
 
 
 def test_get_feature_list(model):

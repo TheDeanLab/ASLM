@@ -32,6 +32,7 @@
 
 # Standard Library Imports
 import logging
+from abc import ABCMeta, abstractmethod, ABC
 
 # Third Party Imports
 
@@ -43,10 +44,48 @@ p = __name__.split(".")[1]
 logger = logging.getLogger(p)
 
 
-@log_initialization
-class ZoomBase:
-    """ZoomBase parent class."""
+class ABCZoom(metaclass=ABCMeta):
+    """Abstract Base Class for Zoom Servo.
+    
+    Any class that inherits from this class must implement the following methods:
+    - __str__
+    - set_zoom
+    
+    Any class that inherits from this class must implement the following properties:
+    - zoom_value
+    - stage_offsets
+    """
 
+    @property
+    @abstractmethod
+    def zoom_value(self):
+        """Get the zoom value."""
+        raise NotImplementedError(f"{self.__class__.__name__} must implement "
+                                  f"the 'zoom_value' attribute")
+
+    @property
+    @abstractmethod
+    def stage_offsets(self):
+        """Get the stage offsets."""
+        raise NotImplementedError(f"{self.__class__.__name__} must implement "
+                                  f"the 'stage_offsets' attribute")
+
+    @abstractmethod
+    def __str__(self) -> str:
+        """Return the string representation of the zoom object."""
+        raise NotImplementedError(f"{self.__class__.__name__} must implement"
+                                  f" the '__str__' method")
+
+    @abstractmethod
+    def set_zoom(self, zoom, wait_until_done=False):
+        """Change the microscope zoom."""
+        raise NotImplementedError(f"{self.__class__.__name__} must implement "
+                                  f"the 'set_zoom' method")
+
+
+@log_initialization
+class ZoomBase(ABCZoom, ABC):
+    """ZoomBase parent class."""
     def __init__(self, microscope_name, device_controller, configuration):
         """Initialize the parent zoom class.
 
@@ -56,7 +95,7 @@ class ZoomBase:
             Name of microscope in configuration
         device_controller : object
             Hardware device to connect to
-        configuration : multiprocesing.managers.DictProxy
+        configuration : multiprocessing.managers.DictProxy
             Global configuration of the microscope
         """
 
@@ -66,15 +105,31 @@ class ZoomBase:
         ]["zoom"]
 
         #: dict: Zoom dictionary
-        self.zoomdict = self.configuration["position"]
+        self.zoom_dict = self.configuration["position"]
         self.build_stage_dict()
 
         #: float: the desired zoom setting
-        self.zoomvalue = None
+        self.zoom_value = None
 
-    def __del__(self) -> None:
-        """Delete the ZoomBase object."""
-        pass
+        # Private Attributes
+        self._stage_offsets = None
+        self._zoom_value = None
+
+    @property
+    def stage_offsets(self):
+        return self._stage_offsets
+
+    @stage_offsets.setter
+    def stage_offsets(self, value):
+        self._stage_offsets = value
+
+    @property
+    def zoom_value(self):
+        return self._zoom_value
+
+    @zoom_value.setter
+    def zoom_value(self, value):
+        self._zoom_value = value
 
     def __str__(self) -> str:
         """Return the string representation of the ZoomBase object."""
@@ -122,45 +177,3 @@ class ZoomBase:
                             focus_target - focus_curr
                         )
 
-    def set_zoom(self, zoom, wait_until_done=False):
-        """Change the microscope zoom.
-
-        Confirms tha the zoom position is available in the zoomdict
-
-        Parameters
-        ----------
-        zoom : dict
-            Zoom dictionary
-        wait_until_done : bool
-            Delay parameter.
-
-        Changes zoom after checking that the commanded value exists
-        """
-        if zoom in self.zoomdict:
-            self.zoomvalue = zoom
-        else:
-            logger.error(f"Zoom designation, {zoom}, not in the configuration")
-            raise ValueError("Zoom designation not in the configuration")
-
-    def move(self, position=0, wait_until_done=False):
-        """Move the Zoom Servo
-
-        Parameters
-        ----------
-        position : int
-            Location to move to.
-        wait_until_done : bool
-            Delay parameter
-        """
-        pass
-
-    def read_position(self):
-        """Read the position of the Zoom Servo
-
-        Returns
-        -------
-        cur_position : int
-            Current position of Zoom
-        """
-        cur_position = None
-        return cur_position

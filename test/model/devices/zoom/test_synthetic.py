@@ -49,8 +49,8 @@ class TestZoomSynthetic(unittest.TestCase):
 
     def test_zoom_synthetic_attributes(self):
 
-        assert hasattr(self.zoom_class, "zoomdict")
-        assert hasattr(self.zoom_class, "zoomvalue")
+        assert hasattr(self.zoom_class, "zoom_dict")
+        assert hasattr(self.zoom_class, "zoom_value")
 
         assert hasattr(self.zoom_class, "set_zoom") and callable(
             getattr(self.zoom_class, "set_zoom")

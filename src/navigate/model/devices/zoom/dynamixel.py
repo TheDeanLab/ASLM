@@ -148,33 +148,6 @@ class DynamixelZoom(ZoomBase):
         except Exception as e:
             logger.exception(e)
 
-    def set_zoom(self, zoom, wait_until_done=False):
-        """Change the DynamixelZoom Servo.
-
-        Confirms that the zoom position is available in the zoomdict, and then
-        changes to that zoom value.
-
-        Parameters
-        ----------
-        zoom : dict
-            Zoom dictionary
-        wait_until_done : bool
-            Delay parameter.
-
-        Raises
-        ------
-        ValueError
-            If the zoom designation is not in the configuration.
-
-        """
-        if zoom in self.zoomdict:
-            self.move(self.zoomdict[zoom], wait_until_done)
-            #: str: Current zoom value.
-            self.zoomvalue = zoom
-        else:
-            logger.error(f"Zoom designation, {zoom}, not in the configuration")
-            raise ValueError("Zoom designation not in the configuration")
-
     def move(self, position, wait_until_done=False):
         """Move the DynamixelZoom Servo
 

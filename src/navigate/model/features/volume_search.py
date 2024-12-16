@@ -592,7 +592,7 @@ class VolumeSearch3D:
         position[2] -= z_end
 
         current_microscope_name = self.model.active_microscope_name
-        current_zoom_value = self.model.active_microscope.zoom.zoomvalue
+        current_zoom_value = self.model.active_microscope.zoom.zoom_value
         # offset
         if self.target_resolution != current_microscope_name:
             current_stage_offset = self.model.configuration["configuration"][

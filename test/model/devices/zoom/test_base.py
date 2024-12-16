@@ -41,8 +41,8 @@ def dummy_zoom(dummy_model):
 
 def test_zoom_base_attributes(dummy_zoom):
 
-    assert hasattr(dummy_zoom, "zoomdict")
-    assert hasattr(dummy_zoom, "zoomvalue")
+    assert hasattr(dummy_zoom, "zoom_dict")
+    assert hasattr(dummy_zoom, "zoom_value")
 
     assert hasattr(dummy_zoom, "set_zoom") and callable(getattr(dummy_zoom, "set_zoom"))
     assert hasattr(dummy_zoom, "move") and callable(getattr(dummy_zoom, "move"))
@@ -72,9 +72,9 @@ def test_build_stage_dict(dummy_zoom):
 
 
 def test_set_zoom(dummy_zoom):
-    for zoom in dummy_zoom.zoomdict.keys():
+    for zoom in dummy_zoom.zoom_dict.keys():
         dummy_zoom.set_zoom(zoom)
-        assert dummy_zoom.zoomvalue == zoom
+        assert dummy_zoom.zoom_value == zoom
 
     try:
         dummy_zoom.set_zoom("not_a_zoom")

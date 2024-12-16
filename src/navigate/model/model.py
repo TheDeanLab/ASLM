@@ -1207,7 +1207,7 @@ class Model:
 
         # update zoom if possible
         try:
-            curr_zoom = self.active_microscope.zoom.zoomvalue
+            curr_zoom = self.active_microscope.zoom.zoom_value
             zoom_value = self.configuration["experiment"]["MicroscopeState"]["zoom"]
             self.active_microscope.zoom.set_zoom(zoom_value)
             self.logger.info(

@@ -71,3 +71,43 @@ class SyntheticZoom(ZoomBase):
     def __del__(self) -> None:
         """Delete the SyntheticZoom Servo."""
         pass
+
+    def set_zoom(self, zoom, wait_until_done=False):
+        """Change the Zoom value.
+
+        Confirms that the zoom position is available in the zoom_dict, and then
+        changes to that zoom value.
+
+        Parameters
+        ----------
+        zoom : dict
+            Zoom dictionary
+        wait_until_done : bool
+            Delay parameter.
+
+        Raises
+        ------
+        ValueError
+            If the zoom designation is not in the configuration.
+
+        """
+        if zoom in self.zoom_dict:
+            self.move(self.zoom_dict[zoom], wait_until_done)
+            #: str: Current zoom value.
+            self.zoom_value = zoom
+        else:
+            logger.error(f"Zoom designation, {zoom}, not in the configuration")
+            raise ValueError("Zoom designation not in the configuration")
+
+    def move(self, zoom, wait_until_done=False):
+        """Move to the designated zoom value.
+
+        Parameters
+        ----------
+        zoom : int
+            Zoom value.
+        wait_until_done : bool
+            Delay parameter.
+
+        """
+        pass

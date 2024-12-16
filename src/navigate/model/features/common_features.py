@@ -634,7 +634,7 @@ class MoveToNextPositionInMultiPositionTable:
                 self.offset[i] = 0
 
         curr_resolution = self.model.active_microscope_name
-        curr_zoom = self.model.active_microscope.zoom.zoomvalue
+        curr_zoom = self.model.active_microscope.zoom.zoom_value
         if not self.resolution_value or not self.zoom_value:
             return
         if curr_resolution == self.resolution_value and curr_zoom == self.zoom_value:
