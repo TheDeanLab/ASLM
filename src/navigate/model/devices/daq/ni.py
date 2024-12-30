@@ -172,12 +172,14 @@ class NIDAQ(DAQBase):
                 self.analog_output_tasks[
                     board_name
                 ].triggers.start_trigger.cfg_dig_edge_start_trig(trigger_source)
-                try:
-                    self.analog_output_tasks[board_name].register_done_event(None)
-                except Exception:
-                    logger.debug(
-                        f"Error Registering Done Event: {traceback.format_exc()}"
-                    )
+                # NOTE: this was causing an error for me using PCIe-6343 in Linux. Not sure if it was board or OS related.
+                # try:
+                #     # print(board_name)
+                #     # self.analog_output_tasks[board_name].register_done_event(None)
+                # except Exception:
+                #     logger.debug(
+                #         f"Error Registering Done Event: {traceback.format_exc()}"
+                #     )
         else:
             # close master trigger task
             if self.master_trigger_task:

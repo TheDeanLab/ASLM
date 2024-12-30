@@ -511,8 +511,18 @@ def load_stages(
                     exception=TLFTDICommunicationError,
                 )
             )
-
-        elif stage_type == "KST101":
+        elif stage_type == "KINESIS" and platform.system() == "Linux":
+            from navigate.model.devices.stages.tl_kinesis_steppermotor import (
+                build_KINESIS_Stage_connection
+                )
+            stage_devices.append(
+                auto_redial(
+                    build_KINESIS_Stage_connection,
+                    (stage_config["serial_number"],),
+                     exception=Exception
+                     )
+                )
+        elif stage_type == "KST101" and platform.system=="Windows":
             from navigate.model.devices.stages.tl_kcube_steppermotor import (
                 build_TLKSTStage_connection,
             )
@@ -562,12 +572,8 @@ def load_stages(
                 )
             )
 
-        elif stage_type == "MS2000" and platform.system() == "Windows":
-            """Filter wheel can be controlled from the same Controller. If
-            so, then we will load this as a shared device. If not, we will create the
-            connection to the Controller.
-
-            TODO: Evaluate whether MS2000 should be able to operate as a shared device.
+        elif stage_type == "MS2000":
+            """Stage and filter wheel are independent and should not be a shared device
             """
 
             from navigate.model.devices.stages.asi_MSTwoThousand import (
@@ -705,7 +711,10 @@ def start_stage(
         from navigate.model.devices.stages.tl_kcube_inertial import TLKIMStage
 
         return TLKIMStage(microscope_name, device_connection, configuration, id)
-
+    elif device_type == "KINESIS":
+        from navigate.model.devices.stages.tl_kinesis_steppermotor import TLKINStage
+        
+        return TLKINStage(microscope_name, device_connection, configuration, id)
     elif device_type == "KST101":
         from navigate.model.devices.stages.tl_kcube_steppermotor import TLKSTStage
 
@@ -1265,7 +1274,6 @@ def start_lasers(
             modulation = "analog"
         elif digital == "NI":
             modulation = "digital"
-
         return LaserNI(
             microscope_name=microscope_name,
             device_connection=device_connection,
