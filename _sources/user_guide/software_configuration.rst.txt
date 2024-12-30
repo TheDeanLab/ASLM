@@ -95,7 +95,7 @@ along in this file when reading the next sections.
 
 See the :ref:`Setting up an Axially Swept Light-Sheet Microscope <setup_aslm>` case
 study for a general walkthrough of how to build your own configuration file and see
-:doc:`Implementations <implemented_microscopes>` for examples of configuration files.
+:doc:`Implementations <../implementations/implementations>` for examples of configuration files.
 
 -----------------
 
@@ -165,7 +165,7 @@ Each microscope is expected to have a ``daq``, ``camera``, ``remote_focus_device
 can be specified as synthetic.
 
 Most of the information to set up these devices can be found in the
-:doc:`Supported Hardware <hardware_overview>` section of the documentation.
+:doc:`Supported Hardware <hardware/hardware_home>` section of the documentation.
 Additional explanations of a few specific sections of the microscope configuration are
 below. Notably, the ``zoom`` section of the ``configuration.yaml`` specifies effective
 pixel size.

@@ -18,8 +18,7 @@ Saving is toggled under the GUI's :ref:`timepoint settings <user_guide/gui_walkt
 These modes (and other custom modes) can be selected in the program's
 :ref:`acquisition bar <user_guide/gui_walkthrough:acquisition bar>` dropdown list.
 
-Each acquisition mode is implemented as a :doc:`feature list <features>` and can be used
-in sequence with other features that can, for example,
+Each acquisition mode is implemented as a :doc:`feature list <features/features>` and can be used in sequence with other features that can, for example,
 :doc:`make smart decisions <../intermediate>`.
 
 ----------------
@@ -32,8 +31,8 @@ this mode, only to preview what is in focus. This mode is helpful for alignment,
 parameter tuning, and scrolling around the sample with the stage.
 
 It is implemented as
-a :doc:`feature list <features>`, shown in its
-:ref:`textual form <user_guide/features:text representation of feature lists>` below.
+a :doc:`feature list <features/features>`, shown in its
+:ref:`textual form <user_guide/features/features:text representation of feature lists>` below.
 
 .. code-block:: python
 
@@ -105,7 +104,7 @@ Customized
 
 The customized acquisition mode can be used to run any feature list of the user's choosing.
 Data acquisition with **navigate** is almost infinitely reconfigurable with the either the
-:doc:`feature container <features>`, if a desired acquisition can be
+:doc:`feature container <features/features>`, if a desired acquisition can be
 performed using a reconfiguration of existing features and saving formats, or the
 :doc:`plugin architecture <../plugin/plugin_home>`, if new features or saving formats are
 required. We strongly recommend the reader check through the

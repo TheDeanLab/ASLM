@@ -46,5 +46,6 @@ navigate.model.metadata\_sources.metadata.Metadata
       ~Metadata.shape_c
       ~Metadata.positions
       ~Metadata.active_microscope
+      ~Metadata.misc
    
    

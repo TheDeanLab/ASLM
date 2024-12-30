@@ -275,7 +275,7 @@ Physik Instrumente
 ------------------
 
 These stages are controlled by `PI <https://www.pi-usa.us/en/>`_'s own
-`Python code <https://pypi.org/project/PIPython/>`_ and are quite stable.
+`Python code <https://pypi.org/project/PIPython/>`_.
 
 .. note::
 
@@ -285,19 +285,22 @@ These stages are controlled by `PI <https://www.pi-usa.us/en/>`_'s own
     - PIMikroMove: 2.36.1.0
     - PI_GCS2_DLL: 3.22.0.0
 
-
-They
-include a special ``hardware`` option, ``refmode``, which corresponds to how the
-PI stage chooses to self-reference. Options are ``REF``, ``FRF``, ``MNL``, ``FNL``,
-``MPL`` or ``FPL``. These are PI's GCS commands, and the correct reference mode
-for your stage should be found by launching PIMikroMove, which should come with
-your stage. Stage names (e.g. ``L-509.20DG10``) can also be found in PIMikroMove
-or on a label on the side of your stage.
-
 .. note::
-    PI L-509.20DG10 has a unidirectional repeatability of 100 nm, bidirectional
-    repeatability of 2 microns, and a minimum incremental motion of 100 nm.
-    This is potentially too coarse.
+    PI stages require a special ``hardware`` option in the configuration.yaml file, ``refmode``,
+    which corresponds to how the PI stage chooses to self-reference. Options are:
+
+    * ``REF``
+    * ``FRF``
+    * ``MNL``
+    * ``FNL``
+    * ``MPL``
+    * ``FPL``
+    * ``" "`` - An empty string can be provided if no stage referencing mode is needed.
+
+    These are PI's GCS commands, and the correct reference mode for your stage should be found by
+    launching PIMikroMove, which comes with your stage and can be downloaded
+    `here <https://www.pi-usa.us/en/products/controllers-drivers-motion-control-software/motion-control-software>`_.
+    Stage names (e.g. ``L-509.20DG10``) can also be found in PIMikroMove or on a label on the side of your stage.
 
 -----------------
 

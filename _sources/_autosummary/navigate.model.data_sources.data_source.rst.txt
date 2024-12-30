@@ -19,6 +19,7 @@ navigate.model.data\_sources.data\_source
       :toctree:
       :template: custom_class.rst
    
+      DataReader
       DataSource
    
    

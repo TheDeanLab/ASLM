@@ -64,5 +64,6 @@ navigate.model.metadata\_sources.bdv\_metadata.BigDataViewerMetadata
       ~BigDataViewerMetadata.shape_c
       ~BigDataViewerMetadata.positions
       ~BigDataViewerMetadata.active_microscope
+      ~BigDataViewerMetadata.misc
    
    

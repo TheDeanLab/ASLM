@@ -101,7 +101,7 @@ Features
 
 This menu provides access to acquisition feature lists. An explanation of features,
 feature lists, and the use and operation of this menu is provided under
-:doc:`Reconfigurable Acquisitions Using Features <features>`.
+:doc:`Reconfigurable Acquisitions Using Features <features/features>`.
 
 -------------------
 
@@ -719,7 +719,7 @@ Autofocus Settings
 .. image:: case_studies/images/autofocus_settings.png
 
 The :guilabel:`Autofocus Settings` panel controls parameters of the autofocus
-:doc:`feature <features>`.
+:doc:`feature <features/features>`.
 
 * :guilabel:`Device Type` indicates if the autofocus routine should be applied to a
   stage or to a remote focus device.

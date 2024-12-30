@@ -18,6 +18,7 @@ navigate.model.data\_sources.pyramidal\_data\_source.PyramidalDataSource
    
       ~PyramidalDataSource.__init__
       ~PyramidalDataSource.close
+      ~PyramidalDataSource.get_data
       ~PyramidalDataSource.get_shape_from_metadata
       ~PyramidalDataSource.get_slice
       ~PyramidalDataSource.read

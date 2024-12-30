@@ -133,12 +133,12 @@
 <h1>navigate.model.features.image_writer.ImageWriter<a class="headerlink" href="#navigate-model-features-image-writer-imagewriter" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="navigate.model.features.image_writer.ImageWriter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.features.image_writer.</span></span><span class="sig-name descname"><span class="pre">ImageWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_buffer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.features.image_writer.</span></span><span class="sig-name descname"><span class="pre">ImageWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="navigate.model.model.Model.html#navigate.model.model.Model" title="navigate.model.model.Model"><span class="pre">Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="navigate.model.concurrency.concurrency_tools.SharedNDArray.html#navigate.model.concurrency.concurrency_tools.SharedNDArray" title="navigate.model.concurrency.concurrency_tools.SharedNDArray"><span class="pre">navigate.model.concurrency.concurrency_tools.SharedNDArray</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for saving acquired data to disk.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.features.image_writer.ImageWriter.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_buffer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="navigate.model.model.Model.html#navigate.model.model.Model" title="navigate.model.model.Model"><span class="pre">Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="navigate.model.concurrency.concurrency_tools.SharedNDArray.html#navigate.model.concurrency.concurrency_tools.SharedNDArray" title="navigate.model.concurrency.concurrency_tools.SharedNDArray"><span class="pre">navigate.model.concurrency.concurrency_tools.SharedNDArray</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Class for saving acquired data to disk.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -146,9 +146,10 @@
 <li><p><strong>model</strong> (<a class="reference internal" href="navigate.model.model.Model.html#navigate.model.model.Model" title="navigate.model.model.Model"><em>navigate.model.model.Model</em></a>) – Navigate Model class for controlling hardware/acquisition.</p></li>
 <li><p><strong>data_buffer</strong> (<em>[</em><a class="reference internal" href="navigate.model.concurrency.concurrency_tools.SharedNDArray.html#navigate.model.concurrency.concurrency_tools.SharedNDArray" title="navigate.model.concurrency.concurrency_tools.SharedNDArray"><em>SharedNDArray</em></a><em>]</em>) – data_buffer will use model’s default data_buffer if it’s not specified</p></li>
 <li><p><strong>sub_dir</strong> (<em>str</em>) – Sub-directory of self.model.configuration[‘experiment’]
-[‘Saving’][‘save_directory’]
-indicating where to save data</p></li>
-<li><p><strong>image_name</strong> (<em>str</em>) – Name of the image to be saved. If None, a name will be generated</p></li>
+[‘Saving’][‘save_directory’] indicating where to save data</p></li>
+<li><p><strong>image_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Name of the image to be saved. If None, a name will be generated</p></li>
+<li><p><strong>saving_flags</strong> (<em>Optional</em><em>[</em><em>list</em><em>[</em><em>bool</em><em>]</em><em>]</em>) – A list of flags indicating whether to save each frame.</p></li>
+<li><p><strong>saving_config</strong> (<em>Optional</em><em>[</em><em>dict</em><em>]</em>) – Dictionary of saving configuration</p></li>
 </ul>
 </dd>
 </dl>
@@ -169,6 +170,12 @@ indicating where to save data</p></li>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.generate_image_name" title="navigate.model.features.image_writer.ImageWriter.generate_image_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_image_name</span></code></a>(current_channel[, ext])</p></td>
 <td><p>Generates a string for the filename, e.g., CH00_000000.tif.</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_saving_file_name</span></code>([sub_dir, image_name])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">initialize_saving</span></code>([sub_dir, image_name])</p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.save_image" title="navigate.model.features.image_writer.ImageWriter.save_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_image</span></code></a>(frame_ids)</p></td>
 <td><p>Save the data to disk.</p></td>
 </tr>
@@ -177,44 +184,50 @@ indicating where to save data</p></li>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.microscope_name" title="navigate.model.features.image_writer.ImageWriter.microscope_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">microscope_name</span></code></a></p></td>
-<td><p>Name of the microscope.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.data_buffer" title="navigate.model.features.image_writer.ImageWriter.data_buffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_buffer</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.data_buffer" title="navigate.model.features.image_writer.ImageWriter.data_buffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_buffer</span></code></a></p></td>
 <td><p>Data buffer for saving data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.number_of_frames" title="navigate.model.features.image_writer.ImageWriter.number_of_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">number_of_frames</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.number_of_frames" title="navigate.model.features.image_writer.ImageWriter.number_of_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">number_of_frames</span></code></a></p></td>
 <td><p>Number of frames in the experiment.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.saving_flags" title="navigate.model.features.image_writer.ImageWriter.saving_flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">saving_flags</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.saving_flags" title="navigate.model.features.image_writer.ImageWriter.saving_flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">saving_flags</span></code></a></p></td>
 <td><p>Array of saving flags</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.save_directory" title="navigate.model.features.image_writer.ImageWriter.save_directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_directory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.save_directory" title="navigate.model.features.image_writer.ImageWriter.save_directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_directory</span></code></a></p></td>
 <td><p>Directory for saving data to disk.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.sub_dir" title="navigate.model.features.image_writer.ImageWriter.sub_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_dir</span></code></a></p></td>
-<td><p>Sub-directory for saving data to disk.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.current_time_point" title="navigate.model.features.image_writer.ImageWriter.current_time_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_time_point</span></code></a></p></td>
-<td><p>Current time point for saving data.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.config_table" title="navigate.model.features.image_writer.ImageWriter.config_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config_table</span></code></a></p></td>
-<td><p>Dictionary of functions to call for each configuration.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.big_tiff" title="navigate.model.features.image_writer.ImageWriter.big_tiff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">big_tiff</span></code></a></p></td>
-<td><p>Is 32 vs 64-bit file format.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.mip" title="navigate.model.features.image_writer.ImageWriter.mip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mip</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.mip" title="navigate.model.features.image_writer.ImageWriter.mip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mip</span></code></a></p></td>
 <td><p>Maximum intensity projection image.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.mip_directory" title="navigate.model.features.image_writer.ImageWriter.mip_directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mip_directory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.mip_directory" title="navigate.model.features.image_writer.ImageWriter.mip_directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mip_directory</span></code></a></p></td>
 <td><p>Directory for saving maximum intensity projection images.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.file_type" title="navigate.model.features.image_writer.ImageWriter.file_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">file_type</span></code></a></p></td>
-<td><p>File type for saving data.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.sub_dir" title="navigate.model.features.image_writer.ImageWriter.sub_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_dir</span></code></a></p></td>
+<td><p>Sub-directory for saving data to disk.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.data_source" title="navigate.model.features.image_writer.ImageWriter.data_source"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_source</span></code></a></p></td>
-<td><p>Data source for saving data to disk.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.current_time_point" title="navigate.model.features.image_writer.ImageWriter.current_time_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_time_point</span></code></a></p></td>
+<td><p>Current time point for saving data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.config_table" title="navigate.model.features.image_writer.ImageWriter.config_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config_table</span></code></a></p></td>
+<td><p>Dictionary of functions to call for each configuration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.big_tiff" title="navigate.model.features.image_writer.ImageWriter.big_tiff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">big_tiff</span></code></a></p></td>
+<td><p>Is 32 vs 64-bit file format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.saving_config" title="navigate.model.features.image_writer.ImageWriter.saving_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">saving_config</span></code></a></p></td>
+<td><p>Saving config</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.data_source" title="navigate.model.features.image_writer.ImageWriter.data_source"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_source</span></code></a></p></td>
+<td><p>Data source</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.disk_space_check_interval" title="navigate.model.features.image_writer.ImageWriter.disk_space_check_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disk_space_check_interval</span></code></a></p></td>
+<td><p>Disk space check interval in seconds.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.min_disk_space" title="navigate.model.features.image_writer.ImageWriter.min_disk_space"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min_disk_space</span></code></a></p></td>
+<td><p>Minimum disk space required in bytes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.image_writer.ImageWriter.last_disk_space_check" title="navigate.model.features.image_writer.ImageWriter.last_disk_space_check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">last_disk_space_check</span></code></a></p></td>
+<td><p>Time of last disk space check</p></td>
 </tr>
 </tbody>
 </table>
@@ -262,7 +275,7 @@ of saved color channel.</p></li>
 <dd><p>Save the data to disk.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>frame_ids</strong> (<em>int</em>) – Index into self.model.data_buffer.</p>
+<dd class="field-odd"><p><strong>frame_ids</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Index into self.model.data_buffer.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -314,32 +327,43 @@ of saved color channel.</p></li>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="navigate.model.features.image_writer.ImageWriter.data_source">
 <span class="sig-name descname"><span class="pre">data_source</span></span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter.data_source" title="Permalink to this definition"></a></dt>
-<dd><p>Data source for saving data to disk.</p>
+<dd><p>Data source</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>navigate.model.data_sources.DataSource</p>
+<dd class="field-odd"><p><a class="reference internal" href="navigate.model.data_sources.data_source.DataSource.html#navigate.model.data_sources.data_source.DataSource" title="navigate.model.data_sources.data_source.DataSource">DataSource</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="navigate.model.features.image_writer.ImageWriter.file_type">
-<span class="sig-name descname"><span class="pre">file_type</span></span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter.file_type" title="Permalink to this definition"></a></dt>
-<dd><p>File type for saving data.</p>
+<dt class="sig sig-object py" id="navigate.model.features.image_writer.ImageWriter.disk_space_check_interval">
+<span class="sig-name descname"><span class="pre">disk_space_check_interval</span></span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter.disk_space_check_interval" title="Permalink to this definition"></a></dt>
+<dd><p>Disk space check interval in seconds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="navigate.model.features.image_writer.ImageWriter.microscope_name">
-<span class="sig-name descname"><span class="pre">microscope_name</span></span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter.microscope_name" title="Permalink to this definition"></a></dt>
-<dd><p>Name of the microscope.</p>
+<dt class="sig sig-object py" id="navigate.model.features.image_writer.ImageWriter.last_disk_space_check">
+<span class="sig-name descname"><span class="pre">last_disk_space_check</span></span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter.last_disk_space_check" title="Permalink to this definition"></a></dt>
+<dd><p>Time of last disk space check</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigate.model.features.image_writer.ImageWriter.min_disk_space">
+<span class="sig-name descname"><span class="pre">min_disk_space</span></span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter.min_disk_space" title="Permalink to this definition"></a></dt>
+<dd><p>Minimum disk space required in bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -384,6 +408,17 @@ of saved color channel.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigate.model.features.image_writer.ImageWriter.saving_config">
+<span class="sig-name descname"><span class="pre">saving_config</span></span><a class="headerlink" href="#navigate.model.features.image_writer.ImageWriter.saving_config" title="Permalink to this definition"></a></dt>
+<dd><p>Saving config</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>

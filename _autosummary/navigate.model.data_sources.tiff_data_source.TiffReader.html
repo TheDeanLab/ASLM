@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>navigate.controller &mdash; navigate 0.0.8 documentation</title>
+  <title>navigate.model.data_sources.tiff_data_source.TiffReader &mdash; navigate 0.0.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -22,8 +22,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="navigate.controller.configuration_controller" href="navigate.controller.configuration_controller.html" />
-    <link rel="prev" title="navigate.config.configuration_database" href="navigate.config.configuration_database.html" /> 
+    <link rel="next" title="navigate.model.data_sources.zarr_data_source" href="navigate.model.data_sources.zarr_data_source.html" />
+    <link rel="prev" title="navigate.model.data_sources.tiff_data_source.TiffDataSource" href="navigate.model.data_sources.tiff_data_source.TiffDataSource.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -84,13 +84,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../implementations/implementations.html">Implemented Microscopes</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">Software API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="navigate.config.html">navigate.config</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">navigate.controller</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="navigate.controller.configuration_controller.html">navigate.controller.configuration_controller</a></li>
-<li class="toctree-l3"><a class="reference internal" href="navigate.controller.thread_pool.html">navigate.controller.thread_pool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="navigate.log_files.html">navigate.log_files</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="navigate.model.html">navigate.model</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="navigate.model.analysis.html">navigate.model.analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigate.model.concurrency.html">navigate.model.concurrency</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="navigate.model.data_sources.html">navigate.model.data_sources</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="navigate.model.data_sources.logger.html">navigate.model.data_sources.logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="navigate.model.data_sources.get_data_source.html">navigate.model.data_sources.get_data_source</a></li>
+<li class="toctree-l4"><a class="reference internal" href="navigate.model.data_sources.bdv_data_source.html">navigate.model.data_sources.bdv_data_source</a></li>
+<li class="toctree-l4"><a class="reference internal" href="navigate.model.data_sources.data_source.html">navigate.model.data_sources.data_source</a></li>
+<li class="toctree-l4"><a class="reference internal" href="navigate.model.data_sources.pyramidal_data_source.html">navigate.model.data_sources.pyramidal_data_source</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="navigate.model.data_sources.tiff_data_source.html">navigate.model.data_sources.tiff_data_source</a></li>
+<li class="toctree-l4"><a class="reference internal" href="navigate.model.data_sources.zarr_data_source.html">navigate.model.data_sources.zarr_data_source</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="navigate.log_files.html">navigate.log_files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="navigate.model.html">navigate.model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigate.model.device_startup_functions.html">navigate.model.device_startup_functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigate.model.devices.html">navigate.model.devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigate.model.features.html">navigate.model.features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigate.model.metadata_sources.html">navigate.model.metadata_sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigate.model.microscope.html">navigate.model.microscope</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigate.model.model.html">navigate.model.model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigate.model.plugins_model.html">navigate.model.plugins_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigate.model.waveforms.html">navigate.model.waveforms</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="navigate.tools.html">navigate.tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="navigate.view.html">navigate.view</a></li>
 </ul>
@@ -112,9 +129,12 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../api.html">Software API</a></li>
-      <li class="breadcrumb-item active">navigate.controller</li>
+          <li class="breadcrumb-item"><a href="navigate.model.html">navigate.model</a></li>
+          <li class="breadcrumb-item"><a href="navigate.model.data_sources.html">navigate.model.data_sources</a></li>
+          <li class="breadcrumb-item"><a href="navigate.model.data_sources.tiff_data_source.html">navigate.model.data_sources.tiff_data_source</a></li>
+      <li class="breadcrumb-item active">navigate.model.data_sources.tiff_data_source.TiffReader</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/_autosummary/navigate.controller.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_autosummary/navigate.model.data_sources.tiff_data_source.TiffReader.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -122,28 +142,43 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-navigate.controller">
-<span id="navigate-controller"></span><h1>navigate.controller<a class="headerlink" href="#module-navigate.controller" title="Permalink to this heading"></a></h1>
-<p>Passes communication between the GUI and the hardware.</p>
-<p class="rubric">Modules</p>
+  <section id="navigate-model-data-sources-tiff-data-source-tiffreader">
+<h1>navigate.model.data_sources.tiff_data_source.TiffReader<a class="headerlink" href="#navigate-model-data-sources-tiff-data-source-tiffreader" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="navigate.model.data_sources.tiff_data_source.TiffReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.data_sources.tiff_data_source.</span></span><span class="sig-name descname"><span class="pre">TiffReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tiff_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TiffFile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.data_sources.tiff_data_source.TiffReader" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="navigate.model.data_sources.data_source.DataReader.html#navigate.model.data_sources.data_source.DataReader" title="navigate.model.data_sources.data_source.DataReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataReader</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="navigate.model.data_sources.tiff_data_source.TiffReader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tiff_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TiffFile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.data_sources.tiff_data_source.TiffReader.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="navigate.controller.configuration_controller.html#module-navigate.controller.configuration_controller" title="navigate.controller.configuration_controller"><code class="xref py py-obj docutils literal notranslate"><span class="pre">navigate.controller.configuration_controller</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="navigate.controller.thread_pool.html#module-navigate.controller.thread_pool" title="navigate.controller.thread_pool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">navigate.controller.thread_pool</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.tiff_data_source.TiffReader.__init__" title="navigate.model.data_sources.tiff_data_source.TiffReader.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(tiff_file)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="navigate.config.configuration_database.html" class="btn btn-neutral float-left" title="navigate.config.configuration_database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="navigate.controller.configuration_controller.html" class="btn btn-neutral float-right" title="navigate.controller.configuration_controller" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="navigate.model.data_sources.tiff_data_source.TiffDataSource.html" class="btn btn-neutral float-left" title="navigate.model.data_sources.tiff_data_source.TiffDataSource" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="navigate.model.data_sources.zarr_data_source.html" class="btn btn-neutral float-right" title="navigate.model.data_sources.zarr_data_source" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

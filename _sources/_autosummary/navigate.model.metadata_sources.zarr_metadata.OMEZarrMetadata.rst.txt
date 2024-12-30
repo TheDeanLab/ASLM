@@ -47,5 +47,6 @@ navigate.model.metadata\_sources.zarr\_metadata.OMEZarrMetadata
       ~OMEZarrMetadata.shape_c
       ~OMEZarrMetadata.positions
       ~OMEZarrMetadata.active_microscope
+      ~OMEZarrMetadata.misc
    
    

@@ -409,7 +409,7 @@ communication if it is connected to the lasers.</p>
 <section id="physik-instrumente">
 <h2>Physik Instrumente<a class="headerlink" href="#physik-instrumente" title="Permalink to this heading"></a></h2>
 <p>These stages are controlled by <a class="reference external" href="https://www.pi-usa.us/en/">PI</a>’s own
-<a class="reference external" href="https://pypi.org/project/PIPython/">Python code</a> and are quite stable.</p>
+<a class="reference external" href="https://pypi.org/project/PIPython/">Python code</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>navigate</strong> has been tested with the following versions of the Physik
@@ -419,18 +419,23 @@ Instrumente software and drivers:</p>
 <li><p>PI_GCS2_DLL: 3.22.0.0</p></li>
 </ul>
 </div>
-<p>They
-include a special <code class="docutils literal notranslate"><span class="pre">hardware</span></code> option, <code class="docutils literal notranslate"><span class="pre">refmode</span></code>, which corresponds to how the
-PI stage chooses to self-reference. Options are <code class="docutils literal notranslate"><span class="pre">REF</span></code>, <code class="docutils literal notranslate"><span class="pre">FRF</span></code>, <code class="docutils literal notranslate"><span class="pre">MNL</span></code>, <code class="docutils literal notranslate"><span class="pre">FNL</span></code>,
-<code class="docutils literal notranslate"><span class="pre">MPL</span></code> or <code class="docutils literal notranslate"><span class="pre">FPL</span></code>. These are PI’s GCS commands, and the correct reference mode
-for your stage should be found by launching PIMikroMove, which should come with
-your stage. Stage names (e.g. <code class="docutils literal notranslate"><span class="pre">L-509.20DG10</span></code>) can also be found in PIMikroMove
-or on a label on the side of your stage.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>PI L-509.20DG10 has a unidirectional repeatability of 100 nm, bidirectional
-repeatability of 2 microns, and a minimum incremental motion of 100 nm.
-This is potentially too coarse.</p>
+<p>PI stages require a special <code class="docutils literal notranslate"><span class="pre">hardware</span></code> option in the configuration.yaml file, <code class="docutils literal notranslate"><span class="pre">refmode</span></code>,
+which corresponds to how the PI stage chooses to self-reference. Options are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">REF</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FRF</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MNL</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FNL</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MPL</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FPL</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&quot;</span></code> - An empty string can be provided if no stage referencing mode is needed.</p></li>
+</ul>
+<p>These are PI’s GCS commands, and the correct reference mode for your stage should be found by
+launching PIMikroMove, which comes with your stage and can be downloaded
+<a class="reference external" href="https://www.pi-usa.us/en/products/controllers-drivers-motion-control-software/motion-control-software">here</a>.
+Stage names (e.g. <code class="docutils literal notranslate"><span class="pre">L-509.20DG10</span></code>) can also be found in PIMikroMove or on a label on the side of your stage.</p>
 </div>
 <hr class="docutils" />
 <section id="c-884">

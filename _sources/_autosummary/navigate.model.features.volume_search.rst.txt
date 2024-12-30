@@ -27,6 +27,7 @@ navigate.model.features.volume\_search
       :template: custom_class.rst
    
       VolumeSearch
+      VolumeSearch3D
    
    
 

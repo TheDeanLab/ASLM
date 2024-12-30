@@ -18,6 +18,7 @@ navigate.model.data\_sources.bdv\_data\_source.BigDataViewerDataSource
    
       ~BigDataViewerDataSource.__init__
       ~BigDataViewerDataSource.close
+      ~BigDataViewerDataSource.get_data
       ~BigDataViewerDataSource.get_shape_from_metadata
       ~BigDataViewerDataSource.get_slice
       ~BigDataViewerDataSource.read

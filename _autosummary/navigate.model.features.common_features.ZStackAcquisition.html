@@ -71,12 +71,10 @@
 <li class="toctree-l3"><a class="reference internal" href="navigate.model.features.auto_tile_scan.html">navigate.model.features.auto_tile_scan</a></li>
 <li class="toctree-l3"><a class="reference internal" href="navigate.model.features.autofocus.html">navigate.model.features.autofocus</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="navigate.model.features.common_features.html">navigate.model.features.common_features</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="navigate.model.features.common_features.ChangeResolution.html">navigate.model.features.common_features.ChangeResolution</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.common_features.FindTissueSimple2D.html">navigate.model.features.common_features.FindTissueSimple2D</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.common_features.LoopByCount.html">navigate.model.features.common_features.LoopByCount</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.common_features.MoveToNextPositionInMultiPositionTable.html">navigate.model.features.common_features.MoveToNextPositionInMultiPositionTable</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.common_features.PrepareNextChannel.html">navigate.model.features.common_features.PrepareNextChannel</a></li>
-<li class="toctree-l4"><a class="reference internal" href="navigate.model.features.common_features.SetCameraParameters.html">navigate.model.features.common_features.SetCameraParameters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.common_features.Snap.html">navigate.model.features.common_features.Snap</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.common_features.StackPause.html">navigate.model.features.common_features.StackPause</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.common_features.WaitForExternalTrigger.html">navigate.model.features.common_features.WaitForExternalTrigger</a></li>
@@ -143,7 +141,7 @@
 <h1>navigate.model.features.common_features.ZStackAcquisition<a class="headerlink" href="#navigate-model-features-common-features-zstackacquisition" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="navigate.model.features.common_features.ZStackAcquisition">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.features.common_features.</span></span><span class="sig-name descname"><span class="pre">ZStackAcquisition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'z-stack'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.common_features.ZStackAcquisition" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.features.common_features.</span></span><span class="sig-name descname"><span class="pre">ZStackAcquisition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'z-stack'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_multiposition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.common_features.ZStackAcquisition" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>ZStackAcquisition class for controlling z-stack acquisition in microscopy.</p>
 <p>This class provides functionality to control z-stack acquisition, including managing
@@ -165,7 +163,7 @@ acquisitions.</p>
 <p>process, including signal acquisition, data handling, and node type.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.features.common_features.ZStackAcquisition.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'z-stack'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.common_features.ZStackAcquisition.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saving_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'z-stack'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_multiposition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.common_features.ZStackAcquisition.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the ZStackAcquisition class.</p>
 <section id="parameters">
 <h3>Parameters:<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
@@ -269,10 +267,13 @@ Default is False.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.common_features.ZStackAcquisition.channels" title="navigate.model.features.common_features.ZStackAcquisition.channels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">channels</span></code></a></p></td>
 <td><p>The number of channels in the z-stack.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.common_features.ZStackAcquisition.image_writer" title="navigate.model.features.common_features.ZStackAcquisition.image_writer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">image_writer</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.common_features.ZStackAcquisition.force_multiposition" title="navigate.model.features.common_features.ZStackAcquisition.force_multiposition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">force_multiposition</span></code></a></p></td>
+<td><p>Force multiposition</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.common_features.ZStackAcquisition.image_writer" title="navigate.model.features.common_features.ZStackAcquisition.image_writer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">image_writer</span></code></a></p></td>
 <td><p>An image writer object for saving z-stack images.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.common_features.ZStackAcquisition.config_table" title="navigate.model.features.common_features.ZStackAcquisition.config_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config_table</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.common_features.ZStackAcquisition.config_table" title="navigate.model.features.common_features.ZStackAcquisition.config_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config_table</span></code></a></p></td>
 <td><p>A dictionary defining the configuration for the z-stack acquisition</p></td>
 </tr>
 </tbody>
@@ -447,6 +448,17 @@ cycling through channels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigate.model.features.common_features.ZStackAcquisition.force_multiposition">
+<span class="sig-name descname"><span class="pre">force_multiposition</span></span><a class="headerlink" href="#navigate.model.features.common_features.ZStackAcquisition.force_multiposition" title="Permalink to this definition"></a></dt>
+<dd><p>Force multiposition</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>

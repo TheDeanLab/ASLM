@@ -18,6 +18,7 @@ navigate.tools.multipos\_table\_tools
       compute_tiles_from_bounding_box
       sign
       update_table
+      write_to_csv_file
    
    
 

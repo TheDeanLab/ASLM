@@ -48,5 +48,6 @@ navigate.model.metadata\_sources.metadata.XMLMetadata
       ~XMLMetadata.shape_c
       ~XMLMetadata.positions
       ~XMLMetadata.active_microscope
+      ~XMLMetadata.misc
    
    

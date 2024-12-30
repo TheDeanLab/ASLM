@@ -37,5 +37,6 @@ navigate.model.features
    navigate.model.features.image_writer
    navigate.model.features.remove_empty_tiles
    navigate.model.features.restful_features
+   navigate.model.features.update_setting
    navigate.model.features.volume_search
 

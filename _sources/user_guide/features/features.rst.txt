@@ -213,9 +213,9 @@ As an example, let's look at the feature list that describes the
 Here, we have a sequence defined by ``[]`` containing one element, a loop, indicated
 by the closed parentheses. There are two features within this loop. One feature has the
 name
-:doc:`PrepareNextChannel <../_autosummary/navigate.model.features.common_features.PrepareNextChannel>`
+:doc:`PrepareNextChannel <../../_autosummary/navigate.model.features.common_features.PrepareNextChannel>`
 and the other
-:doc:`LoopByCount <../_autosummary/navigate.model.features.common_features.LoopByCount>`.
+:doc:`LoopByCount <../../_autosummary/navigate.model.features.common_features.LoopByCount>`.
 The parentheses indicate we will keep looping through both of these features until
 stopping criteria is met. In this case, the looping will stop when ``LoopByCount``
 returns ``False`` due to running out of ``selected_channels`` to loop through. That is,

@@ -18,6 +18,7 @@ navigate.model.data\_sources.zarr\_data\_source.OMEZarrDataSource
    
       ~OMEZarrDataSource.__init__
       ~OMEZarrDataSource.close
+      ~OMEZarrDataSource.get_data
       ~OMEZarrDataSource.get_shape_from_metadata
       ~OMEZarrDataSource.get_slice
       ~OMEZarrDataSource.new_position

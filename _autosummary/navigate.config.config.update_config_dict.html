@@ -99,7 +99,6 @@
 <li class="toctree-l3"><a class="reference internal" href="navigate.config.configuration_database.html">navigate.config.configuration_database</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="navigate.controller.html">navigate.controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="navigate.log_files.html">navigate.log_files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="navigate.model.html">navigate.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="navigate.tools.html">navigate.tools</a></li>
@@ -139,14 +138,14 @@
 <h1>navigate.config.config.update_config_dict<a class="headerlink" href="#navigate-config-config-update-config-dict" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="navigate.config.config.update_config_dict">
-<span class="sig-prename descclassname"><span class="pre">navigate.config.config.</span></span><span class="sig-name descname"><span class="pre">update_config_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_config</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#navigate.config.config.update_config_dict" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">navigate.config.config.</span></span><span class="sig-name descname"><span class="pre">update_config_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Manager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#navigate.config.config.update_config_dict" title="Permalink to this definition"></a></dt>
 <dd><p>Read a new file and update info of the configuration dict.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>manager</strong> (<em>multiprocessing.Manager</em>) – Shares objects (e.g., dict) between processes</p></li>
 <li><p><strong>parent_dict</strong> (<em>dict</em>) – Dictionary we are adding to</p></li>
-<li><p><strong>config_name</strong> (<em>str</em>) – Name of subdictionary to replace</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – Name of dictionary to replace</p></li>
 <li><p><strong>new_config</strong> (<em>dict</em><em> or </em><em>str</em>) – Dictionary values or
 yaml file name</p></li>
 </ul>

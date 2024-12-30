@@ -49,5 +49,6 @@ navigate.model.metadata\_sources.ome\_tiff\_metadata.OMETIFFMetadata
       ~OMETIFFMetadata.shape_c
       ~OMETIFFMetadata.positions
       ~OMETIFFMetadata.active_microscope
+      ~OMETIFFMetadata.misc
    
    

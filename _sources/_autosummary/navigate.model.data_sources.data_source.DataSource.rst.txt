@@ -18,6 +18,7 @@ navigate.model.data\_sources.data\_source.DataSource
    
       ~DataSource.__init__
       ~DataSource.close
+      ~DataSource.get_data
       ~DataSource.get_shape_from_metadata
       ~DataSource.read
       ~DataSource.set_metadata

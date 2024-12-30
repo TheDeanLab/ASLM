@@ -84,7 +84,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../implementations/implementations.html">Implemented Microscopes</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">Software API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="navigate.config.html">navigate.config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="navigate.controller.html">navigate.controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="navigate.log_files.html">navigate.log_files</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="navigate.model.html">navigate.model</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="navigate.model.analysis.html">navigate.model.analysis</a><ul class="current">
@@ -146,14 +145,20 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="navigate.model.analysis.boundary_detect.binary_detect.html#navigate.model.analysis.boundary_detect.binary_detect" title="navigate.model.analysis.boundary_detect.binary_detect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary_detect</span></code></a>(img_data, boundary[, width, ...])</p></td>
 <td><p>Perform a binary search for tissue on an image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="navigate.model.analysis.boundary_detect.find_tissue_boundary_2d.html#navigate.model.analysis.boundary_detect.find_tissue_boundary_2d" title="navigate.model.analysis.boundary_detect.find_tissue_boundary_2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_tissue_boundary_2d</span></code></a>(image_data[, mag_ratio])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="navigate.model.analysis.boundary_detect.find_cell_boundary_3d.html#navigate.model.analysis.boundary_detect.find_cell_boundary_3d" title="navigate.model.analysis.boundary_detect.find_cell_boundary_3d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_cell_boundary_3d</span></code></a>(z_stack_image)</p></td>
+<td><p>A default label volume image function</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="navigate.model.analysis.boundary_detect.find_tissue_boundary_2d.html#navigate.model.analysis.boundary_detect.find_tissue_boundary_2d" title="navigate.model.analysis.boundary_detect.find_tissue_boundary_2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_tissue_boundary_2d</span></code></a>(image_data[, mag_ratio])</p></td>
 <td><p>Find all pixels containing tissue, based on an Otsu threshold.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="navigate.model.analysis.boundary_detect.has_tissue.html#navigate.model.analysis.boundary_detect.has_tissue" title="navigate.model.analysis.boundary_detect.has_tissue"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_tissue</span></code></a>(image_data, x, y, width[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="navigate.model.analysis.boundary_detect.has_tissue.html#navigate.model.analysis.boundary_detect.has_tissue" title="navigate.model.analysis.boundary_detect.has_tissue"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_tissue</span></code></a>(image_data, x, y, width[, ...])</p></td>
 <td><p>Determine if an image contains tissue.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="navigate.model.analysis.boundary_detect.map_boundary.html#navigate.model.analysis.boundary_detect.map_boundary" title="navigate.model.analysis.boundary_detect.map_boundary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">map_boundary</span></code></a>(boundary[, direction])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="navigate.model.analysis.boundary_detect.map_boundary.html#navigate.model.analysis.boundary_detect.map_boundary" title="navigate.model.analysis.boundary_detect.map_boundary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">map_boundary</span></code></a>(boundary[, direction])</p></td>
 <td><p>Map boundary to a path.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="navigate.model.analysis.boundary_detect.map_labels.html#navigate.model.analysis.boundary_detect.map_labels" title="navigate.model.analysis.boundary_detect.map_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">map_labels</span></code></a>(labeled_image, position, z_start, ...)</p></td>
+<td><p>Map labels to positions</p></td>
 </tr>
 </tbody>
 </table>

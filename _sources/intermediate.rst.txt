@@ -4,9 +4,9 @@ Write A Smart Acquisition Routine (Intermediate)
 
 **navigate**'s :doc:`feature container <contributing/feature_container>` enables us to
 write acquisition routines on the fly by chaining existing 
-:doc:`features <user_guide/features>` into lists. Please see
+:doc:`features <user_guide/features/features>` into lists. Please see
 :ref:`Currently Implemented Features <contributing/feature_container:currently implemented features>`
-for a complete list of features. Users can build additionals feature within :doc:`plugins <plugin/plugin_home>`.
+for a complete list of features. Users can build additional features within :doc:`plugins <plugin/plugin_home>`.
 
 In this guide, we will use existing features to write a routine that scans through an 
 imaging chamber and takes z-stacks only where it finds the sample.

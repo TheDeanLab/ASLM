@@ -1,7 +1,7 @@
-navigate.model.features.common\_features.SetCameraParameters
-============================================================
+navigate.model.features.update\_setting.SetCameraParameters
+===========================================================
 
-.. currentmodule:: navigate.model.features.common_features
+.. currentmodule:: navigate.model.features.update_setting
 
 .. autoclass:: SetCameraParameters
    :members:

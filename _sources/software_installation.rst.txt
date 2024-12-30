@@ -193,7 +193,7 @@ Developer install
 
 If you do not have `Git already installed <https://git-scm.com/downloads>`_, you will
 need to do so before downloading the repo. We also recommend installing
-`GitHub Desktop <https://desktop.github.com/>`_ for a more user-friendly experience.
+`GitHub Desktop <https://github.com/apps/desktop>`_ for a more user-friendly experience.
 
 **Create a directory where the repository will be cloned**
     We recommend a path/location that is easy to find and access such as the your

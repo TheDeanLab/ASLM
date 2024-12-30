@@ -20,6 +20,7 @@ navigate.model.data\_sources.tiff\_data\_source
       :template: custom_class.rst
    
       TiffDataSource
+      TiffReader
    
    
 
